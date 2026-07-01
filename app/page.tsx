@@ -5,7 +5,6 @@ import PlayersFilmstrip from "@/components/sections/players-filmstrip";
 export default function Home() {
   return (
     <main className="bg-[#0a0a0a]">
-      <div hidden data-e2e-pipeline="STAGING-TEST-8f3a2c" />
       <HeroBoot />
       <PlatformScroll />
       <StatsBand />

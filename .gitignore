@@ -42,3 +42,9 @@ next-env.d.ts
 
 # superpowers local session state
 .superpowers/
+
+# open-next / cloudflare build output
+.open-next/
+.wrangler/
+cloudflare-env.d.ts
+.dev.vars

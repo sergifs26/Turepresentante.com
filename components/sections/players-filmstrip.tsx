@@ -36,7 +36,7 @@ export default function PlayersFilmstrip() {
 
   return (
     <section id="jugadores" className="bg-[#0a0a0a] pb-28">
-      <div className="flex items-end justify-between px-10 pt-20 pb-12">
+      <div className="flex flex-col md:flex-row md:items-end gap-5 justify-between px-5 md:px-10 pt-20 pb-12">
         <h2
           className="uppercase leading-[0.92] tracking-[-0.03em] text-[#f0f0ee]"
           style={{
@@ -49,19 +49,19 @@ export default function PlayersFilmstrip() {
           <em className="text-[#e8ff00]">en el</em><br />
           escaparate
         </h2>
-        <p className="max-w-[200px] text-[13px] text-white/35 font-light leading-relaxed pb-2 text-right">
+        <p className="max-w-[200px] text-[13px] text-white/35 font-light leading-relaxed pb-2 md:text-right">
           Selección de perfiles actualmente representados.
         </p>
       </div>
 
-      <p className="px-10 mb-3 flex items-center gap-2 text-[9px] font-mono tracking-[0.15em] text-white/20 uppercase">
+      <p className="px-5 md:px-10 mb-3 flex items-center gap-2 text-[9px] font-mono tracking-[0.15em] text-white/20 uppercase">
         <span className="w-5 h-px bg-white/15 block" />
         Arrastra para ver más
       </p>
 
       <div
         ref={stripRef}
-        className="flex gap-0.5 px-10 overflow-x-auto select-none"
+        className="flex gap-0.5 px-5 md:px-10 overflow-x-auto select-none"
         style={{ cursor: "grab", scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
         onMouseDown={onMouseDown}
         onMouseLeave={onMouseLeave}

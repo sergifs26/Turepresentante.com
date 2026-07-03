@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
+import SiteNav from "@/components/layout/site-nav";
 
 // 3D viewer loads client-side only (three.js needs the browser)
 const Boot3D = dynamic(() => import("@/components/sections/boot-3d"), {
@@ -19,42 +21,11 @@ export default function HeroBoot() {
   return (
     <section className="relative h-dvh overflow-hidden bg-[#0a0a0a]">
 
-      {/* Nav */}
-      <nav
-        className="absolute top-0 left-0 right-0 z-50 h-[60px] flex items-center justify-between px-10"
-        style={{ mixBlendMode: "difference" }}
-      >
-        <span
-          className="font-display font-black text-[17px] tracking-[0.08em] uppercase text-[#f0f0ee]"
-          style={{ fontFamily: "var(--font-barlow-condensed)" }}
-        >
-          Turepresentante
-        </span>
-        <div className="flex items-center gap-8">
-          <a
-            href="#como-funciona"
-            className="font-mono text-[10px] tracking-[0.12em] uppercase text-[#f0f0ee] opacity-60 hover:opacity-100 transition-opacity no-underline"
-          >
-            Cómo funciona
-          </a>
-          <a
-            href="#jugadores"
-            className="font-mono text-[10px] tracking-[0.12em] uppercase text-[#f0f0ee] opacity-60 hover:opacity-100 transition-opacity no-underline"
-          >
-            Jugadores
-          </a>
-          <a
-            href="#perfil"
-            className="font-mono text-[10px] tracking-[0.12em] uppercase bg-[#e8ff00] text-[#0a0a0a] px-4 py-[7px] no-underline font-medium hover:opacity-85 transition-opacity"
-          >
-            Sube tu perfil
-          </a>
-        </div>
-      </nav>
+      <SiteNav variant="overlay" />
 
       {/* Boot — real 3D scanned model, transparent so it melts into the page */}
       <motion.div
-        className="absolute right-0 top-0 h-full w-[58vw] max-w-[900px] pointer-events-none"
+        className="absolute right-0 top-0 h-full w-[85vw] md:w-[58vw] max-w-[900px] pointer-events-none opacity-70 md:opacity-100"
         style={{ filter: "drop-shadow(0 0 60px rgba(232,255,0,0.18))" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -64,7 +35,7 @@ export default function HeroBoot() {
       </motion.div>
 
       {/* Text — bottom left, overlapping boot */}
-      <div className="absolute bottom-14 left-10 z-10">
+      <div className="absolute bottom-14 left-5 md:left-10 z-10">
         <motion.div
           className="flex items-center gap-3 mb-5"
           initial={{ opacity: 0, y: 8 }}
@@ -116,22 +87,23 @@ export default function HeroBoot() {
           clubes que importan.
         </motion.p>
 
-        <motion.a
-          href="#perfil"
-          className="mt-6 inline-block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-7 py-[13px] no-underline"
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2.9, duration: 0.4 }}
-          whileHover={{ opacity: 0.85, y: -2 }}
-          whileTap={{ scale: 0.98 }}
         >
-          Crear mi perfil gratis
-        </motion.a>
+          <Link
+            href="/perfil"
+            className="mt-6 inline-block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-7 py-[13px] no-underline hover:opacity-85 active:scale-[0.98] transition-all"
+          >
+            Crear mi perfil gratis
+          </Link>
+        </motion.div>
       </div>
 
       {/* Scroll hint */}
       <motion.div
-        className="absolute bottom-8 right-10 flex flex-col items-center gap-2 z-20"
+        className="absolute bottom-8 right-10 hidden md:flex flex-col items-center gap-2 z-20"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 3.3, duration: 0.5 }}

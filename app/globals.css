@@ -127,5 +127,17 @@
   }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
+  }
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+  ::selection {
+    background: #e8ff00;
+    color: #0a0a0a;
+  }
+  :focus-visible {
+    outline: 2px solid #e8ff00;
+    outline-offset: 2px;
   }
 }

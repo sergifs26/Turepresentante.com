@@ -52,3 +52,26 @@ Sí, puedes trabajar y hacer push a `pruebas` automáticamente. Pero la
 fusión a `main` (publicar en producción) SIEMPRE requiere el OK explícito
 del usuario tras revisar en Vercel.
 <!-- END:deployment-workflow -->
+
+<!-- BEGIN:skill-first-workflow -->
+# Uso OBLIGATORIO de skills en cada petición
+
+Procedimiento fijo (pedido por el usuario el 2026-07-03). Aplícalo SIEMPRE,
+sin pedir confirmación cada vez.
+
+Para CADA petición del usuario:
+1. Consulta el catálogo `docs/CATALOGO-SKILLS.md` (índice por función de las
+   133 skills instaladas en `C:\Users\sergi\.claude\plugins\`).
+2. Elige la(s) skill(s) que mejor encajen con la tarea e invócalas con la
+   herramienta Skill ANTES de hacer el trabajo a mano.
+   - Diseño/frontend/rediseño web → skills de la sección "Diseño · Frontend"
+     (p. ej. `design-taste-frontend`, `redesign-existing-projects`, `impeccable`).
+   - Desarrollo multi-paso → skills de flujo de superpowers
+     (`brainstorming` → `writing-plans` → ejecución).
+3. Solo se pueden invocar las skills CARGADAS en la sesión actual. Si la skill
+   idónea del catálogo no está cargada, dile al usuario cuál es y que debe
+   activarla en el panel de plugins y reiniciar Claude Code; mientras tanto usa
+   la alternativa más cercana disponible.
+4. Si aplican varias, encadénalas en orden lógico. Si ninguna aplica de verdad,
+   trabaja normal (no fuerces una skill irrelevante).
+<!-- END:skill-first-workflow -->

@@ -36,8 +36,8 @@ export default function ClubesPage() {
       <SiteNav />
 
       <header className="px-5 md:px-10 pt-16 md:pt-24 pb-10 md:pb-14">
-        <div className="flex items-center gap-3 mb-5">
-          <span className="w-6 h-px bg-[#e8ff00] block" />
+        <div className="inline-flex items-center gap-2.5 mb-5 border border-[#e8ff00]/25 rounded-full px-4 py-[7px]">
+          <span className="bio-node" aria-hidden="true" />
           <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
             Clubes · Scouts · Agentes
           </span>
@@ -60,7 +60,7 @@ export default function ClubesPage() {
         </p>
       </header>
 
-      <section className="px-5 md:px-10 pb-10 grid grid-cols-1 md:grid-cols-3 gap-px bg-white/[0.07] border-y border-white/[0.07]">
+      <section className="px-5 md:px-10 pb-10 grid grid-cols-1 md:grid-cols-3 gap-5">
         {[
           {
             t: "Filtrado real",
@@ -75,7 +75,7 @@ export default function ClubesPage() {
             d: "Negocias con nosotros de principio a fin. Sin cadenas de intermediarios.",
           },
         ].map((c) => (
-          <div key={c.t} className="bg-[#0a0a0a] py-8 md:px-8 first:pl-0">
+          <div key={c.t} className="bio-cell px-7 py-8">
             <h2
               className="uppercase text-[#f0f0ee] text-[22px] leading-[1.1]"
               style={{ fontFamily: "var(--font-barlow-condensed)", fontWeight: 900 }}

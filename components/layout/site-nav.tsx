@@ -59,7 +59,7 @@ export default function SiteNav({
           })}
           <Link
             href="/perfil"
-            className="font-mono text-[10px] tracking-[0.12em] uppercase bg-[#e8ff00] text-[#0a0a0a] px-4 py-[7px] no-underline font-medium hover:opacity-85 active:scale-[0.98] transition-all"
+            className="bio-btn font-mono text-[10px] tracking-[0.12em] uppercase bg-[#e8ff00] text-[#0a0a0a] px-5 py-[8px] no-underline font-medium"
           >
             Sube tu perfil
           </Link>
@@ -126,7 +126,7 @@ export default function SiteNav({
                 <Link
                   href="/perfil"
                   onClick={() => setOpen(false)}
-                  className="mt-6 inline-block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[12px] tracking-[0.1em] uppercase font-medium px-8 py-4 no-underline"
+                  className="bio-btn mt-6 inline-block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[12px] tracking-[0.1em] uppercase font-medium px-8 py-4 no-underline"
                 >
                   Sube tu perfil gratis
                 </Link>

@@ -28,8 +28,8 @@ export default function ContactoPage() {
       <SiteNav />
 
       <header className="px-5 md:px-10 pt-16 md:pt-24 pb-10 md:pb-14">
-        <div className="flex items-center gap-3 mb-5">
-          <span className="w-6 h-px bg-[#e8ff00] block" />
+        <div className="inline-flex items-center gap-2.5 mb-5 border border-[#e8ff00]/25 rounded-full px-4 py-[7px]">
+          <span className="bio-node" aria-hidden="true" />
           <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
             Contacto
           </span>
@@ -66,7 +66,7 @@ export default function ContactoPage() {
         </div>
 
         <aside className="lg:pt-2">
-          <div className="border border-white/10 px-5 py-5">
+          <div className="bio-cell px-6 py-6">
             <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-white/30 block">
               Email directo
             </span>

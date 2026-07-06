@@ -3,19 +3,45 @@ import HeroBoot from "@/components/sections/hero-boot";
 import PlatformScroll from "@/components/sections/platform-scroll";
 import PlayersFilmstrip from "@/components/sections/players-filmstrip";
 import SiteFooter from "@/components/layout/site-footer";
+import NerveLine from "@/components/fx/nerve-line";
+import SynapseField from "@/components/fx/synapse-field";
+import ElectroCursor from "@/components/fx/electro-cursor";
 
 export default function Home() {
   return (
-    <main className="bg-[#0a0a0a]">
+    <main className="bg-[#0a0a0a] relative">
+      <ElectroCursor />
       <HeroBoot />
-      <PlatformScroll />
-      <StatsBand />
-      <ProcessSection />
-      <PlayersFilmstrip />
-      <FaqSection />
-      <CtaSection />
+      <div className="relative">
+        <NerveLine />
+        <div className="relative" style={{ zIndex: 2 }}>
+          <PlatformScroll />
+          <StatsBand />
+          <ProcessSection />
+          <PlayersFilmstrip />
+          <FaqSection />
+          <CtaSection />
+        </div>
+      </div>
       <SiteFooter />
     </main>
+  );
+}
+
+/* Membrana: borde ondulado orgánico que funde la banda amarilla con el negro */
+function Membrane({ flip = false }: { flip?: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 1440 44"
+      preserveAspectRatio="none"
+      className={`block w-full h-6 md:h-11 ${flip ? "rotate-180" : ""}`}
+      aria-hidden="true"
+    >
+      <path
+        d="M0,44 C180,10 360,2 560,16 C760,30 900,4 1080,12 C1240,19 1360,8 1440,24 L1440,44 Z"
+        fill="#e8ff00"
+      />
+    </svg>
   );
 }
 
@@ -27,30 +53,31 @@ function StatsBand() {
     { val: "1:1", key: "Representación dedicada" },
   ];
   return (
-    <div
-      className="grid grid-cols-2 md:grid-cols-4 border-y-2 border-[#0a0a0a] px-5 md:px-10"
-      style={{ background: "#e8ff00" }}
-    >
-      {stats.map((s, i) => (
-        <div
-          key={s.key}
-          className="py-5 md:py-7 md:[&:not(:last-child)]:border-r md:border-[rgba(10,10,10,0.12)]"
-          style={{
-            borderRight:
-              i % 2 === 0 ? "1px solid rgba(10,10,10,0.12)" : undefined,
-          }}
-        >
-          <span
-            className="block text-[#0a0a0a] leading-none tracking-[-0.03em] text-[34px] md:text-[48px]"
-            style={{ fontFamily: "var(--font-barlow-condensed)", fontWeight: 900 }}
-          >
-            {s.val}
-          </span>
-          <span className="block font-mono text-[9px] tracking-[0.15em] text-[rgba(10,10,10,0.55)] uppercase mt-1 pr-3">
-            {s.key}
-          </span>
-        </div>
-      ))}
+    <div className="relative">
+      <Membrane />
+      <div
+        className="grid grid-cols-2 md:grid-cols-4 px-5 md:px-10 py-2"
+        style={{ background: "#e8ff00" }}
+      >
+        {stats.map((s) => (
+          <div key={s.key} className="py-4 md:py-6">
+            <span
+              className="block text-[#0a0a0a] leading-none tracking-[-0.03em] text-[34px] md:text-[48px]"
+              style={{
+                fontFamily: "var(--font-barlow-condensed)",
+                fontWeight: 900,
+                fontVariantNumeric: "tabular-nums",
+              }}
+            >
+              {s.val}
+            </span>
+            <span className="block font-mono text-[9px] tracking-[0.15em] text-[rgba(10,10,10,0.55)] uppercase mt-1 pr-3">
+              {s.key}
+            </span>
+          </div>
+        ))}
+      </div>
+      <Membrane flip />
     </div>
   );
 }
@@ -106,32 +133,36 @@ function ProcessSection() {
 
   return (
     <section id="como-funciona" className="bg-[#0a0a0a] px-5 md:px-10 pt-20 md:pt-28 pb-16 md:pb-24 scroll-mt-16">
-      <div className="flex items-center gap-3 mb-10 md:mb-16">
-        <span className="w-6 h-px bg-[#e8ff00] block" />
-        <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
-          Proceso
-        </span>
-      </div>
+      <h2
+        className="uppercase leading-[0.92] tracking-[-0.03em] text-[#f0f0ee] mb-4"
+        style={{
+          fontFamily: "var(--font-barlow-condensed)",
+          fontWeight: 900,
+          fontSize: "clamp(44px, 6.5vw, 84px)",
+        }}
+      >
+        De tu vídeo <em className="text-[#e8ff00]">al vestuario.</em>
+      </h2>
+      <p className="text-[14px] text-white/40 font-light leading-[1.75] max-w-[440px] mb-12 md:mb-16">
+        Tres pasos. Sin promesas de humo: si hay nivel, hay representación.
+      </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3">
-        {steps.map((s, i) => (
-          <div
-            key={s.num}
-            className={`py-8 md:pt-12 md:pb-12 ${i > 0 ? "md:pl-10 border-t md:border-t-0" : ""} ${i < 2 ? "md:pr-10 md:border-r" : ""} border-[rgba(240,240,238,0.07)]`}
-          >
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {steps.map((s) => (
+          <div key={s.num} className="bio-cell px-7 py-9 md:px-9 md:py-11">
             <span
-              className="block text-transparent leading-none tracking-[-0.04em] mb-[-18px] md:mb-[-24px] text-[88px] md:text-[120px]"
+              className="block text-transparent leading-none tracking-[-0.04em] mb-[-16px] md:mb-[-22px] text-[80px] md:text-[110px]"
               style={{
                 fontFamily: "var(--font-barlow-condensed)",
                 fontWeight: 900,
-                WebkitTextStroke: "1px rgba(240,240,238,0.06)",
+                WebkitTextStroke: "1px rgba(232,255,0,0.13)",
               }}
               aria-hidden="true"
             >
               {s.num}
             </span>
             <h3
-              className="uppercase leading-[1.05] tracking-[-0.01em] text-[#f0f0ee] text-[26px] md:text-[32px]"
+              className="uppercase leading-[1.05] tracking-[-0.01em] text-[#f0f0ee] text-[26px] md:text-[30px]"
               style={{ fontFamily: "var(--font-barlow-condensed)", fontWeight: 900 }}
             >
               {s.title[0]}
@@ -141,7 +172,10 @@ function ProcessSection() {
             <p className="mt-4 text-[14px] text-white/45 leading-[1.75] font-light max-w-[280px]">
               {s.desc}
             </p>
-            <div className="mt-7 w-9 h-9 bg-[#e8ff00]/8 border border-[#e8ff00]/20 flex items-center justify-center">
+            <div
+              className="mt-7 w-11 h-11 rounded-full bg-[#e8ff00]/8 border border-[#e8ff00]/25 flex items-center justify-center"
+              style={{ animation: "node-pulse 3.4s ease-in-out infinite" }}
+            >
               {s.icon}
             </div>
           </div>
@@ -180,28 +214,38 @@ function FaqSection() {
   ];
 
   return (
-    <section className="bg-[#0a0a0a] px-5 md:px-10 pt-4 pb-20 md:pb-28 border-t border-white/[0.07]">
-      <div className="flex items-center gap-3 mt-16 mb-10 md:mb-14">
-        <span className="w-6 h-px bg-[#e8ff00] block" />
-        <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
-          Preguntas frecuentes
-        </span>
-      </div>
+    <section className="relative bg-[#0a0a0a] px-5 md:px-10 pt-20 md:pt-24 pb-20 md:pb-28 border-t border-white/[0.07] overflow-hidden">
+      <SynapseField />
+      <div className="relative">
+        <h2
+          className="uppercase leading-[0.92] tracking-[-0.03em] text-[#f0f0ee] mb-12 md:mb-14"
+          style={{
+            fontFamily: "var(--font-barlow-condensed)",
+            fontWeight: 900,
+            fontSize: "clamp(44px, 6.5vw, 84px)",
+          }}
+        >
+          Lo que todos <em className="text-[#e8ff00]">preguntan.</em>
+        </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10">
-        {faqs.map((f) => (
-          <div key={f.q}>
-            <h3
-              className="uppercase text-[#f0f0ee] text-[20px] leading-[1.15] tracking-[-0.01em]"
-              style={{ fontFamily: "var(--font-barlow-condensed)", fontWeight: 900 }}
-            >
-              {f.q}
-            </h3>
-            <p className="mt-2.5 text-[14px] text-white/45 leading-[1.75] font-light max-w-[520px]">
-              {f.a}
-            </p>
-          </div>
-        ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10">
+          {faqs.map((f) => (
+            <div key={f.q} className="flex gap-4">
+              <span className="bio-node mt-[7px]" aria-hidden="true" />
+              <div>
+                <h3
+                  className="uppercase text-[#f0f0ee] text-[20px] leading-[1.15] tracking-[-0.01em]"
+                  style={{ fontFamily: "var(--font-barlow-condensed)", fontWeight: 900 }}
+                >
+                  {f.q}
+                </h3>
+                <p className="mt-2.5 text-[14px] text-white/45 leading-[1.75] font-light max-w-[500px]">
+                  {f.a}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -209,9 +253,13 @@ function FaqSection() {
 
 function CtaSection() {
   return (
-    <section className="bg-[#0a0a0a] px-5 md:px-10 pt-20 md:pt-28 pb-20 md:pb-28 flex flex-col md:flex-row md:items-end gap-10 md:gap-16 justify-between border-t border-white/[0.07]">
+    <section className="relative bg-[#0a0a0a] px-5 md:px-10 pt-20 md:pt-28 pb-20 md:pb-28 flex flex-col md:flex-row md:items-end gap-10 md:gap-16 justify-between border-t border-white/[0.07] overflow-hidden">
+      <div
+        aria-hidden="true"
+        className="bio-blob top-[10%] left-[16%] w-[42vw] max-w-[520px] aspect-square opacity-60"
+      />
       <h2
-        className="uppercase leading-[0.88] tracking-[-0.04em] text-[#f0f0ee]"
+        className="relative uppercase leading-[0.88] tracking-[-0.04em] text-[#f0f0ee]"
         style={{
           fontFamily: "var(--font-barlow-condensed)",
           fontWeight: 900,
@@ -221,24 +269,27 @@ function CtaSection() {
       >
         Tu<br />
         talento<br />
-        <span className="text-[#e8ff00]">merece</span><br />
+        <span className="text-[#e8ff00]" style={{ textShadow: "0 0 42px rgba(232,255,0,0.3)" }}>
+          merece
+        </span>
+        <br />
         ser visto.
       </h2>
 
-      <div className="max-w-[300px] md:pb-4">
+      <div className="relative max-w-[300px] md:pb-4">
         <p className="text-[14px] text-white/40 leading-[1.75] font-light mb-7">
           Crea tu perfil hoy. Si tu nivel nos convence, nos encargamos de todo.
           Sin costes ocultos, sin intermediarios entre tú y tu futuro.
         </p>
         <Link
           href="/perfil"
-          className="block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-7 py-3.5 text-center no-underline hover:opacity-85 active:scale-[0.98] transition-all"
+          className="bio-btn block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-7 py-4 text-center no-underline"
         >
           Crear mi perfil gratis
         </Link>
         <Link
           href="/clubes"
-          className="block mt-3 border border-white/20 text-white/50 font-mono text-[10px] tracking-[0.12em] uppercase px-7 py-[10px] text-center no-underline hover:border-white/50 hover:text-white/80 transition-all"
+          className="bio-btn-ghost block mt-3 border border-white/20 text-white/50 font-mono text-[10px] tracking-[0.12em] uppercase px-7 py-3 text-center no-underline hover:border-[#e8ff00]/50 hover:text-white/80"
         >
           Soy representante o club
         </Link>

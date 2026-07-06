@@ -17,7 +17,7 @@ export type Field = {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 const inputBase =
-  "w-full bg-white/[0.04] border border-white/10 text-[#f0f0ee] text-[14px] font-light px-4 py-3 outline-none transition-colors focus:border-[#e8ff00] placeholder:text-white/25";
+  "bio-input w-full bg-white/[0.04] border border-white/10 text-[#f0f0ee] text-[14px] font-light px-4 py-3 outline-none focus:border-[#e8ff00] placeholder:text-white/25";
 
 export default function LeadForm({
   tipo,
@@ -82,7 +82,7 @@ export default function LeadForm({
 
   if (status === "sent") {
     return (
-      <div className="border border-[#e8ff00]/25 bg-[#e8ff00]/[0.04] px-8 py-12 text-center">
+      <div className="bio-cell px-8 py-12 text-center" style={{ borderColor: "rgba(232,255,0,0.3)" }}>
         <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
           Solicitud enviada
         </span>
@@ -173,14 +173,14 @@ export default function LeadForm({
 
       <div className="md:col-span-2 mt-2">
         {status === "error" && (
-          <p className="mb-4 text-[13px] text-red-400/90 font-light border border-red-400/25 bg-red-400/[0.05] px-4 py-3">
+          <p className="mb-4 text-[13px] text-red-400/90 font-light border border-red-400/25 bg-red-400/[0.05] px-4 py-3 rounded-2xl">
             {serverError}
           </p>
         )}
         <button
           type="submit"
           disabled={status === "sending"}
-          className="w-full md:w-auto bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-10 py-4 cursor-pointer border-0 hover:opacity-85 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-wait"
+          className="bio-btn w-full md:w-auto bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-10 py-4 cursor-pointer border-0 disabled:opacity-50 disabled:cursor-wait"
         >
           {status === "sending" ? "Enviando…" : submitLabel}
         </button>

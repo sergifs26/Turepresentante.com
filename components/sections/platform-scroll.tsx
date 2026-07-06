@@ -39,7 +39,10 @@ const PLAYERS = [
 
 function PlatformMockup() {
   return (
-    <div className="h-full w-full bg-[#0d0d0d] overflow-hidden flex flex-col select-none rounded-xl">
+    <div
+      className="h-full w-full bg-[#0d0d0d] overflow-hidden flex flex-col select-none rounded-[26px]"
+      style={{ boxShadow: "inset 0 0 0 1px rgba(232,255,0,0.14), 0 0 60px rgba(232,255,0,0.07)" }}
+    >
       {/* Top bar */}
       <div className="flex items-center gap-4 px-5 py-3 border-b border-white/5 bg-[#111] flex-shrink-0">
         <span

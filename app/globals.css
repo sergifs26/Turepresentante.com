@@ -141,3 +141,109 @@
     outline-offset: 2px;
   }
 }
+
+/* ============================================================
+   Electro-biomorfo — el organismo vivo de Turepresentante
+   ============================================================ */
+
+@keyframes bio-breathe {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.045); opacity: 1; }
+}
+
+@keyframes blob-morph {
+  0%, 100% { border-radius: 58% 42% 55% 45% / 52% 48% 58% 42%; }
+  33% { border-radius: 45% 55% 48% 52% / 60% 40% 50% 50%; }
+  66% { border-radius: 52% 48% 60% 40% / 45% 55% 42% 58%; }
+}
+
+@keyframes node-pulse {
+  0%, 100% { box-shadow: 0 0 6px 1px rgba(232, 255, 0, 0.45); }
+  50% { box-shadow: 0 0 14px 4px rgba(232, 255, 0, 0.75); }
+}
+
+@keyframes synapse-drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Célula-membrana: contenedor orgánico con radios asimétricos que
+   se redondean al tocarla, como tejido vivo */
+.bio-cell {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(232, 255, 0, 0.12);
+  border-radius: 28px 56px 32px 48px;
+  transition:
+    border-radius 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s ease,
+    box-shadow 0.5s ease,
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.bio-cell:hover {
+  border-radius: 44px 36px 52px 30px;
+  border-color: rgba(232, 255, 0, 0.35);
+  box-shadow: 0 0 40px rgba(232, 255, 0, 0.08), inset 0 0 24px rgba(232, 255, 0, 0.03);
+  transform: translateY(-3px);
+}
+
+/* Blob bioluminiscente decorativo */
+.bio-blob {
+  position: absolute;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(232, 255, 0, 0.13), rgba(232, 255, 0, 0.04) 55%, transparent 75%);
+  animation: blob-morph 11s ease-in-out infinite, bio-breathe 5.5s ease-in-out infinite;
+  filter: blur(2px);
+}
+
+/* Nodo de luz: el marcador de sección del organismo */
+.bio-node {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #e8ff00;
+  animation: node-pulse 2.6s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+/* Botón-píldora con glow eléctrico */
+.bio-btn {
+  border-radius: 999px;
+  transition: box-shadow 0.4s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+.bio-btn:hover {
+  box-shadow: 0 0 32px rgba(232, 255, 0, 0.35), 0 0 80px rgba(232, 255, 0, 0.12);
+  transform: translateY(-2px);
+}
+.bio-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Botón fantasma orgánico */
+.bio-btn-ghost {
+  border-radius: 999px;
+  transition: border-color 0.35s ease, color 0.35s ease, box-shadow 0.4s ease;
+}
+.bio-btn-ghost:hover {
+  box-shadow: 0 0 24px rgba(232, 255, 0, 0.12);
+}
+
+/* Inputs del organismo */
+.bio-input {
+  border-radius: 18px;
+  transition: border-color 0.3s ease, box-shadow 0.35s ease;
+}
+.bio-input:focus {
+  box-shadow: 0 0 0 1px rgba(232, 255, 0, 0.5), 0 0 22px rgba(232, 255, 0, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bio-blob, .bio-node, [class*="animate-"] {
+    animation: none !important;
+  }
+  .bio-cell, .bio-btn, .bio-btn-ghost {
+    transition: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}

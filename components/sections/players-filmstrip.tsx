@@ -71,7 +71,7 @@ export default function PlayersFilmstrip() {
         {PLAYERS.map((p) => (
           <div
             key={p.name}
-            className="flex-shrink-0 w-[280px] bg-[#1a1a1a] relative overflow-hidden transition-transform duration-300 hover:scale-[1.02] hover:z-10"
+            className="flex-shrink-0 w-[280px] bg-[#1a1a1a] relative overflow-hidden rounded-tl-[38px] rounded-br-[38px] rounded-tr-[14px] rounded-bl-[14px] border border-transparent transition-all duration-500 hover:scale-[1.02] hover:z-10 hover:border-[#e8ff00]/30 hover:shadow-[0_0_36px_rgba(232,255,0,0.14)]"
           >
             <div
               className="relative overflow-hidden"
@@ -112,17 +112,23 @@ export default function PlayersFilmstrip() {
           </div>
         ))}
 
-        {/* "See all" card */}
-        <div className="flex-shrink-0 w-[280px] bg-[#111] flex flex-col items-center justify-center" style={{ height: 340 }}>
-          <div className="font-mono text-[9px] tracking-[0.2em] text-white/25 uppercase mb-3">Ver todos</div>
+        {/* "Únete" card — la siguiente célula del organismo eres tú */}
+        <a
+          href="/perfil"
+          className="bio-cell flex-shrink-0 w-[280px] flex flex-col items-center justify-center no-underline"
+          style={{ height: 340 }}
+        >
+          <span className="bio-node mb-4" aria-hidden="true" />
           <div
-            className="text-[#e8ff00] font-black uppercase leading-none tracking-[-0.02em]"
-            style={{ fontFamily: "var(--font-barlow-condensed)", fontSize: 48 }}
+            className="text-[#e8ff00] font-black uppercase leading-[0.95] tracking-[-0.02em] text-center"
+            style={{ fontFamily: "var(--font-barlow-condensed)", fontSize: 42 }}
           >
-            240+
+            Tu sitio<br />está aquí
           </div>
-          <div className="font-mono text-[9px] tracking-[0.15em] text-white/20 uppercase mt-2">Jugadores activos</div>
-        </div>
+          <div className="font-mono text-[9px] tracking-[0.15em] text-white/30 uppercase mt-3">
+            Sube tu perfil gratis
+          </div>
+        </a>
       </div>
     </section>
   );

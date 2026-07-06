@@ -6,10 +6,17 @@ export default function NotFound() {
   return (
     <main className="bg-[#0a0a0a] min-h-dvh flex flex-col">
       <SiteNav />
-      <section className="flex-1 flex flex-col justify-center px-5 md:px-10 py-24">
-        <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
-          Error 404
-        </span>
+      <section className="relative flex-1 flex flex-col justify-center px-5 md:px-10 py-24 overflow-hidden">
+        <div
+          aria-hidden="true"
+          className="bio-blob top-[16%] right-[8%] w-[38vw] max-w-[460px] aspect-square opacity-60"
+        />
+        <div className="inline-flex w-fit items-center gap-2.5 border border-[#e8ff00]/25 rounded-full px-4 py-[7px]">
+          <span className="bio-node" aria-hidden="true" />
+          <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
+            Error 404
+          </span>
+        </div>
         <h1
           className="mt-4 uppercase leading-[0.88] tracking-[-0.04em] text-[#f0f0ee]"
           style={{
@@ -28,7 +35,7 @@ export default function NotFound() {
         </p>
         <Link
           href="/"
-          className="mt-8 inline-block w-fit bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-7 py-3.5 no-underline hover:opacity-85 active:scale-[0.98] transition-all"
+          className="bio-btn mt-8 inline-block w-fit bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-7 py-3.5 no-underline"
         >
           Volver al inicio
         </Link>

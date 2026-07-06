@@ -17,16 +17,28 @@ const Boot3D = dynamic(() => import("@/components/sections/boot-3d"), {
   ),
 });
 
+const EASE = [0.16, 1, 0.3, 1] as const;
+
 export default function HeroBoot() {
   return (
     <section className="relative h-dvh overflow-hidden bg-[#0a0a0a]">
-
       <SiteNav variant="overlay" />
+
+      {/* Aura biológica: late detrás de la bota como un corazón */}
+      <div
+        aria-hidden="true"
+        className="absolute right-[-10%] top-[8%] w-[70vw] max-w-[1000px] aspect-square pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(closest-side, rgba(232,255,0,0.14), rgba(232,255,0,0.05) 50%, transparent 72%)",
+          animation: "bio-breathe 4.6s ease-in-out infinite",
+        }}
+      />
 
       {/* Boot — real 3D scanned model, transparent so it melts into the page */}
       <motion.div
         className="absolute right-0 top-0 h-full w-[85vw] md:w-[58vw] max-w-[900px] pointer-events-none opacity-70 md:opacity-100"
-        style={{ filter: "drop-shadow(0 0 60px rgba(232,255,0,0.18))" }}
+        style={{ filter: "drop-shadow(0 0 60px rgba(232,255,0,0.22))" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, ease: "easeOut" }}
@@ -34,19 +46,23 @@ export default function HeroBoot() {
         <Boot3D />
       </motion.div>
 
+      {/* Blob bioluminiscente bajo el titular */}
+      <div
+        aria-hidden="true"
+        className="bio-blob bottom-[6%] left-[-6%] w-[46vw] max-w-[560px] aspect-square opacity-70"
+      />
+
       {/* Text — bottom left, overlapping boot */}
       <div className="absolute bottom-14 left-5 md:left-10 z-10">
         <motion.div
-          className="flex items-center gap-3 mb-5"
+          className="inline-flex items-center gap-2.5 mb-5 border border-[#e8ff00]/25 rounded-full px-4 py-[7px] bg-[#0a0a0a]/60"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2.05, duration: 0.4 }}
+          transition={{ delay: 0.35, duration: 0.5, ease: EASE }}
         >
-          <span className="w-6 h-px bg-[#e8ff00] block flex-shrink-0" />
-          <span
-            className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]"
-          >
-            Marketplace de talento
+          <span className="bio-node" />
+          <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
+            Organismo de talento
           </span>
         </motion.div>
 
@@ -63,7 +79,7 @@ export default function HeroBoot() {
             className="block text-[#f0f0ee]"
             initial={{ opacity: 0, x: -24 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 2.15, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ delay: 0.5, duration: 0.6, ease: EASE }}
           >
             Hazte
           </motion.span>
@@ -71,7 +87,8 @@ export default function HeroBoot() {
             className="block text-[#e8ff00]"
             initial={{ opacity: 0, x: -24 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 2.4, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ delay: 0.68, duration: 0.6, ease: EASE }}
+            style={{ textShadow: "0 0 42px rgba(232,255,0,0.35)" }}
           >
             Ver.
           </motion.span>
@@ -81,7 +98,7 @@ export default function HeroBoot() {
           className="mt-5 max-w-[260px] text-[14px] font-light leading-[1.75] text-[rgba(240,240,238,0.5)]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 2.7, duration: 0.5 }}
+          transition={{ delay: 0.9, duration: 0.5 }}
         >
           Sube tu perfil, nosotros te ponemos delante de los representantes y
           clubes que importan.
@@ -90,11 +107,11 @@ export default function HeroBoot() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 2.9, duration: 0.4 }}
+          transition={{ delay: 1.05, duration: 0.4 }}
         >
           <Link
             href="/perfil"
-            className="mt-6 inline-block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-7 py-[13px] no-underline hover:opacity-85 active:scale-[0.98] transition-all"
+            className="bio-btn mt-6 inline-block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-8 py-[14px] no-underline"
           >
             Crear mi perfil gratis
           </Link>
@@ -106,7 +123,7 @@ export default function HeroBoot() {
         className="absolute bottom-8 right-10 hidden md:flex flex-col items-center gap-2 z-20"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 3.3, duration: 0.5 }}
+        transition={{ delay: 1.6, duration: 0.5 }}
         aria-hidden="true"
       >
         <div className="w-px h-12 bg-gradient-to-b from-transparent to-[rgba(240,240,238,0.3)] animate-pulse" />

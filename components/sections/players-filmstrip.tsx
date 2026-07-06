@@ -114,7 +114,7 @@ export default function PlayersFilmstrip() {
 
         {/* "Únete" card — la siguiente célula del organismo eres tú */}
         <a
-          href="/perfil"
+          href="/registro"
           className="bio-cell flex-shrink-0 w-[280px] flex flex-col items-center justify-center no-underline"
           style={{ height: 340 }}
         >

@@ -282,7 +282,7 @@ function CtaSection() {
         </p>
         <Link
           id="nerve-end"
-          href="/perfil"
+          href="/registro"
           className="bio-btn block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-7 py-4 text-center no-underline"
         >
           Crear mi perfil gratis

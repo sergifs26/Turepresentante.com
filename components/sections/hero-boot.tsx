@@ -112,7 +112,7 @@ export default function HeroBoot() {
           transition={{ delay: 1.05, duration: 0.4 }}
         >
           <Link
-            href="/perfil"
+            href="/registro"
             className="bio-btn mt-6 inline-block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-8 py-[14px] no-underline"
           >
             Crear mi perfil gratis

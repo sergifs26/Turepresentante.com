@@ -7,9 +7,9 @@ import { AnimatePresence, motion } from "framer-motion";
 
 const LINKS = [
   { href: "/#como-funciona", label: "Cómo funciona" },
-  { href: "/#jugadores", label: "Jugadores" },
+  { href: "/jugadores", label: "Jugadores" },
   { href: "/clubes", label: "Clubes y agentes" },
-  { href: "/contacto", label: "Contacto" },
+  { href: "/login", label: "Entrar" },
 ];
 
 export default function SiteNav({
@@ -58,7 +58,7 @@ export default function SiteNav({
             );
           })}
           <Link
-            href="/perfil"
+            href="/registro"
             className="bio-btn font-mono text-[10px] tracking-[0.12em] uppercase bg-[#e8ff00] text-[#0a0a0a] px-5 py-[8px] no-underline font-medium"
           >
             Sube tu perfil
@@ -124,7 +124,7 @@ export default function SiteNav({
                 transition={{ delay: 0.38, duration: 0.35 }}
               >
                 <Link
-                  href="/perfil"
+                  href="/registro"
                   onClick={() => setOpen(false)}
                   className="bio-btn mt-6 inline-block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[12px] tracking-[0.1em] uppercase font-medium px-8 py-4 no-underline"
                 >

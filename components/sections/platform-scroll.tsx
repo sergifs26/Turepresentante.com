@@ -137,7 +137,7 @@ function PlatformMockup() {
 
 export default function PlatformScroll() {
   return (
-    <div className="bg-[#0a0a0a]">
+    <div>
       <ContainerScroll
         titleComponent={
           <div className="text-center px-4">

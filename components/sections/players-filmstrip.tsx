@@ -35,7 +35,7 @@ export default function PlayersFilmstrip() {
   };
 
   return (
-    <section id="jugadores" className="bg-[#0a0a0a] pb-28">
+    <section id="jugadores" className="pb-28">
       <div className="flex flex-col md:flex-row md:items-end gap-5 justify-between px-5 md:px-10 pt-20 pb-12">
         <h2
           className="uppercase leading-[0.92] tracking-[-0.03em] text-[#f0f0ee]"

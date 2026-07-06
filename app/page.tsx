@@ -132,7 +132,7 @@ function ProcessSection() {
   ];
 
   return (
-    <section id="como-funciona" className="bg-[#0a0a0a] px-5 md:px-10 pt-20 md:pt-28 pb-16 md:pb-24 scroll-mt-16">
+    <section id="como-funciona" className="px-5 md:px-10 pt-20 md:pt-28 pb-16 md:pb-24 scroll-mt-16">
       <h2
         className="uppercase leading-[0.92] tracking-[-0.03em] text-[#f0f0ee] mb-4"
         style={{
@@ -211,7 +211,7 @@ function FaqSection() {
   ];
 
   return (
-    <section className="relative bg-[#0a0a0a] px-5 md:px-10 pt-20 md:pt-24 pb-20 md:pb-28 border-t border-white/[0.07] overflow-hidden">
+    <section className="relative px-5 md:px-10 pt-20 md:pt-24 pb-20 md:pb-28 border-t border-white/[0.07] overflow-hidden">
       <SynapseField />
       <div className="relative">
         <h2
@@ -250,7 +250,7 @@ function FaqSection() {
 
 function CtaSection() {
   return (
-    <section className="relative bg-[#0a0a0a] px-5 md:px-10 pt-20 md:pt-28 pb-20 md:pb-28 flex flex-col md:flex-row md:items-end gap-10 md:gap-16 justify-between border-t border-white/[0.07] overflow-hidden">
+    <section className="relative px-5 md:px-10 pt-20 md:pt-28 pb-20 md:pb-28 flex flex-col md:flex-row md:items-end gap-10 md:gap-16 justify-between border-t border-white/[0.07] overflow-hidden">
       <div
         aria-hidden="true"
         className="bio-blob top-[10%] left-[16%] w-[42vw] max-w-[520px] aspect-square opacity-60"

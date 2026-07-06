@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, Suspense } from "react";
+import { useEffect, useRef, useState, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF, Center, Bounds } from "@react-three/drei";
 import * as THREE from "three";
@@ -38,7 +38,7 @@ function RotatingBoot() {
       mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouse.current.y = (e.clientY / window.innerHeight) * 2 - 1;
     };
-    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mousemove", onMove, { passive: true });
     return () => window.removeEventListener("mousemove", onMove);
   }, []);
 
@@ -60,25 +60,44 @@ function RotatingBoot() {
 }
 
 export default function Boot3D() {
-  return (
-    <Canvas
-      camera={{ position: [0, 0.3, 3], fov: 35 }}
-      gl={{ alpha: true, antialias: true }}
-      dpr={[1, 2]}
-      style={{ background: "transparent" }}
-    >
-      {/* Neutral lights give realistic form; the acid color lives in the material */}
-      <ambientLight intensity={0.55} />
-      <directionalLight position={[4, 6, 5]} intensity={2.2} />
-      <directionalLight position={[-5, 2, -3]} intensity={0.9} />
-      {/* White rim from behind for a crisp highlighted edge */}
-      <spotLight position={[0, 3, -5]} angle={0.8} penumbra={1} intensity={18} color="#ffffff" />
+  const wrapper = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(true);
 
-      <Suspense fallback={null}>
-        <Bounds fit clip margin={1.15}>
-          <RotatingBoot />
-        </Bounds>
-      </Suspense>
-    </Canvas>
+  // The render loop only runs while the hero is actually on screen;
+  // past the fold the GPU goes idle instead of spinning a boot nobody sees.
+  useEffect(() => {
+    const el = wrapper.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setVisible(entry.isIntersecting),
+      { threshold: 0.05 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <div ref={wrapper} className="h-full w-full">
+      <Canvas
+        camera={{ position: [0, 0.3, 3], fov: 35 }}
+        gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
+        dpr={[1, 1.5]}
+        frameloop={visible ? "always" : "never"}
+        style={{ background: "transparent" }}
+      >
+        {/* Neutral lights give realistic form; the acid color lives in the material */}
+        <ambientLight intensity={0.55} />
+        <directionalLight position={[4, 6, 5]} intensity={2.2} />
+        <directionalLight position={[-5, 2, -3]} intensity={0.9} />
+        {/* White rim from behind for a crisp highlighted edge */}
+        <spotLight position={[0, 3, -5]} angle={0.8} penumbra={1} intensity={18} color="#ffffff" />
+
+        <Suspense fallback={null}>
+          <Bounds fit clip margin={1.15}>
+            <RotatingBoot />
+          </Bounds>
+        </Suspense>
+      </Canvas>
+    </div>
   );
 }

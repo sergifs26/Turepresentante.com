@@ -146,20 +146,15 @@
    Electro-biomorfo — el organismo vivo de Turepresentante
    ============================================================ */
 
+/* Solo transform + opacity: todo compone en GPU, nada repinta por frame */
 @keyframes bio-breathe {
   0%, 100% { transform: scale(1); opacity: 0.85; }
   50% { transform: scale(1.045); opacity: 1; }
 }
 
-@keyframes blob-morph {
-  0%, 100% { border-radius: 58% 42% 55% 45% / 52% 48% 58% 42%; }
-  33% { border-radius: 45% 55% 48% 52% / 60% 40% 50% 50%; }
-  66% { border-radius: 52% 48% 60% 40% / 45% 55% 42% 58%; }
-}
-
-@keyframes node-pulse {
-  0%, 100% { box-shadow: 0 0 6px 1px rgba(232, 255, 0, 0.45); }
-  50% { box-shadow: 0 0 14px 4px rgba(232, 255, 0, 0.75); }
+@keyframes bio-pulse-halo {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.35); }
 }
 
 @keyframes synapse-drift {
@@ -186,23 +181,40 @@
   transform: translateY(-3px);
 }
 
-/* Blob bioluminiscente decorativo */
+/* Blob bioluminiscente decorativo. El degradado ya se difumina solo:
+   ni blur (repintado caro) ni morphing de border-radius (invisible aquí) */
 .bio-blob {
   position: absolute;
   pointer-events: none;
+  border-radius: 50%;
   background: radial-gradient(closest-side, rgba(232, 255, 0, 0.13), rgba(232, 255, 0, 0.04) 55%, transparent 75%);
-  animation: blob-morph 11s ease-in-out infinite, bio-breathe 5.5s ease-in-out infinite;
-  filter: blur(2px);
+  animation: bio-breathe 5.5s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
-/* Nodo de luz: el marcador de sección del organismo */
+/* Nodo de luz: glow base estático (se pinta una vez) + halo que pulsa
+   con opacity/transform en un pseudo-elemento compuesto en GPU */
 .bio-node {
+  position: relative;
   width: 7px;
   height: 7px;
   border-radius: 50%;
   background: #e8ff00;
-  animation: node-pulse 2.6s ease-in-out infinite;
+  box-shadow: 0 0 8px 2px rgba(232, 255, 0, 0.4);
   flex-shrink: 0;
+}
+.bio-node::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 255, 0, 0.5), transparent 70%);
+  animation: bio-pulse-halo 2.6s ease-in-out infinite;
+}
+
+/* Anillo de icono con glow estático (sin animación de box-shadow) */
+.bio-ring {
+  box-shadow: 0 0 16px rgba(232, 255, 0, 0.18);
 }
 
 /* Botón-píldora con glow eléctrico */
@@ -237,7 +249,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bio-blob, .bio-node, [class*="animate-"] {
+  .bio-blob, .bio-node::after, [class*="animate-"] {
     animation: none !important;
   }
   .bio-cell, .bio-btn, .bio-btn-ghost {

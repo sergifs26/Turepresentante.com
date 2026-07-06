@@ -36,9 +36,10 @@ export default function HeroBoot() {
       />
 
       {/* Boot — real 3D scanned model, transparent so it melts into the page */}
+      {/* Sin drop-shadow: filtrar un canvas WebGL cuesta GPU en cada frame;
+          el glow lo pone la aura de detrás, que es una capa estática */}
       <motion.div
         className="absolute right-0 top-0 h-full w-[85vw] md:w-[58vw] max-w-[900px] pointer-events-none opacity-70 md:opacity-100"
-        style={{ filter: "drop-shadow(0 0 60px rgba(232,255,0,0.22))" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, ease: "easeOut" }}

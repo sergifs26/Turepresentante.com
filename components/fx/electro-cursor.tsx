@@ -37,9 +37,7 @@ export default function ElectroCursor() {
         x: sx,
         y: sy,
         background:
-          "radial-gradient(circle, rgba(232,255,0,0.5) 0%, rgba(232,255,0,0.12) 45%, transparent 70%)",
-        mixBlendMode: "screen",
-        filter: "blur(1px)",
+          "radial-gradient(circle, rgba(232,255,0,0.35) 0%, rgba(232,255,0,0.08) 45%, transparent 70%)",
       }}
     />
   );

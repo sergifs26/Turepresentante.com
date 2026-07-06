@@ -172,10 +172,7 @@ function ProcessSection() {
             <p className="mt-4 text-[14px] text-white/45 leading-[1.75] font-light max-w-[280px]">
               {s.desc}
             </p>
-            <div
-              className="mt-7 w-11 h-11 rounded-full bg-[#e8ff00]/8 border border-[#e8ff00]/25 flex items-center justify-center"
-              style={{ animation: "node-pulse 3.4s ease-in-out infinite" }}
-            >
+            <div className="bio-ring mt-7 w-11 h-11 rounded-full bg-[#e8ff00]/8 border border-[#e8ff00]/25 flex items-center justify-center">
               {s.icon}
             </div>
           </div>

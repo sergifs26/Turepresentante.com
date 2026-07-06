@@ -3,6 +3,15 @@
 import { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
+const NERVE_PATH = `M 82 0
+  C 82 60, 30 90, 26 150
+  S 70 240, 74 300
+  S 22 390, 20 450
+  S 78 540, 80 600
+  S 28 690, 26 750
+  S 72 840, 74 900
+  C 75 940, 50 970, 50 1000`;
+
 /**
  * El nervio: una sinapsis vertical que recorre la home y se va
  * dibujando con el scroll, conectando jugador → evaluación → club.
@@ -22,35 +31,28 @@ export default function NerveLine() {
       className="absolute inset-0 pointer-events-none hidden md:block"
       style={{ zIndex: 1 }}
     >
+      {/* Glow con doble trazo: un filtro SVG re-rasterizaría el path
+          en cada tick de scroll; dos strokes son casi gratis */}
       <svg
         className="w-full h-full"
         viewBox="0 0 100 1000"
         preserveAspectRatio="none"
         fill="none"
       >
-        <defs>
-          <filter id="nerve-glow" x="-50%" y="-2%" width="200%" height="104%">
-            <feGaussianBlur stdDeviation="1.6" result="b" />
-            <feMerge>
-              <feMergeNode in="b" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
         <motion.path
-          d="M 82 0
-             C 82 60, 30 90, 26 150
-             S 70 240, 74 300
-             S 22 390, 20 450
-             S 78 540, 80 600
-             S 28 690, 26 750
-             S 72 840, 74 900
-             C 75 940, 50 970, 50 1000"
+          d={NERVE_PATH}
+          stroke="#e8ff00"
+          strokeWidth="5"
+          strokeLinecap="round"
+          vectorEffect="non-scaling-stroke"
+          style={{ pathLength, opacity: 0.05 }}
+        />
+        <motion.path
+          d={NERVE_PATH}
           stroke="#e8ff00"
           strokeWidth="1.1"
           strokeLinecap="round"
           vectorEffect="non-scaling-stroke"
-          filter="url(#nerve-glow)"
           style={{ pathLength, opacity: 0.16 }}
         />
       </svg>

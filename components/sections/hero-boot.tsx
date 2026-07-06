@@ -21,7 +21,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function HeroBoot() {
   return (
-    <section className="relative h-dvh overflow-hidden bg-[#0a0a0a]">
+    <section className="relative h-dvh overflow-hidden">
       <SiteNav variant="overlay" />
 
       {/* Aura biológica: late detrás de la bota como un corazón */}
@@ -39,6 +39,7 @@ export default function HeroBoot() {
       {/* Sin drop-shadow: filtrar un canvas WebGL cuesta GPU en cada frame;
           el glow lo pone la aura de detrás, que es una capa estática */}
       <motion.div
+        id="nerve-origin"
         className="absolute right-0 top-0 h-full w-[85vw] md:w-[58vw] max-w-[900px] pointer-events-none opacity-70 md:opacity-100"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

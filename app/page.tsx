@@ -11,10 +11,12 @@ export default function Home() {
   return (
     <main className="bg-[#0a0a0a] relative">
       <ElectroCursor />
-      <HeroBoot />
+      {/* El nervio abarca desde el hero (nace en la bota) hasta el CTA
+          final (se conecta al botón): el arco narrativo de la página */}
       <div className="relative">
         <NerveLine />
         <div className="relative" style={{ zIndex: 2 }}>
+          <HeroBoot />
           <PlatformScroll />
           <StatsBand />
           <ProcessSection />
@@ -279,6 +281,7 @@ function CtaSection() {
           Sin costes ocultos, sin intermediarios entre tú y tu futuro.
         </p>
         <Link
+          id="nerve-end"
           href="/perfil"
           className="bio-btn block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-7 py-4 text-center no-underline"
         >

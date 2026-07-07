@@ -33,8 +33,10 @@ export default async function CuentaPage() {
     .single();
 
   if (!profile) {
+    const meta = user.user_metadata ?? {};
     const nombre =
-      (user.user_metadata?.nombre as string | undefined)?.trim() || "Jugador";
+      ((meta.nombre || meta.full_name || meta.name) as string | undefined)?.trim() ||
+      "Jugador";
     const { data: created } = await supabase
       .from("profiles")
       .insert({

@@ -18,6 +18,22 @@ export default function AuthForm({ mode }: { mode: "registro" | "login" }) {
   const [status, setStatus] = useState<"idle" | "working" | "sent" | "error">("idle");
   const [error, setError] = useState("");
 
+  const onGoogle = async () => {
+    const supabase = createClient();
+    if (!supabase) return;
+    setStatus("working");
+    setError("");
+    const { error: err } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: `${window.location.origin}/auth/callback` },
+    });
+    if (err) {
+      setStatus("error");
+      setError("No se pudo abrir Google. Inténtalo de nuevo.");
+    }
+    // si va bien, el navegador redirige a Google: no hay más que hacer aquí
+  };
+
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const supabase = createClient();
@@ -85,6 +101,30 @@ export default function AuthForm({ mode }: { mode: "registro" | "login" }) {
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-6">
+      {/* Google: la vía rápida */}
+      <button
+        type="button"
+        onClick={onGoogle}
+        disabled={status === "working"}
+        className="bio-btn-ghost flex items-center justify-center gap-3 border border-white/20 text-white/80 font-mono text-[11px] tracking-[0.1em] uppercase px-8 py-[14px] bg-transparent cursor-pointer hover:border-[#e8ff00]/50 hover:text-white disabled:opacity-50"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="#EA4335" d="M12 5.04c1.62 0 3.06.56 4.2 1.64l3.12-3.12C17.45 1.8 14.97.75 12 .75 7.7.75 3.99 3.22 2.18 6.82l3.66 2.84C6.71 7.05 9.14 5.04 12 5.04z" />
+          <path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z" />
+          <path fill="#FBBC05" d="M5.84 14.09A6.97 6.97 0 015.46 12c0-.73.14-1.43.38-2.09L2.18 7.07a11.25 11.25 0 000 9.86l3.66-2.84z" />
+          <path fill="#34A853" d="M12 23.25c3.04 0 5.59-1 7.45-2.72l-3.86-3c-1.03.69-2.35 1.1-3.59 1.1-2.86 0-5.29-2.01-6.16-4.62l-3.66 2.84c1.81 3.6 5.52 6.4 9.82 6.4z" />
+        </svg>
+        Continuar con Google
+      </button>
+
+      <div className="flex items-center gap-4" aria-hidden="true">
+        <span className="flex-1 h-px bg-white/10" />
+        <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-white/25">
+          o con tu email
+        </span>
+        <span className="flex-1 h-px bg-white/10" />
+      </div>
+
       {mode === "registro" && (
         <div>
           <label htmlFor="nombre" className={label}>

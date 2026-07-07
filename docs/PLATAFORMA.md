@@ -16,6 +16,27 @@ la web funciona en modo landing y las páginas de cuenta muestran un aviso.
    - `Project URL`  → variable `NEXT_PUBLIC_SUPABASE_URL`
    - `anon public`  → variable `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
+## 1b. Login con Google (opcional pero recomendado)
+
+El botón «Continuar con Google» ya está en la web. Para activarlo:
+
+1. Entra en https://console.cloud.google.com → crea un proyecto
+   (nombre: Turepresentante).
+2. Menú **APIs y servicios → Pantalla de consentimiento OAuth**:
+   tipo **Externo**, rellena nombre de la app (Turepresentante) y tu
+   email. Guarda (no hace falta añadir nada más).
+3. **APIs y servicios → Credenciales → Crear credenciales →
+   ID de cliente de OAuth**:
+   - Tipo: **Aplicación web**
+   - En «URI de redireccionamiento autorizados» pega EXACTAMENTE la que
+     te da Supabase en el paso 4 (algo como
+     `https://TUPROYECTO.supabase.co/auth/v1/callback`)
+4. En Supabase: **Authentication → Sign In / Providers → Google** →
+   actívalo. Ahí verás la «Callback URL» (para el paso 3) y dos campos:
+   pega el **Client ID** y el **Client Secret** que te dio Google. Save.
+
+Nada más: no hay variables nuevas, el botón funciona solo.
+
 ## 2. Cloudflare Stream (vídeos) — de pago (~5 $/mes por 1.000 min)
 
 1. En el dashboard de Cloudflare → **Stream** → activa el plan.

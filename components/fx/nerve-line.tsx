@@ -10,8 +10,8 @@ import {
   useTransform,
 } from "framer-motion";
 
-// The drawn portion of the path: always partially visible, completes on scroll
-const DRAW_MIN = 0.1;
+// Trozo mínimo siempre dibujado: la raíz que asoma bajo la bota
+const DRAW_MIN = 0.08;
 
 /* Puntos de paso del zigzag (x en fracción del ancho, f en fracción del
    trayecto vertical entre la bota y el botón final) */
@@ -40,31 +40,64 @@ function buildPath(pts: Pt[]) {
 }
 
 /**
- * El nervio: la historia de la página hecha línea. Nace en la bota del
- * hero (tu talento), se dibuja con el scroll atravesando plataforma,
- * proceso y escaparate, y termina conectándose al botón "Crear mi
- * perfil gratis", donde la sinapsis se enciende: talento → conexión →
- * tu perfil. Anclado a los elementos reales (#nerve-origin, #nerve-end).
- * Decorativo (aria-hidden), solo escritorio.
+ * El nervio: nace en la bota, termina en el botón de crear perfil, y su
+ * punta (con el impulso) viaja SIEMPRE a la altura del centro de la
+ * pantalla mientras haces scroll: te acompaña de principio a fin.
+ * Anclado a #nerve-origin y #nerve-end. Decorativo, solo escritorio.
  */
 export default function NerveLine() {
   const containerRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
   const totalLength = useRef(0);
+  // Muestreo longitud→Y para invertir "¿qué fracción del nervio está a
+  // esta altura?" (la Y del trazado siempre crece, así que es biyectivo)
+  const samples = useRef<{ len: number; y: number }[]>([]);
+  const contTopAbs = useRef(0);
   const [d, setD] = useState<string | null>(null);
   const [startPt, setStartPt] = useState<Pt | null>(null);
   const [endPt, setEndPt] = useState<Pt | null>(null);
 
-  const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 55, damping: 22 });
-  const pathLength = useTransform(progress, [0, 1], [DRAW_MIN, 1]);
+  const { scrollY } = useScroll();
+  const rawDrawn = useMotionValue(DRAW_MIN);
+  const drawn = useSpring(rawDrawn, { stiffness: 75, damping: 21 });
 
   // La sinapsis final se enciende cuando el impulso llega al botón
-  const endOpacity = useTransform(progress, [0.86, 0.98], [0, 1]);
-  const endScale = useTransform(progress, [0.86, 0.98], [0.5, 1]);
+  const endOpacity = useTransform(drawn, [0.9, 0.99], [0, 1]);
+  const endScale = useTransform(drawn, [0.9, 0.99], [0.5, 1]);
 
   const dotX = useMotionValue(0);
   const dotY = useMotionValue(0);
+
+  const yToFraction = (y: number) => {
+    const s = samples.current;
+    const total = totalLength.current;
+    if (!s.length || !total) return DRAW_MIN;
+    if (y <= s[0].y) return DRAW_MIN;
+    if (y >= s[s.length - 1].y) return 1;
+    let lo = 0;
+    let hi = s.length - 1;
+    while (lo < hi - 1) {
+      const mid = (lo + hi) >> 1;
+      if (s[mid].y < y) lo = mid;
+      else hi = mid;
+    }
+    const a = s[lo];
+    const b = s[hi];
+    const t = (y - a.y) / (b.y - a.y || 1);
+    const len = a.len + t * (b.len - a.len);
+    return Math.min(1, Math.max(DRAW_MIN, len / total));
+  };
+
+  // La punta del nervio persigue el centro del viewport
+  const update = useCallback(
+    (sy: number) => {
+      const targetY = sy + window.innerHeight * 0.5 - contTopAbs.current;
+      rawDrawn.set(yToFraction(targetY));
+    },
+    [rawDrawn]
+  );
+
+  useMotionValueEvent(scrollY, "change", update);
 
   const measure = useCallback(() => {
     const cont = containerRef.current;
@@ -75,6 +108,7 @@ export default function NerveLine() {
     const o = origin.getBoundingClientRect();
     const e = end.getBoundingClientRect();
     if (!c.width || !c.height) return;
+    contTopAbs.current = c.top + window.scrollY;
 
     // Nace bajo el empeine de la bota; muere enchufado al lateral del botón
     const start: Pt = {
@@ -103,7 +137,6 @@ export default function NerveLine() {
     if (!el) return;
     const ro = new ResizeObserver(measure);
     ro.observe(el);
-    // Remedición tras hidratar y cargar fuentes (el alto del hero es dvh)
     const t = setTimeout(measure, 400);
     return () => {
       ro.disconnect();
@@ -111,21 +144,31 @@ export default function NerveLine() {
     };
   }, [measure]);
 
-  const placeDot = (drawn: number) => {
+  const placeDot = (frac: number) => {
     const path = pathRef.current;
     if (!path || !totalLength.current) return;
-    const pt = path.getPointAtLength(totalLength.current * Math.min(drawn, 1));
+    const pt = path.getPointAtLength(totalLength.current * Math.min(frac, 1));
     dotX.set(pt.x);
     dotY.set(pt.y);
   };
 
-  useMotionValueEvent(pathLength, "change", placeDot);
+  useMotionValueEvent(drawn, "change", placeDot);
 
+  // Al (re)generarse el trazado: medir longitud, muestrear y colocar todo
   useEffect(() => {
     const path = pathRef.current;
     if (!path || !d) return;
-    totalLength.current = path.getTotalLength();
-    placeDot(pathLength.get());
+    const total = path.getTotalLength();
+    totalLength.current = total;
+    const N = 240;
+    const s: { len: number; y: number }[] = [];
+    for (let i = 0; i <= N; i++) {
+      const len = (total * i) / N;
+      s.push({ len, y: path.getPointAtLength(len).y });
+    }
+    samples.current = s;
+    update(window.scrollY);
+    placeDot(drawn.get());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [d]);
 
@@ -146,7 +189,7 @@ export default function NerveLine() {
               stroke="#e8ff00"
               strokeWidth="7"
               strokeLinecap="round"
-              style={{ pathLength, opacity: 0.07 }}
+              style={{ pathLength: drawn, opacity: 0.07 }}
             />
             <motion.path
               ref={pathRef}
@@ -154,7 +197,7 @@ export default function NerveLine() {
               stroke="#e8ff00"
               strokeWidth="1.4"
               strokeLinecap="round"
-              style={{ pathLength, opacity: 0.32 }}
+              style={{ pathLength: drawn, opacity: 0.32 }}
             />
           </svg>
 
@@ -165,8 +208,9 @@ export default function NerveLine() {
             style={{ position: "absolute", left: startPt.x - 3.5, top: startPt.y - 3.5 }}
           />
 
-          {/* El impulso: viaja por la punta del nervio siguiendo el scroll */}
+          {/* El impulso: siempre a la altura del centro de tu pantalla */}
           <motion.div
+            data-nerve-dot
             className="absolute top-0 left-0 w-[10px] h-[10px] -ml-[5px] -mt-[5px] rounded-full"
             style={{
               x: dotX,

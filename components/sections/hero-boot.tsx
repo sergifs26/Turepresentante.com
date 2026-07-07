@@ -64,7 +64,7 @@ export default function HeroBoot() {
         >
           <span className="bio-node" />
           <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
-            Organismo de talento
+            Representación de futbolistas · Gratis para ti
           </span>
         </motion.div>
 
@@ -97,26 +97,34 @@ export default function HeroBoot() {
         </h1>
 
         <motion.p
-          className="mt-5 max-w-[260px] text-[14px] font-light leading-[1.75] text-[rgba(240,240,238,0.5)]"
+          className="mt-5 max-w-[320px] text-[15px] font-light leading-[1.75] text-[rgba(240,240,238,0.6)]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.9, duration: 0.5 }}
         >
-          Sube tu perfil, nosotros te ponemos delante de los representantes y
-          clubes que importan.
+          ¿Juegas bien y nadie te representa? Sube tu vídeo, lo evaluamos y,
+          si hay nivel, somos tu agencia: te movemos ante clubes y negociamos
+          por ti.
         </motion.p>
 
         <motion.div
+          className="mt-6 flex flex-wrap items-center gap-3"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.05, duration: 0.4 }}
         >
           <Link
             href="/registro"
-            className="bio-btn mt-6 inline-block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-8 py-[14px] no-underline"
+            className="bio-btn inline-block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-8 py-[14px] no-underline"
           >
             Crear mi perfil gratis
           </Link>
+          <a
+            href="#como-funciona"
+            className="bio-btn-ghost inline-block border border-white/25 text-white/70 font-mono text-[10px] tracking-[0.12em] uppercase px-6 py-[13px] no-underline hover:border-[#e8ff00]/50 hover:text-white"
+          >
+            Cómo funciona ↓
+          </a>
         </motion.div>
       </div>
 

@@ -162,6 +162,18 @@
   50% { transform: translateY(-10px); }
 }
 
+/* Cinta de marca: dos copias del contenido, desplazamos el 50% en loop */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 30s linear infinite;
+  will-change: transform;
+}
+
 /* Célula-membrana: contenedor orgánico con radios asimétricos que
    se redondean al tocarla, como tejido vivo */
 .bio-cell {
@@ -249,7 +261,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bio-blob, .bio-node::after, [class*="animate-"] {
+  .bio-blob, .bio-node::after, .marquee-track, [class*="animate-"] {
     animation: none !important;
   }
   .bio-cell, .bio-btn, .bio-btn-ghost {

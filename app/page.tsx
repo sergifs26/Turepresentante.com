@@ -6,6 +6,7 @@ import SiteFooter from "@/components/layout/site-footer";
 import NerveLine from "@/components/fx/nerve-line";
 import SynapseField from "@/components/fx/synapse-field";
 import ElectroCursor from "@/components/fx/electro-cursor";
+import BrandMarquee from "@/components/fx/brand-marquee";
 
 export default function Home() {
   return (
@@ -17,9 +18,13 @@ export default function Home() {
         <NerveLine />
         <div className="relative" style={{ zIndex: 2 }}>
           <HeroBoot />
+          <BrandMarquee />
+          <IntroSection />
           <PlatformScroll />
           <StatsBand />
           <ProcessSection />
+          <FitSection />
+          <ManifestoSection />
           <PlayersFilmstrip />
           <FaqSection />
           <CtaSection />
@@ -27,6 +32,147 @@ export default function Home() {
       </div>
       <SiteFooter />
     </main>
+  );
+}
+
+/* Qué somos, en lenguaje llano: lo primero que lee quien no nos conoce */
+function IntroSection() {
+  const chips = ["Jugadores sin agencia", "De juvenil DH a 2ª RFEF", "Toda España"];
+  return (
+    <section className="px-5 md:px-10 pt-20 md:pt-28 pb-16 md:pb-20">
+      <div className="max-w-[900px]">
+        <div className="inline-flex items-center gap-2.5 mb-7 border border-[#e8ff00]/25 rounded-full px-4 py-[7px]">
+          <span className="bio-node" aria-hidden="true" />
+          <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
+            Qué es Turepresentante
+          </span>
+        </div>
+        <p
+          className="text-[#f0f0ee] leading-[1.25] tracking-[-0.01em] font-light"
+          style={{ fontSize: "clamp(24px, 3.2vw, 40px)" }}
+        >
+          Somos una <strong className="font-semibold text-[#e8ff00]">agencia de representación</strong>{" "}
+          para futbolistas que aún no tienen quien les represente. Tú subes tu
+          vídeo y tu ficha; nosotros lo revisamos a mano y, si tu nivel encaja,{" "}
+          <strong className="font-semibold">te representamos ante clubes y agentes</strong>{" "}
+          y negociamos por ti.
+        </p>
+        <p className="mt-6 text-[16px] text-white/50 font-light leading-[1.8] max-w-[620px]">
+          Para ti es gratis, siempre. Solo ganamos cuando tú ganas: cobramos
+          al club cuando se cierra una operación. Sin cuotas, sin letra
+          pequeña.
+        </p>
+        <div className="mt-8 flex flex-wrap gap-3">
+          {chips.map((c) => (
+            <span
+              key={c}
+              className="border border-white/15 rounded-full px-4 py-2 font-mono text-[10px] tracking-[0.12em] uppercase text-white/50"
+            >
+              {c}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ¿Es para ti? Requisitos claros, sin dejar dudas */
+function FitSection() {
+  const si = [
+    "Juegas federado en España, de juvenil DH a 2ª RFEF",
+    "Tienes entre 16 y 26 años",
+    "Puedes enseñar vídeo reciente de tus partidos",
+    "No tienes representante ahora mismo",
+  ];
+  const no = [
+    "Buscas promesas de fichaje garantizado: nadie serio puede prometer eso",
+    "No tienes ningún vídeo de tu juego (grábalo y vuelve, te esperamos)",
+    "Ya tienes agencia: no pisamos el trabajo de otros",
+  ];
+  return (
+    <section className="px-5 md:px-10 pb-16 md:pb-24">
+      <h2
+        className="uppercase leading-[0.92] tracking-[-0.03em] text-[#f0f0ee] mb-10 md:mb-12"
+        style={{
+          fontFamily: "var(--font-barlow-condensed)",
+          fontWeight: 900,
+          fontSize: "clamp(44px, 6.5vw, 84px)",
+        }}
+      >
+        ¿Es <em className="text-[#e8ff00]">para ti?</em>
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="bio-cell px-7 py-8 md:px-9 md:py-10">
+          <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
+            Sí, si…
+          </span>
+          <ul className="mt-5 flex flex-col gap-4">
+            {si.map((t) => (
+              <li key={t} className="flex gap-3 text-[14px] text-white/60 font-light leading-[1.7]">
+                <svg width="16" height="16" viewBox="0 0 16 16" className="flex-shrink-0 mt-[3px]" aria-hidden="true">
+                  <path d="M2 8.5L6 12.5L14 3.5" stroke="#e8ff00" strokeWidth="2" fill="none" />
+                </svg>
+                {t}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="bio-cell px-7 py-8 md:px-9 md:py-10" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+          <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/35">
+            Todavía no, si…
+          </span>
+          <ul className="mt-5 flex flex-col gap-4">
+            {no.map((t) => (
+              <li key={t} className="flex gap-3 text-[14px] text-white/45 font-light leading-[1.7]">
+                <svg width="16" height="16" viewBox="0 0 16 16" className="flex-shrink-0 mt-[3px]" aria-hidden="true">
+                  <path d="M3 3l10 10M13 3L3 13" stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
+                </svg>
+                {t}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* Manifiesto: foto real a sangre + declaración. El momento editorial */
+function ManifestoSection() {
+  return (
+    <section className="relative overflow-hidden">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?w=1800&q=80"
+        alt="Jugador golpeando un balón en un campo de fútbol"
+        loading="lazy"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a]/95 via-[#0a0a0a]/75 to-[#0a0a0a]/40" />
+      <div className="relative px-5 md:px-10 py-24 md:py-36">
+        <p
+          className="uppercase leading-[0.95] tracking-[-0.03em] text-[#f0f0ee] max-w-[720px]"
+          style={{
+            fontFamily: "var(--font-barlow-condensed)",
+            fontWeight: 900,
+            fontStyle: "italic",
+            fontSize: "clamp(40px, 6vw, 78px)",
+          }}
+        >
+          El talento sin visibilidad{" "}
+          <span className="text-[#e8ff00]" style={{ textShadow: "0 0 36px rgba(232,255,0,0.3)" }}>
+            no existe.
+          </span>
+        </p>
+        <p className="mt-6 max-w-[440px] text-[15px] text-white/60 font-light leading-[1.8]">
+          Cada fin de semana hay jugadores rindiendo a nivel profesional en
+          campos donde no mira nadie. Nuestro trabajo es que te miren.
+          Trabajamos con pocos jugadores a la vez: cuando entras, vamos a por
+          todas contigo.
+        </p>
+      </div>
+    </section>
   );
 }
 
@@ -252,11 +398,12 @@ function FaqSection() {
 
 function CtaSection() {
   return (
-    <section className="relative px-5 md:px-10 pt-20 md:pt-28 pb-20 md:pb-28 flex flex-col md:flex-row md:items-end gap-10 md:gap-16 justify-between border-t border-white/[0.07] overflow-hidden">
+    <section className="relative px-5 md:px-10 pt-20 md:pt-28 pb-20 md:pb-28 border-t border-white/[0.07] overflow-hidden">
       <div
         aria-hidden="true"
         className="bio-blob top-[10%] left-[16%] w-[42vw] max-w-[520px] aspect-square opacity-60"
       />
+      <div className="flex flex-col md:flex-row md:items-end gap-10 md:gap-16 justify-between">
       <h2
         className="relative uppercase leading-[0.88] tracking-[-0.04em] text-[#f0f0ee]"
         style={{
@@ -292,6 +439,29 @@ function CtaSection() {
           className="bio-btn-ghost block mt-3 border border-white/20 text-white/50 font-mono text-[10px] tracking-[0.12em] uppercase px-7 py-3 text-center no-underline hover:border-[#e8ff00]/50 hover:text-white/80"
         >
           Soy representante o club
+        </Link>
+      </div>
+      </div>
+
+      {/* Bloque de ayuda: nadie se va por no saber a quién preguntar */}
+      <div className="relative mt-16 md:mt-20 bio-cell px-7 py-7 md:px-9 md:py-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+          <h3
+            className="uppercase text-[#f0f0ee] text-[22px] leading-[1.1]"
+            style={{ fontFamily: "var(--font-barlow-condensed)", fontWeight: 900 }}
+          >
+            ¿No lo tienes claro?
+          </h3>
+          <p className="mt-1.5 text-[13px] text-white/45 font-light leading-[1.7] max-w-[480px]">
+            Cuéntanos tu situación y te decimos con sinceridad si encajas,
+            qué vídeo grabar o por dónde empezar. Sin compromiso.
+          </p>
+        </div>
+        <Link
+          href="/contacto"
+          className="bio-btn-ghost flex-shrink-0 border border-[#e8ff00]/40 text-[#e8ff00] font-mono text-[10px] tracking-[0.12em] uppercase px-7 py-3.5 no-underline text-center hover:border-[#e8ff00]"
+        >
+          Escríbenos
         </Link>
       </div>
     </section>

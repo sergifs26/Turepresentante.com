@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Barlow_Condensed, Barlow, Geist_Mono } from "next/font/google";
+import WhatsappPill from "@/components/layout/whatsapp-pill";
 import "./globals.css";
 
 const barlowCondensed = Barlow_Condensed({
@@ -66,6 +67,7 @@ export default function RootLayout({
     >
       <body className="min-h-full bg-[#0a0a0a] text-[#f0f0ee] antialiased overflow-x-hidden">
         {children}
+        <WhatsappPill />
       </body>
     </html>
   );

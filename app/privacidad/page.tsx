@@ -14,7 +14,7 @@ export default function PrivacidadPage() {
         Turepresentante.com (en adelante, «Turepresentante») es el responsable
         del tratamiento de los datos que nos facilitas a través de esta web.
         Puedes escribirnos para cualquier cuestión de privacidad a{" "}
-        <a href="mailto:hola@turepresentante.com">hola@turepresentante.com</a>.
+        <a href="mailto:info@turepresentante.com">info@turepresentante.com</a>.
       </p>
 
       <h2>Qué datos recogemos</h2>
@@ -70,7 +70,7 @@ export default function PrivacidadPage() {
       <p>
         Puedes ejercer tus derechos de acceso, rectificación, supresión,
         oposición, limitación y portabilidad escribiendo a{" "}
-        <a href="mailto:hola@turepresentante.com">hola@turepresentante.com</a>.
+        <a href="mailto:info@turepresentante.com">info@turepresentante.com</a>.
         También puedes reclamar ante la Agencia Española de Protección de Datos
         (aepd.es).
       </p>

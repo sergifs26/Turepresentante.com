@@ -72,7 +72,7 @@ export default function PerfilPage() {
       <header className="px-5 md:px-10 pt-16 md:pt-24 pb-10 md:pb-14">
         <div className="inline-flex items-center gap-2.5 mb-5 border border-[#e8ff00]/25 rounded-full px-4 py-[7px]">
           <span className="bio-node" aria-hidden="true" />
-          <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
+          <span className="font-mono text-[12px] tracking-[0.2em] uppercase text-[#e8ff00]">
             Jugadores · 100% gratis
           </span>
         </div>
@@ -87,7 +87,7 @@ export default function PerfilPage() {
         >
           Sube tu <span className="text-[#e8ff00]">perfil.</span>
         </h1>
-        <p className="mt-5 max-w-[460px] text-[15px] font-light leading-[1.75] text-white/80">
+        <p className="mt-5 max-w-[460px] text-[17px] leading-[1.75] text-white/80">
           Rellena el formulario con tu mejor material. Lo revisamos a mano y te
           respondemos en menos de 72 horas, sí o sí.
         </p>
@@ -118,7 +118,7 @@ export default function PerfilPage() {
               "Regularidad. Nos importa más tu temporada completa que una jugada viral.",
               "Actitud: puntualidad en la comunicación ya dice mucho de ti.",
             ].map((t) => (
-              <li key={t} className="flex gap-3 text-[13px] text-white/80 font-light leading-[1.7]">
+              <li key={t} className="flex gap-3 text-[15px] text-white/80 leading-[1.7]">
                 <span className="w-4 h-px bg-[#e8ff00] block flex-shrink-0 mt-[9px]" />
                 {t}
               </li>
@@ -126,12 +126,12 @@ export default function PerfilPage() {
           </ul>
 
           <div className="bio-cell mt-10 px-6 py-6">
-            <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-white/65 block">
+            <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-white/65 block">
               ¿Dudas antes de enviar?
             </span>
             <a
               href="mailto:info@turepresentante.com"
-              className="mt-1.5 inline-block text-[13px] text-[#e8ff00] no-underline hover:opacity-80 transition-opacity"
+              className="mt-1.5 inline-block text-[15px] text-[#e8ff00] no-underline hover:opacity-80 transition-opacity"
             >
               info@turepresentante.com
             </a>

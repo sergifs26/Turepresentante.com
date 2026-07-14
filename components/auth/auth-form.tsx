@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 const inputBase =
-  "bio-input w-full bg-white/[0.04] border border-white/10 text-[#f0f0ee] text-[14px] font-light px-4 py-3 outline-none focus:border-[#e8ff00] placeholder:text-white/60";
+  "bio-input w-full bg-white/[0.04] border border-white/10 text-[#f0f0ee] text-[16px] px-4 py-3 outline-none focus:border-[#e8ff00] placeholder:text-white/60";
 
 const label =
-  "block font-mono text-[10px] tracking-[0.15em] uppercase text-white/75 mb-2";
+  "block font-mono text-[12px] tracking-[0.15em] uppercase text-white/75 mb-2";
 
 export default function AuthForm({ mode }: { mode: "registro" | "login" }) {
   const router = useRouter();
@@ -82,7 +82,7 @@ export default function AuthForm({ mode }: { mode: "registro" | "login" }) {
   if (status === "sent") {
     return (
       <div className="bio-cell px-8 py-12 text-center" style={{ borderColor: "rgba(232,255,0,0.3)" }}>
-        <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
+        <span className="font-mono text-[12px] tracking-[0.2em] uppercase text-[#e8ff00]">
           Un paso más
         </span>
         <h2
@@ -91,7 +91,7 @@ export default function AuthForm({ mode }: { mode: "registro" | "login" }) {
         >
           Confirma tu email.
         </h2>
-        <p className="mt-3 text-[14px] text-white/80 font-light leading-[1.75] max-w-[400px] mx-auto">
+        <p className="mt-3 text-[16px] text-white/80 leading-[1.75] max-w-[400px] mx-auto">
           Te hemos enviado un enlace a <span className="text-white/80">{email}</span>.
           Ábrelo para activar tu cuenta y entrar en tu panel.
         </p>
@@ -106,7 +106,7 @@ export default function AuthForm({ mode }: { mode: "registro" | "login" }) {
         type="button"
         onClick={onGoogle}
         disabled={status === "working"}
-        className="bio-btn-ghost flex items-center justify-center gap-3 border border-white/20 text-white/80 font-mono text-[11px] tracking-[0.1em] uppercase px-8 py-[14px] bg-transparent cursor-pointer hover:border-[#e8ff00]/50 hover:text-white disabled:opacity-50"
+        className="bio-btn-ghost flex items-center justify-center gap-3 border border-white/20 text-white/80 font-mono text-[13px] tracking-[0.1em] uppercase px-8 py-[14px] bg-transparent cursor-pointer hover:border-[#e8ff00]/50 hover:text-white disabled:opacity-50"
       >
         <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
           <path fill="#EA4335" d="M12 5.04c1.62 0 3.06.56 4.2 1.64l3.12-3.12C17.45 1.8 14.97.75 12 .75 7.7.75 3.99 3.22 2.18 6.82l3.66 2.84C6.71 7.05 9.14 5.04 12 5.04z" />
@@ -119,7 +119,7 @@ export default function AuthForm({ mode }: { mode: "registro" | "login" }) {
 
       <div className="flex items-center gap-4" aria-hidden="true">
         <span className="flex-1 h-px bg-white/10" />
-        <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-white/60">
+        <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-white/60">
           o con tu email
         </span>
         <span className="flex-1 h-px bg-white/10" />
@@ -173,7 +173,7 @@ export default function AuthForm({ mode }: { mode: "registro" | "login" }) {
       </div>
 
       {error && (
-        <p className="text-[13px] text-red-400/90 font-light border border-red-400/25 bg-red-400/[0.05] px-4 py-3 rounded-2xl">
+        <p className="text-[15px] text-red-400/90 border border-red-400/25 bg-red-400/[0.05] px-4 py-3 rounded-2xl">
           {error}
         </p>
       )}
@@ -181,7 +181,7 @@ export default function AuthForm({ mode }: { mode: "registro" | "login" }) {
       <button
         type="submit"
         disabled={status === "working"}
-        className="bio-btn bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-10 py-4 cursor-pointer border-0 disabled:opacity-50 disabled:cursor-wait"
+        className="bio-btn bg-[#e8ff00] text-[#0a0a0a] font-mono text-[13px] tracking-[0.1em] uppercase font-medium px-10 py-4 cursor-pointer border-0 disabled:opacity-50 disabled:cursor-wait"
       >
         {status === "working"
           ? "Un momento…"
@@ -190,7 +190,7 @@ export default function AuthForm({ mode }: { mode: "registro" | "login" }) {
             : "Entrar"}
       </button>
 
-      <p className="text-[13px] text-white/70 font-light">
+      <p className="text-[15px] text-white/70">
         {mode === "registro" ? (
           <>¿Ya tienes cuenta?{" "}
             <a href="/login" className="text-[#e8ff00] no-underline hover:opacity-80">Entra aquí</a>

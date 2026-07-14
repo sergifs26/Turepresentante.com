@@ -5,9 +5,9 @@ import { createClient } from "@/lib/supabase/client";
 import { POSICIONES, PIERNAS, type Profile } from "@/lib/types";
 
 const inputBase =
-  "bio-input w-full bg-white/[0.04] border border-white/10 text-[#f0f0ee] text-[14px] font-light px-4 py-3 outline-none focus:border-[#e8ff00] placeholder:text-white/60";
+  "bio-input w-full bg-white/[0.04] border border-white/10 text-[#f0f0ee] text-[16px] px-4 py-3 outline-none focus:border-[#e8ff00] placeholder:text-white/60";
 const label =
-  "block font-mono text-[10px] tracking-[0.15em] uppercase text-white/75 mb-2";
+  "block font-mono text-[12px] tracking-[0.15em] uppercase text-white/75 mb-2";
 
 export default function ProfileForm({ profile }: { profile: Profile }) {
   const [form, setForm] = useState({
@@ -115,15 +115,15 @@ export default function ProfileForm({ profile }: { profile: Profile }) {
         <button
           type="submit"
           disabled={status === "saving"}
-          className="bio-btn bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-8 py-3.5 cursor-pointer border-0 disabled:opacity-50 disabled:cursor-wait"
+          className="bio-btn bg-[#e8ff00] text-[#0a0a0a] font-mono text-[13px] tracking-[0.1em] uppercase font-medium px-8 py-3.5 cursor-pointer border-0 disabled:opacity-50 disabled:cursor-wait"
         >
           {status === "saving" ? "Guardando…" : "Guardar cambios"}
         </button>
         {status === "saved" && (
-          <span className="font-mono text-[10px] tracking-[0.15em] uppercase text-[#e8ff00]">Guardado</span>
+          <span className="font-mono text-[12px] tracking-[0.15em] uppercase text-[#e8ff00]">Guardado</span>
         )}
         {status === "error" && (
-          <span className="font-mono text-[10px] tracking-[0.15em] uppercase text-red-400/90">No se pudo guardar</span>
+          <span className="font-mono text-[12px] tracking-[0.15em] uppercase text-red-400/90">No se pudo guardar</span>
         )}
       </div>
     </form>

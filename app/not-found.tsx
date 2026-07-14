@@ -13,7 +13,7 @@ export default function NotFound() {
         />
         <div className="inline-flex w-fit items-center gap-2.5 border border-[#e8ff00]/25 rounded-full px-4 py-[7px]">
           <span className="bio-node" aria-hidden="true" />
-          <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
+          <span className="font-mono text-[12px] tracking-[0.2em] uppercase text-[#e8ff00]">
             Error 404
           </span>
         </div>
@@ -29,13 +29,13 @@ export default function NotFound() {
           Fuera de<br />
           <span className="text-[#e8ff00]">juego.</span>
         </h1>
-        <p className="mt-6 max-w-[380px] text-[14px] font-light leading-[1.75] text-white/80">
+        <p className="mt-6 max-w-[380px] text-[16px] leading-[1.75] text-white/80">
           Esta página no existe o ha cambiado de sitio. Vuelve al campo y
           sigue jugando.
         </p>
         <Link
           href="/"
-          className="bio-btn mt-8 inline-block w-fit bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-7 py-3.5 no-underline"
+          className="bio-btn mt-8 inline-block w-fit bg-[#e8ff00] text-[#0a0a0a] font-mono text-[13px] tracking-[0.1em] uppercase font-medium px-7 py-3.5 no-underline"
         >
           Volver al inicio
         </Link>

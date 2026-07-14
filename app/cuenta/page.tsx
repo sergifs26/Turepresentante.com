@@ -59,7 +59,7 @@ export default async function CuentaPage() {
         <div>
           <div className="inline-flex items-center gap-2.5 mb-5 border border-[#e8ff00]/25 rounded-full px-4 py-[7px]">
             <span className="bio-node" aria-hidden="true" />
-            <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
+            <span className="font-mono text-[12px] tracking-[0.2em] uppercase text-[#e8ff00]">
               Tu panel
             </span>
           </div>
@@ -80,7 +80,7 @@ export default async function CuentaPage() {
           {p?.slug && (
             <Link
               href={`/jugadores/${p.slug}`}
-              className="bio-btn-ghost border border-white/20 text-white/75 font-mono text-[10px] tracking-[0.12em] uppercase px-5 py-2.5 no-underline hover:border-[#e8ff00]/50 hover:text-white/90"
+              className="bio-btn-ghost border border-white/20 text-white/75 font-mono text-[12px] tracking-[0.12em] uppercase px-5 py-2.5 no-underline hover:border-[#e8ff00]/50 hover:text-white/90"
             >
               Ver mi perfil público
             </Link>
@@ -88,7 +88,7 @@ export default async function CuentaPage() {
           <form action="/auth/logout" method="post">
             <button
               type="submit"
-              className="bio-btn-ghost border border-white/10 text-white/70 font-mono text-[10px] tracking-[0.12em] uppercase px-5 py-2.5 bg-transparent cursor-pointer hover:text-white/85"
+              className="bio-btn-ghost border border-white/10 text-white/70 font-mono text-[12px] tracking-[0.12em] uppercase px-5 py-2.5 bg-transparent cursor-pointer hover:text-white/85"
             >
               Salir
             </button>

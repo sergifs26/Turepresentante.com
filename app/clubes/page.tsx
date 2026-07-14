@@ -38,7 +38,7 @@ export default function ClubesPage() {
       <header className="px-5 md:px-10 pt-16 md:pt-24 pb-10 md:pb-14">
         <div className="inline-flex items-center gap-2.5 mb-5 border border-[#e8ff00]/25 rounded-full px-4 py-[7px]">
           <span className="bio-node" aria-hidden="true" />
-          <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
+          <span className="font-mono text-[12px] tracking-[0.2em] uppercase text-[#e8ff00]">
             Clubes · Scouts · Agentes
           </span>
         </div>
@@ -53,7 +53,7 @@ export default function ClubesPage() {
         >
           Talento <span className="text-[#e8ff00]">verificado.</span>
         </h1>
-        <p className="mt-5 max-w-[480px] text-[15px] font-light leading-[1.75] text-white/80">
+        <p className="mt-5 max-w-[480px] text-[17px] leading-[1.75] text-white/80">
           Cada jugador de nuestra cartera ha pasado una revisión manual: vídeo,
           trayectoria y referencias. Dinos qué buscas y te presentamos perfiles
           que encajan, sin ruido.
@@ -82,7 +82,7 @@ export default function ClubesPage() {
             >
               {c.t}
             </h2>
-            <p className="mt-2.5 text-[13px] text-white/80 font-light leading-[1.75] max-w-[300px]">
+            <p className="mt-2.5 text-[15px] text-white/80 leading-[1.75] max-w-[300px]">
               {c.d}
             </p>
           </div>

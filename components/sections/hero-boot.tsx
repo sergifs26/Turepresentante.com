@@ -10,7 +10,7 @@ const Boot3D = dynamic(() => import("@/components/sections/boot-3d"), {
   ssr: false,
   loading: () => (
     <div className="flex h-full w-full items-center justify-center">
-      <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]/50 animate-pulse">
+      <span className="font-mono text-[12px] tracking-[0.2em] uppercase text-[#e8ff00]/50 animate-pulse">
         Cargando…
       </span>
     </div>
@@ -63,7 +63,7 @@ export default function HeroBoot() {
           transition={{ delay: 0.35, duration: 0.5, ease: EASE }}
         >
           <span className="bio-node" />
-          <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
+          <span className="font-mono text-[12px] tracking-[0.2em] uppercase text-[#e8ff00]">
             Representación de futbolistas · Gratis para ti
           </span>
         </motion.div>
@@ -97,7 +97,7 @@ export default function HeroBoot() {
         </h1>
 
         <motion.p
-          className="mt-5 max-w-[320px] text-[15px] font-light leading-[1.75] text-[rgba(240,240,238,0.6)]"
+          className="mt-5 max-w-[360px] text-[18px] leading-[1.7] text-[rgba(240,240,238,0.88)]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.9, duration: 0.5 }}
@@ -115,13 +115,13 @@ export default function HeroBoot() {
         >
           <Link
             href="/registro"
-            className="bio-btn inline-block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-8 py-[14px] no-underline"
+            className="bio-btn inline-block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[13px] tracking-[0.1em] uppercase font-medium px-8 py-[14px] no-underline"
           >
             Crear mi perfil gratis
           </Link>
           <a
             href="#como-funciona"
-            className="bio-btn-ghost inline-block border border-white/25 text-white/85 font-mono text-[10px] tracking-[0.12em] uppercase px-6 py-[13px] no-underline hover:border-[#e8ff00]/50 hover:text-white"
+            className="bio-btn-ghost inline-block border border-white/25 text-white/85 font-mono text-[12px] tracking-[0.12em] uppercase px-6 py-[13px] no-underline hover:border-[#e8ff00]/50 hover:text-white"
           >
             Cómo funciona ↓
           </a>
@@ -138,7 +138,7 @@ export default function HeroBoot() {
       >
         <div className="w-px h-12 bg-gradient-to-b from-transparent to-[rgba(240,240,238,0.3)] animate-pulse" />
         <span
-          className="text-[9px] tracking-[0.2em] text-[rgba(240,240,238,0.25)] uppercase font-mono"
+          className="text-[11px] tracking-[0.2em] text-[rgba(240,240,238,0.25)] uppercase font-mono"
           style={{ writingMode: "vertical-rl" }}
         >
           Scroll

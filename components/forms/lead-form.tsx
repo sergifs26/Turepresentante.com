@@ -17,7 +17,7 @@ export type Field = {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 const inputBase =
-  "bio-input w-full bg-white/[0.04] border border-white/10 text-[#f0f0ee] text-[14px] font-light px-4 py-3 outline-none focus:border-[#e8ff00] placeholder:text-white/60";
+  "bio-input w-full bg-white/[0.04] border border-white/10 text-[#f0f0ee] text-[16px] px-4 py-3 outline-none focus:border-[#e8ff00] placeholder:text-white/60";
 
 export default function LeadForm({
   tipo,
@@ -83,7 +83,7 @@ export default function LeadForm({
   if (status === "sent") {
     return (
       <div className="bio-cell px-8 py-12 text-center" style={{ borderColor: "rgba(232,255,0,0.3)" }}>
-        <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
+        <span className="font-mono text-[12px] tracking-[0.2em] uppercase text-[#e8ff00]">
           Solicitud enviada
         </span>
         <h3
@@ -92,7 +92,7 @@ export default function LeadForm({
         >
           {successTitle}
         </h3>
-        <p className="mt-3 text-[14px] text-white/80 font-light leading-[1.75] max-w-[420px] mx-auto">
+        <p className="mt-3 text-[16px] text-white/80 leading-[1.75] max-w-[420px] mx-auto">
           {successBody}
         </p>
       </div>
@@ -119,7 +119,7 @@ export default function LeadForm({
           <div key={f.name} className={f.full ? "md:col-span-2" : ""}>
             <label
               htmlFor={id}
-              className="block font-mono text-[10px] tracking-[0.15em] uppercase text-white/75 mb-2"
+              className="block font-mono text-[12px] tracking-[0.15em] uppercase text-white/75 mb-2"
             >
               {f.label}
               {f.required && <span className="text-[#e8ff00]"> *</span>}
@@ -163,9 +163,9 @@ export default function LeadForm({
             )}
 
             {err ? (
-              <p className="mt-1.5 text-[12px] text-red-400/90 font-light">{err}</p>
+              <p className="mt-1.5 text-[14px] text-red-400/90">{err}</p>
             ) : f.hint ? (
-              <p className="mt-1.5 text-[12px] text-white/60 font-light">{f.hint}</p>
+              <p className="mt-1.5 text-[14px] text-white/60">{f.hint}</p>
             ) : null}
           </div>
         );
@@ -173,18 +173,18 @@ export default function LeadForm({
 
       <div className="md:col-span-2 mt-2">
         {status === "error" && (
-          <p className="mb-4 text-[13px] text-red-400/90 font-light border border-red-400/25 bg-red-400/[0.05] px-4 py-3 rounded-2xl">
+          <p className="mb-4 text-[15px] text-red-400/90 border border-red-400/25 bg-red-400/[0.05] px-4 py-3 rounded-2xl">
             {serverError}
           </p>
         )}
         <button
           type="submit"
           disabled={status === "sending"}
-          className="bio-btn w-full md:w-auto bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-10 py-4 cursor-pointer border-0 disabled:opacity-50 disabled:cursor-wait"
+          className="bio-btn w-full md:w-auto bg-[#e8ff00] text-[#0a0a0a] font-mono text-[13px] tracking-[0.1em] uppercase font-medium px-10 py-4 cursor-pointer border-0 disabled:opacity-50 disabled:cursor-wait"
         >
           {status === "sending" ? "Enviando…" : submitLabel}
         </button>
-        <p className="mt-4 text-[12px] text-white/60 font-light leading-[1.7]">
+        <p className="mt-4 text-[14px] text-white/60 leading-[1.7]">
           Al enviar aceptas nuestra{" "}
           <a href="/privacidad" className="text-white/75 underline hover:text-white/85 transition-colors">
             política de privacidad

@@ -210,6 +210,9 @@ function traducir(msg: string) {
   if (m.includes("already registered")) return "Ese email ya tiene cuenta. Prueba a entrar.";
   if (m.includes("invalid login credentials")) return "Email o contraseña incorrectos.";
   if (m.includes("email not confirmed")) return "Confirma tu email primero: revisa tu bandeja de entrada.";
+  if (m.includes("is invalid")) return "Ese email no parece válido. Revísalo.";
+  if (m.includes("email rate limit") || m.includes("over_email_send_rate_limit"))
+    return "Hemos alcanzado el límite de emails por ahora. Prueba en unos minutos o entra con Google.";
   if (m.includes("rate limit")) return "Demasiados intentos. Espera un minuto y prueba otra vez.";
   return "No hemos podido completar la operación. Inténtalo de nuevo.";
 }

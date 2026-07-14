@@ -7,6 +7,11 @@
     "nodejs_compat",
     "global_fetch_strictly_public"
   ],
+  // Dominios del sitio: wrangler los registra como Custom Domains al desplegar
+  "routes": [
+    { "pattern": "turepresentante.com", "custom_domain": true },
+    { "pattern": "www.turepresentante.com", "custom_domain": true }
+  ],
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"

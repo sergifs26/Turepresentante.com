@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 const inputBase =
-  "bio-input w-full bg-white/[0.04] border border-white/10 text-[#f0f0ee] text-[14px] font-light px-4 py-3 outline-none focus:border-[#e8ff00] placeholder:text-white/25";
+  "bio-input w-full bg-white/[0.04] border border-white/10 text-[#f0f0ee] text-[14px] font-light px-4 py-3 outline-none focus:border-[#e8ff00] placeholder:text-white/45";
 
 const label =
-  "block font-mono text-[10px] tracking-[0.15em] uppercase text-white/40 mb-2";
+  "block font-mono text-[10px] tracking-[0.15em] uppercase text-white/60 mb-2";
 
 export default function AuthForm({ mode }: { mode: "registro" | "login" }) {
   const router = useRouter();
@@ -91,7 +91,7 @@ export default function AuthForm({ mode }: { mode: "registro" | "login" }) {
         >
           Confirma tu email.
         </h2>
-        <p className="mt-3 text-[14px] text-white/45 font-light leading-[1.75] max-w-[400px] mx-auto">
+        <p className="mt-3 text-[14px] text-white/65 font-light leading-[1.75] max-w-[400px] mx-auto">
           Te hemos enviado un enlace a <span className="text-white/80">{email}</span>.
           Ábrelo para activar tu cuenta y entrar en tu panel.
         </p>
@@ -119,7 +119,7 @@ export default function AuthForm({ mode }: { mode: "registro" | "login" }) {
 
       <div className="flex items-center gap-4" aria-hidden="true">
         <span className="flex-1 h-px bg-white/10" />
-        <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-white/25">
+        <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-white/45">
           o con tu email
         </span>
         <span className="flex-1 h-px bg-white/10" />
@@ -190,7 +190,7 @@ export default function AuthForm({ mode }: { mode: "registro" | "login" }) {
             : "Entrar"}
       </button>
 
-      <p className="text-[13px] text-white/35 font-light">
+      <p className="text-[13px] text-white/55 font-light">
         {mode === "registro" ? (
           <>¿Ya tienes cuenta?{" "}
             <a href="/login" className="text-[#e8ff00] no-underline hover:opacity-80">Entra aquí</a>

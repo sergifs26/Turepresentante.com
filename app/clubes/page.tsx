@@ -53,7 +53,7 @@ export default function ClubesPage() {
         >
           Talento <span className="text-[#e8ff00]">verificado.</span>
         </h1>
-        <p className="mt-5 max-w-[480px] text-[15px] font-light leading-[1.75] text-white/45">
+        <p className="mt-5 max-w-[480px] text-[15px] font-light leading-[1.75] text-white/65">
           Cada jugador de nuestra cartera ha pasado una revisión manual: vídeo,
           trayectoria y referencias. Dinos qué buscas y te presentamos perfiles
           que encajan, sin ruido.
@@ -82,7 +82,7 @@ export default function ClubesPage() {
             >
               {c.t}
             </h2>
-            <p className="mt-2.5 text-[13px] text-white/45 font-light leading-[1.75] max-w-[300px]">
+            <p className="mt-2.5 text-[13px] text-white/65 font-light leading-[1.75] max-w-[300px]">
               {c.d}
             </p>
           </div>

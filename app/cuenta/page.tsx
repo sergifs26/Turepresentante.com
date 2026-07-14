@@ -88,7 +88,7 @@ export default async function CuentaPage() {
           <form action="/auth/logout" method="post">
             <button
               type="submit"
-              className="bio-btn-ghost border border-white/10 text-white/35 font-mono text-[10px] tracking-[0.12em] uppercase px-5 py-2.5 bg-transparent cursor-pointer hover:text-white/70"
+              className="bio-btn-ghost border border-white/10 text-white/55 font-mono text-[10px] tracking-[0.12em] uppercase px-5 py-2.5 bg-transparent cursor-pointer hover:text-white/70"
             >
               Salir
             </button>

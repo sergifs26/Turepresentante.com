@@ -121,7 +121,7 @@ export default function VideoManager() {
           >
             Subir un vídeo
           </span>
-          <span className="block mt-2 text-[12px] text-white/35 font-light">
+          <span className="block mt-2 text-[12px] text-white/55 font-light">
             MP4, MOV o WebM · hasta {MAX_MB} MB · mejor clips de 1-5 minutos
           </span>
         </button>
@@ -139,7 +139,7 @@ export default function VideoManager() {
               style={{ width: `${uploadPct}%` }}
             />
           </div>
-          <p className="mt-3 text-[12px] text-white/30 font-light">
+          <p className="mt-3 text-[12px] text-white/50 font-light">
             No cierres esta página hasta que termine.
           </p>
         </div>
@@ -154,10 +154,10 @@ export default function VideoManager() {
       {/* Galería */}
       <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
         {loading && (
-          <p className="text-[13px] text-white/30 font-light col-span-full">Cargando tu galería…</p>
+          <p className="text-[13px] text-white/50 font-light col-span-full">Cargando tu galería…</p>
         )}
         {!loading && videos.length === 0 && (
-          <p className="text-[13px] text-white/30 font-light col-span-full">
+          <p className="text-[13px] text-white/50 font-light col-span-full">
             Tu galería está vacía. Sube tu primer vídeo: es lo primero que
             miran los clubes.
           </p>
@@ -192,7 +192,7 @@ export default function VideoManager() {
               ) : (
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
                   <span className="bio-node" aria-hidden="true" />
-                  <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-white/40">
+                  <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-white/60">
                     {v.status === "error" ? "Error al procesar" : "Procesando…"}
                   </span>
                 </div>
@@ -205,7 +205,7 @@ export default function VideoManager() {
               <button
                 type="button"
                 onClick={() => onDelete(v)}
-                className="font-mono text-[9px] tracking-[0.15em] uppercase text-white/25 hover:text-red-400/90 transition-colors bg-transparent border-0 cursor-pointer flex-shrink-0"
+                className="font-mono text-[9px] tracking-[0.15em] uppercase text-white/45 hover:text-red-400/90 transition-colors bg-transparent border-0 cursor-pointer flex-shrink-0"
               >
                 Borrar
               </button>
@@ -226,7 +226,7 @@ export default function VideoManager() {
               <button
                 type="button"
                 onClick={() => setPlaying(null)}
-                className="font-mono text-[10px] tracking-[0.15em] uppercase text-white/50 hover:text-white bg-transparent border-0 cursor-pointer"
+                className="font-mono text-[10px] tracking-[0.15em] uppercase text-white/70 hover:text-white bg-transparent border-0 cursor-pointer"
               >
                 Cerrar ✕
               </button>

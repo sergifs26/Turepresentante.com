@@ -26,7 +26,7 @@ export default function SiteFooter() {
           >
             Turepresentante
           </span>
-          <p className="mt-3 max-w-[340px] text-[13px] text-white/35 font-light leading-[1.7]">
+          <p className="mt-3 max-w-[340px] text-[13px] text-white/55 font-light leading-[1.7]">
             Representación de talento futbolístico. Sube tu perfil y deja que
             tu juego hable por ti.
           </p>
@@ -38,7 +38,7 @@ export default function SiteFooter() {
               <Link
                 key={l.href}
                 href={l.href}
-                className="font-mono text-[10px] tracking-[0.12em] text-white/40 uppercase no-underline hover:text-[#e8ff00] transition-colors"
+                className="font-mono text-[10px] tracking-[0.12em] text-white/60 uppercase no-underline hover:text-[#e8ff00] transition-colors"
               >
                 {l.label}
               </Link>
@@ -49,14 +49,14 @@ export default function SiteFooter() {
               <Link
                 key={l.href}
                 href={l.href}
-                className="font-mono text-[10px] tracking-[0.12em] text-white/40 uppercase no-underline hover:text-[#e8ff00] transition-colors"
+                className="font-mono text-[10px] tracking-[0.12em] text-white/60 uppercase no-underline hover:text-[#e8ff00] transition-colors"
               >
                 {l.label}
               </Link>
             ))}
             <a
               href="mailto:info@turepresentante.com"
-              className="font-mono text-[10px] tracking-[0.12em] text-white/40 uppercase no-underline hover:text-[#e8ff00] transition-colors"
+              className="font-mono text-[10px] tracking-[0.12em] text-white/60 uppercase no-underline hover:text-[#e8ff00] transition-colors"
             >
               info@turepresentante.com
             </a>
@@ -65,10 +65,10 @@ export default function SiteFooter() {
       </div>
 
       <div className="mt-12 pt-6 border-t border-white/[0.05] flex flex-col md:flex-row gap-2 md:items-center justify-between">
-        <span className="font-mono text-[10px] tracking-[0.12em] text-white/20 uppercase">
+        <span className="font-mono text-[10px] tracking-[0.12em] text-white/40 uppercase">
           © {new Date().getFullYear()} Turepresentante
         </span>
-        <span className="font-mono text-[10px] tracking-[0.12em] text-white/20 uppercase">
+        <span className="font-mono text-[10px] tracking-[0.12em] text-white/40 uppercase">
           Hecho en España
         </span>
       </div>

@@ -87,7 +87,7 @@ export default function PerfilPage() {
         >
           Sube tu <span className="text-[#e8ff00]">perfil.</span>
         </h1>
-        <p className="mt-5 max-w-[460px] text-[15px] font-light leading-[1.75] text-white/45">
+        <p className="mt-5 max-w-[460px] text-[15px] font-light leading-[1.75] text-white/65">
           Rellena el formulario con tu mejor material. Lo revisamos a mano y te
           respondemos en menos de 72 horas, sí o sí.
         </p>
@@ -118,7 +118,7 @@ export default function PerfilPage() {
               "Regularidad. Nos importa más tu temporada completa que una jugada viral.",
               "Actitud: puntualidad en la comunicación ya dice mucho de ti.",
             ].map((t) => (
-              <li key={t} className="flex gap-3 text-[13px] text-white/45 font-light leading-[1.7]">
+              <li key={t} className="flex gap-3 text-[13px] text-white/65 font-light leading-[1.7]">
                 <span className="w-4 h-px bg-[#e8ff00] block flex-shrink-0 mt-[9px]" />
                 {t}
               </li>
@@ -126,7 +126,7 @@ export default function PerfilPage() {
           </ul>
 
           <div className="bio-cell mt-10 px-6 py-6">
-            <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-white/30 block">
+            <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-white/50 block">
               ¿Dudas antes de enviar?
             </span>
             <a

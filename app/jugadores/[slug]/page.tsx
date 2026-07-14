@@ -66,7 +66,7 @@ export default async function JugadorPage({
       <header className="px-5 md:px-10 pt-16 md:pt-24 pb-10">
         <Link
           href="/jugadores"
-          className="font-mono text-[10px] tracking-[0.15em] uppercase text-white/30 no-underline hover:text-white/60 transition-colors"
+          className="font-mono text-[10px] tracking-[0.15em] uppercase text-white/50 no-underline hover:text-white/60 transition-colors"
         >
           ← Todos los jugadores
         </Link>
@@ -91,7 +91,7 @@ export default async function JugadorPage({
           </div>
         )}
         {profile.bio && (
-          <p className="mt-6 max-w-[560px] text-[15px] font-light leading-[1.8] text-white/50">
+          <p className="mt-6 max-w-[560px] text-[15px] font-light leading-[1.8] text-white/70">
             {profile.bio}
           </p>
         )}
@@ -102,7 +102,7 @@ export default async function JugadorPage({
           <div className="flex flex-wrap gap-3">
             {datos.map((d) => (
               <div key={d.k} className="border border-white/10 rounded-2xl px-5 py-3">
-                <span className="block font-mono text-[8px] tracking-[0.2em] uppercase text-white/30">
+                <span className="block font-mono text-[8px] tracking-[0.2em] uppercase text-white/50">
                   {d.k}
                 </span>
                 <span className="block text-[14px] text-white/80 font-light mt-0.5">{d.v}</span>
@@ -131,7 +131,7 @@ export default async function JugadorPage({
             >
               ¿Te interesa este perfil?
             </h2>
-            <p className="mt-2 text-[14px] text-white/45 font-light leading-[1.7] max-w-[440px]">
+            <p className="mt-2 text-[14px] text-white/65 font-light leading-[1.7] max-w-[440px]">
               Si eres club o agente, gestionamos el contacto y la negociación.
               Escríbenos y te respondemos en 24-48 h.
             </p>

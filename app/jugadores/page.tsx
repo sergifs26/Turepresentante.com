@@ -47,7 +47,7 @@ export default async function JugadoresPage() {
         >
           Jugadores<span className="text-[#e8ff00]">.</span>
         </h1>
-        <p className="mt-5 max-w-[460px] text-[15px] font-light leading-[1.75] text-white/45">
+        <p className="mt-5 max-w-[460px] text-[15px] font-light leading-[1.75] text-white/65">
           Perfiles públicos con vídeo. Si eres club o agente y quieres que te
           filtremos candidatos,{" "}
           <Link href="/clubes" className="text-[#e8ff00] no-underline hover:opacity-80">
@@ -66,7 +66,7 @@ export default async function JugadoresPage() {
             >
               Los primeros están llegando
             </h2>
-            <p className="mt-3 text-[14px] text-white/45 font-light leading-[1.75]">
+            <p className="mt-3 text-[14px] text-white/65 font-light leading-[1.75]">
               El escaparate acaba de abrir. Crea tu cuenta hoy y sé de los
               primeros jugadores en tener su perfil aquí.
             </p>
@@ -94,7 +94,7 @@ export default async function JugadoresPage() {
                 <span className="block mt-1.5 font-mono text-[10px] tracking-[0.15em] uppercase text-[#e8ff00]">
                   {[p.posicion, p.ciudad].filter(Boolean).join(" · ") || "Perfil nuevo"}
                 </span>
-                <span className="block mt-3 text-[13px] text-white/40 font-light leading-[1.7]">
+                <span className="block mt-3 text-[13px] text-white/60 font-light leading-[1.7]">
                   {[p.club, p.categoria, p.nacimiento ? `Nacido en ${p.nacimiento}` : null]
                     .filter(Boolean)
                     .join(" · ") || "Completando su ficha…"}

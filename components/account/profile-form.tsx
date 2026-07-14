@@ -5,9 +5,9 @@ import { createClient } from "@/lib/supabase/client";
 import { POSICIONES, PIERNAS, type Profile } from "@/lib/types";
 
 const inputBase =
-  "bio-input w-full bg-white/[0.04] border border-white/10 text-[#f0f0ee] text-[14px] font-light px-4 py-3 outline-none focus:border-[#e8ff00] placeholder:text-white/25";
+  "bio-input w-full bg-white/[0.04] border border-white/10 text-[#f0f0ee] text-[14px] font-light px-4 py-3 outline-none focus:border-[#e8ff00] placeholder:text-white/45";
 const label =
-  "block font-mono text-[10px] tracking-[0.15em] uppercase text-white/40 mb-2";
+  "block font-mono text-[10px] tracking-[0.15em] uppercase text-white/60 mb-2";
 
 export default function ProfileForm({ profile }: { profile: Profile }) {
   const [form, setForm] = useState({
@@ -59,7 +59,7 @@ export default function ProfileForm({ profile }: { profile: Profile }) {
         <label className={label} htmlFor="p-posicion">Posición</label>
         <select
           id="p-posicion"
-          className={`${inputBase} appearance-none cursor-pointer ${!form.posicion ? "text-white/25" : ""}`}
+          className={`${inputBase} appearance-none cursor-pointer ${!form.posicion ? "text-white/45" : ""}`}
           value={form.posicion}
           onChange={(e) => set("posicion", e.target.value)}
         >
@@ -73,7 +73,7 @@ export default function ProfileForm({ profile }: { profile: Profile }) {
         <label className={label} htmlFor="p-pierna">Pierna dominante</label>
         <select
           id="p-pierna"
-          className={`${inputBase} appearance-none cursor-pointer ${!form.pierna ? "text-white/25" : ""}`}
+          className={`${inputBase} appearance-none cursor-pointer ${!form.pierna ? "text-white/45" : ""}`}
           value={form.pierna}
           onChange={(e) => set("pierna", e.target.value)}
         >

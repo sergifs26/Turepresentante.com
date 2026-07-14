@@ -57,7 +57,7 @@ function IntroSection() {
           <strong className="font-semibold">te representamos ante clubes y agentes</strong>{" "}
           y negociamos por ti.
         </p>
-        <p className="mt-6 text-[16px] text-white/50 font-light leading-[1.8] max-w-[620px]">
+        <p className="mt-6 text-[16px] text-white/70 font-light leading-[1.8] max-w-[620px]">
           Para ti es gratis, siempre. Solo ganamos cuando tú ganas: cobramos
           al club cuando se cierra una operación. Sin cuotas, sin letra
           pequeña.
@@ -66,7 +66,7 @@ function IntroSection() {
           {chips.map((c) => (
             <span
               key={c}
-              className="border border-white/15 rounded-full px-4 py-2 font-mono text-[10px] tracking-[0.12em] uppercase text-white/50"
+              className="border border-white/15 rounded-full px-4 py-2 font-mono text-[10px] tracking-[0.12em] uppercase text-white/70"
             >
               {c}
             </span>
@@ -119,14 +119,14 @@ function FitSection() {
           </ul>
         </div>
         <div className="bio-cell px-7 py-8 md:px-9 md:py-10" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
-          <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/35">
+          <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/55">
             Todavía no, si…
           </span>
           <ul className="mt-5 flex flex-col gap-4">
             {no.map((t) => (
-              <li key={t} className="flex gap-3 text-[14px] text-white/45 font-light leading-[1.7]">
+              <li key={t} className="flex gap-3 text-[14px] text-white/65 font-light leading-[1.7]">
                 <svg width="16" height="16" viewBox="0 0 16 16" className="flex-shrink-0 mt-[3px]" aria-hidden="true">
-                  <path d="M3 3l10 10M13 3L3 13" stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
+                  <path d="M3 3l10 10M13 3L3 13" stroke="rgba(255,255,255,0.55)" strokeWidth="2" />
                 </svg>
                 {t}
               </li>
@@ -291,7 +291,7 @@ function ProcessSection() {
       >
         De tu vídeo <em className="text-[#e8ff00]">al vestuario.</em>
       </h2>
-      <p className="text-[14px] text-white/40 font-light leading-[1.75] max-w-[440px] mb-12 md:mb-16">
+      <p className="text-[14px] text-white/60 font-light leading-[1.75] max-w-[440px] mb-12 md:mb-16">
         Tres pasos. Sin promesas de humo: si hay nivel, hay representación.
       </p>
 
@@ -317,7 +317,7 @@ function ProcessSection() {
               <br />
               {s.title[1]}
             </h3>
-            <p className="mt-4 text-[14px] text-white/45 leading-[1.75] font-light max-w-[280px]">
+            <p className="mt-4 text-[14px] text-white/65 leading-[1.75] font-light max-w-[280px]">
               {s.desc}
             </p>
             <div className="bio-ring mt-7 w-11 h-11 rounded-full bg-[#e8ff00]/8 border border-[#e8ff00]/25 flex items-center justify-center">
@@ -384,7 +384,7 @@ function FaqSection() {
                 >
                   {f.q}
                 </h3>
-                <p className="mt-2.5 text-[14px] text-white/45 leading-[1.75] font-light max-w-[500px]">
+                <p className="mt-2.5 text-[14px] text-white/65 leading-[1.75] font-light max-w-[500px]">
                   {f.a}
                 </p>
               </div>
@@ -423,7 +423,7 @@ function CtaSection() {
       </h2>
 
       <div className="relative max-w-[300px] md:pb-4">
-        <p className="text-[14px] text-white/40 leading-[1.75] font-light mb-7">
+        <p className="text-[14px] text-white/60 leading-[1.75] font-light mb-7">
           Crea tu perfil hoy. Si tu nivel nos convence, nos encargamos de todo.
           Sin costes ocultos, sin intermediarios entre tú y tu futuro.
         </p>
@@ -436,7 +436,7 @@ function CtaSection() {
         </Link>
         <Link
           href="/clubes"
-          className="bio-btn-ghost block mt-3 border border-white/20 text-white/50 font-mono text-[10px] tracking-[0.12em] uppercase px-7 py-3 text-center no-underline hover:border-[#e8ff00]/50 hover:text-white/80"
+          className="bio-btn-ghost block mt-3 border border-white/20 text-white/70 font-mono text-[10px] tracking-[0.12em] uppercase px-7 py-3 text-center no-underline hover:border-[#e8ff00]/50 hover:text-white/80"
         >
           Soy representante o club
         </Link>
@@ -452,7 +452,7 @@ function CtaSection() {
           >
             ¿No lo tienes claro?
           </h3>
-          <p className="mt-1.5 text-[13px] text-white/45 font-light leading-[1.7] max-w-[480px]">
+          <p className="mt-1.5 text-[13px] text-white/65 font-light leading-[1.7] max-w-[480px]">
             Cuéntanos tu situación y te decimos con sinceridad si encajas,
             qué vídeo grabar o por dónde empezar. Sin compromiso.
           </p>

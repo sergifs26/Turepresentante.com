@@ -16,7 +16,7 @@ export default function PublicGallery({
 
   if (videos.length === 0) {
     return (
-      <p className="text-[14px] text-white/35 font-light">
+      <p className="text-[14px] text-white/55 font-light">
         {nombre.split(" ")[0]} todavía no ha publicado vídeos.
       </p>
     );
@@ -74,7 +74,7 @@ export default function PublicGallery({
               <button
                 type="button"
                 onClick={() => setPlaying(null)}
-                className="font-mono text-[10px] tracking-[0.15em] uppercase text-white/50 hover:text-white bg-transparent border-0 cursor-pointer"
+                className="font-mono text-[10px] tracking-[0.15em] uppercase text-white/70 hover:text-white bg-transparent border-0 cursor-pointer"
               >
                 Cerrar ✕
               </button>

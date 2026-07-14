@@ -17,7 +17,7 @@ export type Field = {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 const inputBase =
-  "bio-input w-full bg-white/[0.04] border border-white/10 text-[#f0f0ee] text-[14px] font-light px-4 py-3 outline-none focus:border-[#e8ff00] placeholder:text-white/25";
+  "bio-input w-full bg-white/[0.04] border border-white/10 text-[#f0f0ee] text-[14px] font-light px-4 py-3 outline-none focus:border-[#e8ff00] placeholder:text-white/45";
 
 export default function LeadForm({
   tipo,
@@ -92,7 +92,7 @@ export default function LeadForm({
         >
           {successTitle}
         </h3>
-        <p className="mt-3 text-[14px] text-white/45 font-light leading-[1.75] max-w-[420px] mx-auto">
+        <p className="mt-3 text-[14px] text-white/65 font-light leading-[1.75] max-w-[420px] mx-auto">
           {successBody}
         </p>
       </div>
@@ -119,7 +119,7 @@ export default function LeadForm({
           <div key={f.name} className={f.full ? "md:col-span-2" : ""}>
             <label
               htmlFor={id}
-              className="block font-mono text-[10px] tracking-[0.15em] uppercase text-white/40 mb-2"
+              className="block font-mono text-[10px] tracking-[0.15em] uppercase text-white/60 mb-2"
             >
               {f.label}
               {f.required && <span className="text-[#e8ff00]"> *</span>}
@@ -130,7 +130,7 @@ export default function LeadForm({
                 id={id}
                 value={values[f.name] ?? ""}
                 onChange={(e) => set(f.name, e.target.value)}
-                className={`${inputBase} appearance-none cursor-pointer ${err ? "border-red-400/60" : ""} ${!values[f.name] ? "text-white/25" : ""}`}
+                className={`${inputBase} appearance-none cursor-pointer ${err ? "border-red-400/60" : ""} ${!values[f.name] ? "text-white/45" : ""}`}
               >
                 <option value="" disabled className="bg-[#141414]">
                   {f.placeholder ?? "Selecciona…"}
@@ -165,7 +165,7 @@ export default function LeadForm({
             {err ? (
               <p className="mt-1.5 text-[12px] text-red-400/90 font-light">{err}</p>
             ) : f.hint ? (
-              <p className="mt-1.5 text-[12px] text-white/25 font-light">{f.hint}</p>
+              <p className="mt-1.5 text-[12px] text-white/45 font-light">{f.hint}</p>
             ) : null}
           </div>
         );
@@ -184,9 +184,9 @@ export default function LeadForm({
         >
           {status === "sending" ? "Enviando…" : submitLabel}
         </button>
-        <p className="mt-4 text-[12px] text-white/25 font-light leading-[1.7]">
+        <p className="mt-4 text-[12px] text-white/45 font-light leading-[1.7]">
           Al enviar aceptas nuestra{" "}
-          <a href="/privacidad" className="text-white/40 underline hover:text-white/70 transition-colors">
+          <a href="/privacidad" className="text-white/60 underline hover:text-white/70 transition-colors">
             política de privacidad
           </a>
           . Solo usamos tus datos para valorar tu perfil y responderte.

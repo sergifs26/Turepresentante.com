@@ -16,7 +16,7 @@ export default function PublicGallery({
 
   if (videos.length === 0) {
     return (
-      <p className="text-[14px] text-white/55 font-light">
+      <p className="text-[14px] text-white/70 font-light">
         {nombre.split(" ")[0]} todavía no ha publicado vídeos.
       </p>
     );
@@ -54,7 +54,7 @@ export default function PublicGallery({
                 </span>
               )}
             </div>
-            <span className="block px-4 py-3 text-[13px] text-white/70 font-light truncate">
+            <span className="block px-4 py-3 text-[13px] text-white/85 font-light truncate">
               {v.title}
             </span>
           </button>
@@ -68,13 +68,13 @@ export default function PublicGallery({
         >
           <div className="w-full max-w-[960px]" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-3">
-              <span className="text-[14px] text-white/70 font-light truncate pr-4">
+              <span className="text-[14px] text-white/85 font-light truncate pr-4">
                 {playing.title}
               </span>
               <button
                 type="button"
                 onClick={() => setPlaying(null)}
-                className="font-mono text-[10px] tracking-[0.15em] uppercase text-white/70 hover:text-white bg-transparent border-0 cursor-pointer"
+                className="font-mono text-[10px] tracking-[0.15em] uppercase text-white/85 hover:text-white bg-transparent border-0 cursor-pointer"
               >
                 Cerrar ✕
               </button>

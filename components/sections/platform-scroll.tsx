@@ -52,7 +52,7 @@ function PlatformMockup() {
           Turepresentante
         </span>
         <div className="ml-auto flex items-center gap-2">
-          <div className="flex items-center gap-1.5 bg-white/[0.04] px-3 py-1.5 text-[10px] text-white/50 font-mono">
+          <div className="flex items-center gap-1.5 bg-white/[0.04] px-3 py-1.5 text-[10px] text-white/65 font-mono">
             🔍 Buscar jugadores...
           </div>
           <div className="w-6 h-6 bg-[#e8ff00]/10 border border-[#e8ff00]/20 flex items-center justify-center text-[10px]">
@@ -69,13 +69,13 @@ function PlatformMockup() {
             className={`text-[9px] font-mono tracking-wider uppercase px-2.5 py-1 ${
               i === 0
                 ? "bg-[#e8ff00] text-[#0a0a0a]"
-                : "border border-white/10 text-white/55"
+                : "border border-white/10 text-white/70"
             }`}
           >
             {f}
           </span>
         ))}
-        <span className="ml-auto text-[9px] font-mono text-white/40 tracking-wider">
+        <span className="ml-auto text-[9px] font-mono text-white/55 tracking-wider">
           2,401 jugadores
         </span>
       </div>
@@ -93,7 +93,7 @@ function PlatformMockup() {
                 className={`absolute top-2 left-2 text-[8px] font-mono font-medium tracking-wider px-1.5 py-0.5 ${
                   p.rep
                     ? "bg-[#e8ff00] text-[#0a0a0a]"
-                    : "bg-white/10 text-white/60 border border-white/15"
+                    : "bg-white/10 text-white/75 border border-white/15"
                 }`}
               >
                 {p.rep ? "Representado" : "Nuevo"}
@@ -113,7 +113,7 @@ function PlatformMockup() {
                     <span className="block text-[11px] font-mono font-medium text-white">
                       {p.goals || "—"}
                     </span>
-                    <span className="block text-[7px] font-mono text-white/50 uppercase tracking-wider">
+                    <span className="block text-[7px] font-mono text-white/65 uppercase tracking-wider">
                       Goles
                     </span>
                   </div>
@@ -121,7 +121,7 @@ function PlatformMockup() {
                     <span className="block text-[11px] font-mono font-medium text-white">
                       {p.age}
                     </span>
-                    <span className="block text-[7px] font-mono text-white/50 uppercase tracking-wider">
+                    <span className="block text-[7px] font-mono text-white/65 uppercase tracking-wider">
                       Edad
                     </span>
                   </div>

@@ -121,7 +121,7 @@ export default function HeroBoot() {
           </Link>
           <a
             href="#como-funciona"
-            className="bio-btn-ghost inline-block border border-white/25 text-white/70 font-mono text-[10px] tracking-[0.12em] uppercase px-6 py-[13px] no-underline hover:border-[#e8ff00]/50 hover:text-white"
+            className="bio-btn-ghost inline-block border border-white/25 text-white/85 font-mono text-[10px] tracking-[0.12em] uppercase px-6 py-[13px] no-underline hover:border-[#e8ff00]/50 hover:text-white"
           >
             Cómo funciona ↓
           </a>

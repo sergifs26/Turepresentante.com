@@ -40,7 +40,7 @@ export default function AuthPage({
           >
             {title}
           </h1>
-          <p className="mt-5 max-w-[440px] text-[15px] font-light leading-[1.75] text-white/65">
+          <p className="mt-5 max-w-[440px] text-[15px] font-light leading-[1.75] text-white/80">
             {intro}
           </p>
         </header>
@@ -56,7 +56,7 @@ export default function AuthPage({
               >
                 Estamos activando las cuentas
               </h2>
-              <p className="mt-3 text-[14px] text-white/65 font-light leading-[1.75]">
+              <p className="mt-3 text-[14px] text-white/80 font-light leading-[1.75]">
                 Muy pronto podrás crear tu cuenta y subir tus vídeos. Mientras
                 tanto, envíanos tu perfil por el formulario y lo revisamos
                 igual.

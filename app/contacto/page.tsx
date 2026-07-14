@@ -45,7 +45,7 @@ export default function ContactoPage() {
         >
           Hablemos<span className="text-[#e8ff00]">.</span>
         </h1>
-        <p className="mt-5 max-w-[440px] text-[15px] font-light leading-[1.75] text-white/65">
+        <p className="mt-5 max-w-[440px] text-[15px] font-light leading-[1.75] text-white/80">
           Si quieres que valoremos tu juego, usa el formulario de{" "}
           <a href="/perfil" className="text-[#e8ff00] no-underline hover:opacity-80">
             sube tu perfil
@@ -67,7 +67,7 @@ export default function ContactoPage() {
 
         <aside className="lg:pt-2">
           <div className="bio-cell px-6 py-6">
-            <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-white/50 block">
+            <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-white/65 block">
               Email directo
             </span>
             <a
@@ -77,7 +77,7 @@ export default function ContactoPage() {
               info@turepresentante.com
             </a>
           </div>
-          <p className="mt-5 text-[12px] text-white/45 font-light leading-[1.7]">
+          <p className="mt-5 text-[12px] text-white/60 font-light leading-[1.7]">
             Si eres menor de edad, pide a tu padre, madre o tutor que nos
             escriba o que esté en copia en el primer email.
           </p>

@@ -80,7 +80,7 @@ export default async function CuentaPage() {
           {p?.slug && (
             <Link
               href={`/jugadores/${p.slug}`}
-              className="bio-btn-ghost border border-white/20 text-white/60 font-mono text-[10px] tracking-[0.12em] uppercase px-5 py-2.5 no-underline hover:border-[#e8ff00]/50 hover:text-white/90"
+              className="bio-btn-ghost border border-white/20 text-white/75 font-mono text-[10px] tracking-[0.12em] uppercase px-5 py-2.5 no-underline hover:border-[#e8ff00]/50 hover:text-white/90"
             >
               Ver mi perfil público
             </Link>
@@ -88,7 +88,7 @@ export default async function CuentaPage() {
           <form action="/auth/logout" method="post">
             <button
               type="submit"
-              className="bio-btn-ghost border border-white/10 text-white/55 font-mono text-[10px] tracking-[0.12em] uppercase px-5 py-2.5 bg-transparent cursor-pointer hover:text-white/70"
+              className="bio-btn-ghost border border-white/10 text-white/70 font-mono text-[10px] tracking-[0.12em] uppercase px-5 py-2.5 bg-transparent cursor-pointer hover:text-white/85"
             >
               Salir
             </button>

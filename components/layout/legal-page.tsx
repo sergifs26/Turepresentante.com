@@ -33,12 +33,12 @@ export default function LegalPage({
         >
           {title}
         </h1>
-        <p className="mt-4 font-mono text-[10px] tracking-[0.15em] uppercase text-white/45">
+        <p className="mt-4 font-mono text-[10px] tracking-[0.15em] uppercase text-white/60">
           Última actualización: {updated}
         </p>
       </header>
 
-      <article className="px-5 md:px-10 pb-24 max-w-[720px] [&_h2]:uppercase [&_h2]:text-[#f0f0ee] [&_h2]:text-[20px] [&_h2]:mt-10 [&_h2]:mb-3 [&_h2]:leading-[1.15] [&_p]:text-[14px] [&_p]:text-white/65 [&_p]:font-light [&_p]:leading-[1.8] [&_p]:mb-4 [&_ul]:text-[14px] [&_ul]:text-white/65 [&_ul]:font-light [&_ul]:leading-[1.8] [&_ul]:mb-4 [&_ul]:pl-5 [&_li]:list-disc [&_a]:text-[#e8ff00]">
+      <article className="px-5 md:px-10 pb-24 max-w-[720px] [&_h2]:uppercase [&_h2]:text-[#f0f0ee] [&_h2]:text-[20px] [&_h2]:mt-10 [&_h2]:mb-3 [&_h2]:leading-[1.15] [&_p]:text-[14px] [&_p]:text-white/80 [&_p]:font-light [&_p]:leading-[1.8] [&_p]:mb-4 [&_ul]:text-[14px] [&_ul]:text-white/80 [&_ul]:font-light [&_ul]:leading-[1.8] [&_ul]:mb-4 [&_ul]:pl-5 [&_li]:list-disc [&_a]:text-[#e8ff00]">
         <style>{`article h2 { font-family: var(--font-barlow-condensed); font-weight: 900; }`}</style>
         {children}
       </article>

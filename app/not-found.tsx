@@ -29,7 +29,7 @@ export default function NotFound() {
           Fuera de<br />
           <span className="text-[#e8ff00]">juego.</span>
         </h1>
-        <p className="mt-6 max-w-[380px] text-[14px] font-light leading-[1.75] text-white/65">
+        <p className="mt-6 max-w-[380px] text-[14px] font-light leading-[1.75] text-white/80">
           Esta página no existe o ha cambiado de sitio. Vuelve al campo y
           sigue jugando.
         </p>

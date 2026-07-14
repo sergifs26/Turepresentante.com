@@ -2,8 +2,11 @@ import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
 /** Refresca la sesión de Supabase en cada petición (los Server
- *  Components no pueden escribir cookies). Convención Next 16: proxy. */
-export async function proxy(request: NextRequest) {
+ *  Components no pueden escribir cookies).
+ *  Nota: usamos la convención `middleware` (runtime edge) y no la nueva
+ *  `proxy` de Next 16 porque el adaptador de Cloudflare no soporta
+ *  middleware en runtime Node.js. */
+export async function middleware(request: NextRequest) {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url || !key) return NextResponse.next({ request });

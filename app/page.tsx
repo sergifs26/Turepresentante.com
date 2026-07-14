@@ -417,13 +417,10 @@ function CtaSection() {
           fontSize: "clamp(56px, 10vw, 130px)",
         }}
       >
-        Tu<br />
-        talento<br />
+        Hazte<br />
         <span className="text-[#e8ff00]" style={{ textShadow: "0 0 42px rgba(232,255,0,0.3)" }}>
-          merece
+          ver.
         </span>
-        <br />
-        ser visto.
       </h2>
 
       <div className="relative max-w-[300px] md:pb-4">

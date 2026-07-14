@@ -74,7 +74,7 @@ export default function HeroBoot() {
             fontFamily: "var(--font-barlow-condensed)",
             fontWeight: 900,
             fontStyle: "italic",
-            fontSize: "clamp(80px, 12vw, 168px)",
+            fontSize: "clamp(60px, 9vw, 126px)",
           }}
         >
           <motion.span
@@ -83,16 +83,24 @@ export default function HeroBoot() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5, duration: 0.6, ease: EASE }}
           >
-            Hazte
+            Tu talento
           </motion.span>
           <motion.span
             className="block text-[#e8ff00]"
             initial={{ opacity: 0, x: -24 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.68, duration: 0.6, ease: EASE }}
+            transition={{ delay: 0.64, duration: 0.6, ease: EASE }}
             style={{ textShadow: "0 0 42px rgba(232,255,0,0.35)" }}
           >
-            Ver.
+            merece
+          </motion.span>
+          <motion.span
+            className="block text-[#f0f0ee]"
+            initial={{ opacity: 0, x: -24 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.78, duration: 0.6, ease: EASE }}
+          >
+            ser visto.
           </motion.span>
         </h1>
 

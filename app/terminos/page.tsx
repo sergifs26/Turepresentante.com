@@ -60,7 +60,7 @@ export default function TerminosPage() {
       <h2>Contacto</h2>
       <p>
         Para cualquier duda sobre estas condiciones:{" "}
-        <a href="mailto:hola@turepresentante.com">hola@turepresentante.com</a>.
+        <a href="mailto:info@turepresentante.com">info@turepresentante.com</a>.
       </p>
     </LegalPage>
   );

@@ -43,7 +43,7 @@ export async function POST(request: Request) {
       {
         ok: false,
         error:
-          "El envío no está activado todavía. Escríbenos a hola@turepresentante.com.",
+          "El envío no está activado todavía. Escríbenos a info@turepresentante.com.",
       },
       { status: 503 }
     );

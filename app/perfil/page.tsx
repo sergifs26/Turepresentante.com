@@ -130,10 +130,10 @@ export default function PerfilPage() {
               ¿Dudas antes de enviar?
             </span>
             <a
-              href="mailto:hola@turepresentante.com"
+              href="mailto:info@turepresentante.com"
               className="mt-1.5 inline-block text-[13px] text-[#e8ff00] no-underline hover:opacity-80 transition-opacity"
             >
-              hola@turepresentante.com
+              info@turepresentante.com
             </a>
           </div>
         </aside>

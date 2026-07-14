@@ -55,10 +55,10 @@ export default function SiteFooter() {
               </Link>
             ))}
             <a
-              href="mailto:hola@turepresentante.com"
+              href="mailto:info@turepresentante.com"
               className="font-mono text-[10px] tracking-[0.12em] text-white/40 uppercase no-underline hover:text-[#e8ff00] transition-colors"
             >
-              hola@turepresentante.com
+              info@turepresentante.com
             </a>
           </div>
         </div>

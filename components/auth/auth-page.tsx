@@ -25,7 +25,7 @@ export default function AuthPage({
         <header>
           <div className="inline-flex items-center gap-2.5 mb-5 border border-[#e8ff00]/25 rounded-full px-4 py-[7px]">
             <span className="bio-node" aria-hidden="true" />
-            <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
+            <span className="font-mono text-[12px] tracking-[0.2em] uppercase text-[#e8ff00]">
               {eyebrow}
             </span>
           </div>
@@ -40,7 +40,7 @@ export default function AuthPage({
           >
             {title}
           </h1>
-          <p className="mt-5 max-w-[440px] text-[15px] font-light leading-[1.75] text-white/45">
+          <p className="mt-5 max-w-[440px] text-[17px] leading-[1.75] text-white/80">
             {intro}
           </p>
         </header>
@@ -56,14 +56,14 @@ export default function AuthPage({
               >
                 Estamos activando las cuentas
               </h2>
-              <p className="mt-3 text-[14px] text-white/45 font-light leading-[1.75]">
+              <p className="mt-3 text-[16px] text-white/80 leading-[1.75]">
                 Muy pronto podrás crear tu cuenta y subir tus vídeos. Mientras
                 tanto, envíanos tu perfil por el formulario y lo revisamos
                 igual.
               </p>
               <Link
                 href="/perfil"
-                className="bio-btn mt-6 inline-block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-7 py-3.5 no-underline"
+                className="bio-btn mt-6 inline-block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[13px] tracking-[0.1em] uppercase font-medium px-7 py-3.5 no-underline"
               >
                 Enviar mi perfil
               </Link>

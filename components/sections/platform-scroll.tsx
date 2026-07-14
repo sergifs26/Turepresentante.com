@@ -46,16 +46,16 @@ function PlatformMockup() {
       {/* Top bar */}
       <div className="flex items-center gap-4 px-5 py-3 border-b border-white/5 bg-[#111] flex-shrink-0">
         <span
-          className="text-[13px] font-black tracking-wide text-[#e8ff00] uppercase"
+          className="text-[15px] font-black tracking-wide text-[#e8ff00] uppercase"
           style={{ fontFamily: "var(--font-barlow-condensed)" }}
         >
           Turepresentante
         </span>
         <div className="ml-auto flex items-center gap-2">
-          <div className="flex items-center gap-1.5 bg-white/[0.04] px-3 py-1.5 text-[10px] text-white/30 font-mono">
+          <div className="flex items-center gap-1.5 bg-white/[0.04] px-3 py-1.5 text-[12px] text-white/65 font-mono">
             🔍 Buscar jugadores...
           </div>
-          <div className="w-6 h-6 bg-[#e8ff00]/10 border border-[#e8ff00]/20 flex items-center justify-center text-[10px]">
+          <div className="w-6 h-6 bg-[#e8ff00]/10 border border-[#e8ff00]/20 flex items-center justify-center text-[12px]">
             +
           </div>
         </div>
@@ -66,16 +66,16 @@ function PlatformMockup() {
         {["Todos", "Delantero", "Mediocentro", "Portero"].map((f, i) => (
           <span
             key={f}
-            className={`text-[9px] font-mono tracking-wider uppercase px-2.5 py-1 ${
+            className={`text-[11px] font-mono tracking-wider uppercase px-2.5 py-1 ${
               i === 0
                 ? "bg-[#e8ff00] text-[#0a0a0a]"
-                : "border border-white/10 text-white/35"
+                : "border border-white/10 text-white/70"
             }`}
           >
             {f}
           </span>
         ))}
-        <span className="ml-auto text-[9px] font-mono text-white/20 tracking-wider">
+        <span className="ml-auto text-[11px] font-mono text-white/55 tracking-wider">
           2,401 jugadores
         </span>
       </div>
@@ -93,14 +93,14 @@ function PlatformMockup() {
                 className={`absolute top-2 left-2 text-[8px] font-mono font-medium tracking-wider px-1.5 py-0.5 ${
                   p.rep
                     ? "bg-[#e8ff00] text-[#0a0a0a]"
-                    : "bg-white/10 text-white/60 border border-white/15"
+                    : "bg-white/10 text-white/75 border border-white/15"
                 }`}
               >
                 {p.rep ? "Representado" : "Nuevo"}
               </span>
               <div className="absolute bottom-0 left-0 right-0 p-2.5">
                 <div
-                  className="text-[12px] font-black uppercase text-white tracking-tight"
+                  className="text-[14px] font-black uppercase text-white tracking-tight"
                   style={{ fontFamily: "var(--font-barlow-condensed)" }}
                 >
                   {p.name}
@@ -110,18 +110,18 @@ function PlatformMockup() {
                 </div>
                 <div className="flex gap-3 mt-1.5 pt-1.5 border-t border-white/[0.08]">
                   <div>
-                    <span className="block text-[11px] font-mono font-medium text-white">
+                    <span className="block text-[13px] font-mono font-medium text-white">
                       {p.goals || "—"}
                     </span>
-                    <span className="block text-[7px] font-mono text-white/30 uppercase tracking-wider">
+                    <span className="block text-[7px] font-mono text-white/65 uppercase tracking-wider">
                       Goles
                     </span>
                   </div>
                   <div>
-                    <span className="block text-[11px] font-mono font-medium text-white">
+                    <span className="block text-[13px] font-mono font-medium text-white">
                       {p.age}
                     </span>
-                    <span className="block text-[7px] font-mono text-white/30 uppercase tracking-wider">
+                    <span className="block text-[7px] font-mono text-white/65 uppercase tracking-wider">
                       Edad
                     </span>
                   </div>
@@ -143,7 +143,7 @@ export default function PlatformScroll() {
           <div className="text-center px-4">
             <div className="flex items-center justify-center gap-3 mb-5">
               <span className="w-6 h-px bg-[#e8ff00] block" />
-              <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
+              <span className="font-mono text-[12px] tracking-[0.2em] uppercase text-[#e8ff00]">
                 La plataforma
               </span>
               <span className="w-6 h-px bg-[#e8ff00] block" />

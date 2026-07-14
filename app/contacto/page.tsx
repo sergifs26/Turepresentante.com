@@ -30,7 +30,7 @@ export default function ContactoPage() {
       <header className="px-5 md:px-10 pt-16 md:pt-24 pb-10 md:pb-14">
         <div className="inline-flex items-center gap-2.5 mb-5 border border-[#e8ff00]/25 rounded-full px-4 py-[7px]">
           <span className="bio-node" aria-hidden="true" />
-          <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
+          <span className="font-mono text-[12px] tracking-[0.2em] uppercase text-[#e8ff00]">
             Contacto
           </span>
         </div>
@@ -45,7 +45,7 @@ export default function ContactoPage() {
         >
           Hablemos<span className="text-[#e8ff00]">.</span>
         </h1>
-        <p className="mt-5 max-w-[440px] text-[15px] font-light leading-[1.75] text-white/45">
+        <p className="mt-5 max-w-[440px] text-[17px] leading-[1.75] text-white/80">
           Si quieres que valoremos tu juego, usa el formulario de{" "}
           <a href="/perfil" className="text-[#e8ff00] no-underline hover:opacity-80">
             sube tu perfil
@@ -67,17 +67,17 @@ export default function ContactoPage() {
 
         <aside className="lg:pt-2">
           <div className="bio-cell px-6 py-6">
-            <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-white/30 block">
+            <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-white/65 block">
               Email directo
             </span>
             <a
               href="mailto:info@turepresentante.com"
-              className="mt-1.5 inline-block text-[13px] text-[#e8ff00] no-underline hover:opacity-80 transition-opacity"
+              className="mt-1.5 inline-block text-[15px] text-[#e8ff00] no-underline hover:opacity-80 transition-opacity"
             >
               info@turepresentante.com
             </a>
           </div>
-          <p className="mt-5 text-[12px] text-white/25 font-light leading-[1.7]">
+          <p className="mt-5 text-[14px] text-white/60 leading-[1.7]">
             Si eres menor de edad, pide a tu padre, madre o tutor que nos
             escriba o que esté en copia en el primer email.
           </p>

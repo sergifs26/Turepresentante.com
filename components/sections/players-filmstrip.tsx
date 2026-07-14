@@ -49,12 +49,12 @@ export default function PlayersFilmstrip() {
           <em className="text-[#e8ff00]">en el</em><br />
           escaparate
         </h2>
-        <p className="max-w-[200px] text-[13px] text-white/35 font-light leading-relaxed pb-2 md:text-right">
+        <p className="max-w-[200px] text-[15px] text-white/70 leading-relaxed pb-2 md:text-right">
           Selección de perfiles actualmente representados.
         </p>
       </div>
 
-      <p className="px-5 md:px-10 mb-3 flex items-center gap-2 text-[9px] font-mono tracking-[0.15em] text-white/20 uppercase">
+      <p className="px-5 md:px-10 mb-3 flex items-center gap-2 text-[11px] font-mono tracking-[0.15em] text-white/55 uppercase">
         <span className="w-5 h-px bg-white/15 block" />
         Arrastra para ver más
       </p>
@@ -80,7 +80,7 @@ export default function PlayersFilmstrip() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/15 to-transparent" />
               <span
                 className={`absolute top-3.5 left-3.5 text-[8px] font-mono font-medium tracking-widest uppercase px-2 py-1 ${
-                  p.rep ? "bg-[#e8ff00] text-[#0a0a0a]" : "bg-white/10 text-white/60 border border-white/15"
+                  p.rep ? "bg-[#e8ff00] text-[#0a0a0a]" : "bg-white/10 text-white/75 border border-white/15"
                 }`}
               >
                 {p.rep ? "Representado" : "En proceso"}
@@ -92,19 +92,19 @@ export default function PlayersFilmstrip() {
                 >
                   {p.name}
                 </div>
-                <div className="text-[#e8ff00] text-[9px] font-mono tracking-widest uppercase mt-1">{p.pos}</div>
+                <div className="text-[#e8ff00] text-[11px] font-mono tracking-widest uppercase mt-1">{p.pos}</div>
                 <div className="flex gap-4 mt-3 pt-3 border-t border-white/10">
                   <div>
-                    <span className="block font-mono text-[15px] font-medium text-white">{p.goals || "—"}</span>
-                    <span className="block font-mono text-[8px] text-white/30 uppercase tracking-wider mt-0.5">Goles</span>
+                    <span className="block font-mono text-[17px] font-medium text-white">{p.goals || "—"}</span>
+                    <span className="block font-mono text-[8px] text-white/65 uppercase tracking-wider mt-0.5">Goles</span>
                   </div>
                   <div>
-                    <span className="block font-mono text-[15px] font-medium text-white">{p.age}</span>
-                    <span className="block font-mono text-[8px] text-white/30 uppercase tracking-wider mt-0.5">Edad</span>
+                    <span className="block font-mono text-[17px] font-medium text-white">{p.age}</span>
+                    <span className="block font-mono text-[8px] text-white/65 uppercase tracking-wider mt-0.5">Edad</span>
                   </div>
                   <div>
-                    <span className="block font-mono text-[15px] font-medium text-white">{p.parts}</span>
-                    <span className="block font-mono text-[8px] text-white/30 uppercase tracking-wider mt-0.5">Part.</span>
+                    <span className="block font-mono text-[17px] font-medium text-white">{p.parts}</span>
+                    <span className="block font-mono text-[8px] text-white/65 uppercase tracking-wider mt-0.5">Part.</span>
                   </div>
                 </div>
               </div>
@@ -125,7 +125,7 @@ export default function PlayersFilmstrip() {
           >
             Tu sitio<br />está aquí
           </div>
-          <div className="font-mono text-[9px] tracking-[0.15em] text-white/30 uppercase mt-3">
+          <div className="font-mono text-[11px] tracking-[0.15em] text-white/65 uppercase mt-3">
             Sube tu perfil gratis
           </div>
         </a>

@@ -32,7 +32,7 @@ export default async function JugadoresPage() {
       <header className="px-5 md:px-10 pt-16 md:pt-24 pb-10 md:pb-14">
         <div className="inline-flex items-center gap-2.5 mb-5 border border-[#e8ff00]/25 rounded-full px-4 py-[7px]">
           <span className="bio-node" aria-hidden="true" />
-          <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
+          <span className="font-mono text-[12px] tracking-[0.2em] uppercase text-[#e8ff00]">
             El escaparate
           </span>
         </div>
@@ -47,7 +47,7 @@ export default async function JugadoresPage() {
         >
           Jugadores<span className="text-[#e8ff00]">.</span>
         </h1>
-        <p className="mt-5 max-w-[460px] text-[15px] font-light leading-[1.75] text-white/45">
+        <p className="mt-5 max-w-[460px] text-[17px] leading-[1.75] text-white/80">
           Perfiles públicos con vídeo. Si eres club o agente y quieres que te
           filtremos candidatos,{" "}
           <Link href="/clubes" className="text-[#e8ff00] no-underline hover:opacity-80">
@@ -66,13 +66,13 @@ export default async function JugadoresPage() {
             >
               Los primeros están llegando
             </h2>
-            <p className="mt-3 text-[14px] text-white/45 font-light leading-[1.75]">
+            <p className="mt-3 text-[16px] text-white/80 leading-[1.75]">
               El escaparate acaba de abrir. Crea tu cuenta hoy y sé de los
               primeros jugadores en tener su perfil aquí.
             </p>
             <Link
               href="/registro"
-              className="bio-btn mt-6 inline-block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[11px] tracking-[0.1em] uppercase font-medium px-7 py-3.5 no-underline"
+              className="bio-btn mt-6 inline-block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[13px] tracking-[0.1em] uppercase font-medium px-7 py-3.5 no-underline"
             >
               Crear mi perfil gratis
             </Link>
@@ -91,10 +91,10 @@ export default async function JugadoresPage() {
                 >
                   {p.nombre}
                 </span>
-                <span className="block mt-1.5 font-mono text-[10px] tracking-[0.15em] uppercase text-[#e8ff00]">
+                <span className="block mt-1.5 font-mono text-[12px] tracking-[0.15em] uppercase text-[#e8ff00]">
                   {[p.posicion, p.ciudad].filter(Boolean).join(" · ") || "Perfil nuevo"}
                 </span>
-                <span className="block mt-3 text-[13px] text-white/40 font-light leading-[1.7]">
+                <span className="block mt-3 text-[15px] text-white/75 leading-[1.7]">
                   {[p.club, p.categoria, p.nacimiento ? `Nacido en ${p.nacimiento}` : null]
                     .filter(Boolean)
                     .join(" · ") || "Completando su ficha…"}

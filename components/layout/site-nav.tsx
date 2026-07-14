@@ -35,7 +35,7 @@ export default function SiteNav({
       >
         <Link
           href="/"
-          className="font-black text-[17px] tracking-[0.08em] uppercase text-[#f0f0ee] no-underline"
+          className="font-black text-[19px] tracking-[0.08em] uppercase text-[#f0f0ee] no-underline"
           style={{ fontFamily: "var(--font-barlow-condensed)" }}
         >
           Turepresentante
@@ -49,7 +49,7 @@ export default function SiteNav({
               <Link
                 key={l.href}
                 href={l.href}
-                className={`font-mono text-[10px] tracking-[0.12em] uppercase text-[#f0f0ee] no-underline transition-opacity ${
+                className={`font-mono text-[12px] tracking-[0.12em] uppercase text-[#f0f0ee] no-underline transition-opacity ${
                   active ? "opacity-100" : "opacity-60 hover:opacity-100"
                 }`}
               >
@@ -59,7 +59,7 @@ export default function SiteNav({
           })}
           <Link
             href="/registro"
-            className="bio-btn font-mono text-[10px] tracking-[0.12em] uppercase bg-[#e8ff00] text-[#0a0a0a] px-5 py-[8px] no-underline font-medium"
+            className="bio-btn font-mono text-[12px] tracking-[0.12em] uppercase bg-[#e8ff00] text-[#0a0a0a] px-5 py-[8px] no-underline font-medium"
           >
             Sube tu perfil
           </Link>
@@ -126,7 +126,7 @@ export default function SiteNav({
                 <Link
                   href="/registro"
                   onClick={() => setOpen(false)}
-                  className="bio-btn mt-6 inline-block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[12px] tracking-[0.1em] uppercase font-medium px-8 py-4 no-underline"
+                  className="bio-btn mt-6 inline-block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[14px] tracking-[0.1em] uppercase font-medium px-8 py-4 no-underline"
                 >
                   Sube tu perfil gratis
                 </Link>

@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import SiteNav from "@/components/layout/site-nav";
 import SiteFooter from "@/components/layout/site-footer";
 import ProfileForm from "@/components/account/profile-form";
+import AvatarUpload from "@/components/account/avatar-upload";
 import VideoManager from "@/components/account/video-manager";
 import { createClient } from "@/lib/supabase/server";
 import { slugify } from "@/lib/slug";
@@ -114,6 +115,7 @@ export default async function CuentaPage() {
           >
             Tus datos
           </h2>
+          {p && <AvatarUpload profile={p} />}
           {p && <ProfileForm profile={p} />}
         </div>
       </section>

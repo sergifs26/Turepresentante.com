@@ -70,6 +70,14 @@ export default async function JugadorPage({
         >
           ← Todos los jugadores
         </Link>
+        {profile.foto_url && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={profile.foto_url}
+            alt={`Foto de ${profile.nombre}`}
+            className="mt-8 w-[110px] h-[110px] md:w-[140px] md:h-[140px] rounded-full object-cover border-2 border-[#e8ff00]/40"
+          />
+        )}
         <h1
           className="mt-6 uppercase leading-[0.9] tracking-[-0.03em] text-[#f0f0ee]"
           style={{

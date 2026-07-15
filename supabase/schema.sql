@@ -65,3 +65,35 @@ create policy "cada uno actualiza sus videos"
 drop policy if exists "cada uno borra sus videos" on public.videos;
 create policy "cada uno borra sus videos"
   on public.videos for delete using (auth.uid() = user_id);
+
+-- ============================================================
+-- Fotos de perfil (Supabase Storage, bucket público "avatars")
+-- ============================================================
+alter table public.profiles add column if not exists foto_url text;
+
+insert into storage.buckets (id, name, public)
+values ('avatars', 'avatars', true)
+on conflict (id) do nothing;
+
+drop policy if exists "avatars lectura publica" on storage.objects;
+create policy "avatars lectura publica"
+  on storage.objects for select using (bucket_id = 'avatars');
+
+-- Cada usuario solo puede tocar su propia carpeta (avatars/{user_id}/...)
+drop policy if exists "avatars sube el dueno" on storage.objects;
+create policy "avatars sube el dueno"
+  on storage.objects for insert with check (
+    bucket_id = 'avatars' and (storage.foldername(name))[1] = auth.uid()::text
+  );
+
+drop policy if exists "avatars actualiza el dueno" on storage.objects;
+create policy "avatars actualiza el dueno"
+  on storage.objects for update using (
+    bucket_id = 'avatars' and (storage.foldername(name))[1] = auth.uid()::text
+  );
+
+drop policy if exists "avatars borra el dueno" on storage.objects;
+create policy "avatars borra el dueno"
+  on storage.objects for delete using (
+    bucket_id = 'avatars' and (storage.foldername(name))[1] = auth.uid()::text
+  );

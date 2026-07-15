@@ -85,6 +85,23 @@ export default async function JugadoresPage() {
                 href={`/jugadores/${p.slug}`}
                 className="bio-cell block px-7 py-8 no-underline"
               >
+                {p.foto_url ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={p.foto_url}
+                    alt={`Foto de ${p.nombre}`}
+                    loading="lazy"
+                    className="w-[72px] h-[72px] rounded-full object-cover border border-white/15 mb-4"
+                  />
+                ) : (
+                  <span
+                    className="w-[72px] h-[72px] rounded-full bg-white/[0.05] border border-white/10 flex items-center justify-center text-[30px] text-[#e8ff00] uppercase mb-4"
+                    style={{ fontFamily: "var(--font-barlow-condensed)", fontWeight: 900 }}
+                    aria-hidden="true"
+                  >
+                    {p.nombre.charAt(0)}
+                  </span>
+                )}
                 <span
                   className="block uppercase text-[#f0f0ee] leading-[1.02] tracking-[-0.01em] text-[28px]"
                   style={{ fontFamily: "var(--font-barlow-condensed)", fontWeight: 900 }}

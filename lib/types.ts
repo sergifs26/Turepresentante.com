@@ -9,6 +9,7 @@ export type Profile = {
   ciudad: string | null;
   nacimiento: number | null;
   bio: string | null;
+  foto_url: string | null;
   created_at: string;
 };
 

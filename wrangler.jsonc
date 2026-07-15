@@ -7,6 +7,8 @@
     "nodejs_compat",
     "global_fetch_strictly_public"
   ],
+  // No borrar en cada deploy las variables creadas desde el dashboard
+  "keep_vars": true,
   // Dominios del sitio: wrangler los registra como Custom Domains al desplegar
   "routes": [
     { "pattern": "turepresentante.com", "custom_domain": true },

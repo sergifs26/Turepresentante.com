@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Favicon: "T." — la T condensada en cursiva + el punto amarillo de la marca -->
+  <rect width="64" height="64" rx="13" fill="#0a0a0a"/>
+  <g transform="translate(4.5 0) skewX(-8)" fill="#f0f0ee">
+    <rect x="12" y="13" width="28" height="9"/>
+    <rect x="21.5" y="13" width="9" height="39"/>
+  </g>
+  <circle cx="47.5" cy="48" r="6.5" fill="#e8ff00"/>
+</svg>

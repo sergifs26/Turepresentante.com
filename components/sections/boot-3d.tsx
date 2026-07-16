@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, Suspense } from "react";
+import { useEffect, useMemo, useRef, useState, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF, Center, Bounds } from "@react-three/drei";
 import * as THREE from "three";
@@ -17,39 +17,44 @@ function RotatingArt() {
 
   // Tinte de marca: todo el arte en amarillo ácido con un leve autobrillo,
   // como la bota original — la pieza lee como un neón sobre el negro.
-  useEffect(() => {
+  // Se hace en useMemo (durante el render) para que <Center> y <Bounds>
+  // midan la escena YA sin el campo: con visible=false u ocultado en un
+  // efecto, el auto-encuadre seguiría contando las piezas gigantes.
+  useMemo(() => {
+    const size = new THREE.Vector3();
+    const gigantes: THREE.Object3D[] = [];
     scene.traverse((obj) => {
       const mesh = obj as THREE.Mesh;
       if (!mesh.isMesh) return;
+      // La escena trae el campo y dos láminas de miles de unidades; los
+      // jugadores, el balón y los fragmentos miden ~200. Solo queremos
+      // a los jugadores.
+      mesh.geometry.computeBoundingBox();
+      mesh.geometry.boundingBox!.getSize(size);
+      if (Math.max(size.x, size.y, size.z) > 500) {
+        gigantes.push(mesh);
+        return;
+      }
       const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
       mats.forEach((m) => {
         const mat = m as THREE.MeshStandardMaterial;
-        if (!mat) return;
-        // El modelo trae una lámina de "cristal oscuro" por encima que
-        // apaga todo el arte: fuera
-        const nombre = (mat.name || "").toLowerCase();
-        if (nombre.includes("glass") || nombre.includes("translucent")) {
-          mat.visible = false;
-          return;
-        }
-        if (!mat.color) return;
+        if (!mat || !mat.color) return;
         // Los colores por vértice del original ensucian el tinte de marca
         mat.vertexColors = false;
         // El export trae capas con opacidad 0-20% (arte en "cristales"):
-        // sin esto el modelo entero se ve fantasma
+        // sin esto los jugadores se ven fantasma
         mat.transparent = false;
         mat.opacity = 1;
         mat.depthWrite = true;
         mat.color.copy(ACID);
-        // Relieve plano al que apenas le llega la luz: el neón sale del
-        // autobrillo, no de los focos
         mat.emissive = ACID.clone();
-        mat.emissiveIntensity = 0.35;
-        mat.metalness = 0.1;
-        mat.roughness = 0.5;
+        mat.emissiveIntensity = 0.25;
+        mat.metalness = 0.15;
+        mat.roughness = 0.55;
         mat.needsUpdate = true;
       });
     });
+    gigantes.forEach((m) => m.removeFromParent());
   }, [scene]);
 
   useEffect(() => {
@@ -61,15 +66,13 @@ function RotatingArt() {
     return () => window.removeEventListener("mousemove", onMove);
   }, []);
 
-  // La pieza es un relieve casi plano: nada de giros completos (se vería
-  // de canto). Balanceo suave + parallax con el ratón.
+  // Los jugadores giran en continuo (como la bota original) + parallax
   useFrame((_, delta) => {
     const g = group.current;
     if (!g) return;
-    t.current += delta;
-    const sway = Math.sin(t.current * 0.45) * 0.28;
-    g.rotation.y = THREE.MathUtils.lerp(g.rotation.y, sway + mouse.current.x * 0.18, 0.06);
-    g.rotation.x = THREE.MathUtils.lerp(g.rotation.x, mouse.current.y * 0.14, 0.05);
+    g.rotation.y += delta * 0.35;
+    g.rotation.x = THREE.MathUtils.lerp(g.rotation.x, mouse.current.y * 0.22, 0.05);
+    g.rotation.z = THREE.MathUtils.lerp(g.rotation.z, -mouse.current.x * 0.08, 0.05);
   });
 
   return (

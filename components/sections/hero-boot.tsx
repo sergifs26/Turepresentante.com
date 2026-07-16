@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import SiteNav from "@/components/layout/site-nav";
+import AuthCta from "@/components/auth/auth-cta";
 
 // 3D viewer loads client-side only (three.js needs the browser)
 const Boot3D = dynamic(() => import("@/components/sections/boot-3d"), {
@@ -121,12 +121,10 @@ export default function HeroBoot() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.05, duration: 0.4 }}
         >
-          <Link
-            href="/registro"
+          <AuthCta
+            anonLabel="Crear mi perfil gratis"
             className="bio-btn inline-block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[13px] tracking-[0.1em] uppercase font-medium px-8 py-[14px] no-underline"
-          >
-            Crear mi perfil gratis
-          </Link>
+          />
           <a
             href="#como-funciona"
             className="bio-btn-ghost inline-block border border-white/25 text-white/85 font-mono text-[12px] tracking-[0.12em] uppercase px-6 py-[13px] no-underline hover:border-[#e8ff00]/50 hover:text-white"

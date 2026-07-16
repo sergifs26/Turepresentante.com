@@ -1,36 +1,64 @@
 "use client";
 
-import { useEffect, useRef, useState, Suspense } from "react";
+import { useEffect, useMemo, useRef, useState, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF, Center, Bounds } from "@react-three/drei";
 import * as THREE from "three";
 
-useGLTF.preload("/bota.glb");
+useGLTF.preload("/balon-energia.glb");
 
 const ACID = new THREE.Color("#e8ff00");
+const BLANCO = new THREE.Color("#f0f0ee");
 
-function RotatingBoot() {
-  const { scene } = useGLTF("/bota.glb");
+function RotatingArt() {
+  const { scene } = useGLTF("/balon-energia.glb");
   const group = useRef<THREE.Group>(null);
   const mouse = useRef({ x: 0, y: 0 });
+  const t = useRef(0);
 
-  // Tint every material toward acid — keeps the scanned geometry/normals/detail,
-  // multiplies the texture by the brand color so the boot reads as neon yellow.
-  useEffect(() => {
+  // Tinte de marca: todo el arte en amarillo ácido con un leve autobrillo,
+  // como la bota original — la pieza lee como un neón sobre el negro.
+  // Se hace en useMemo (durante el render) para que <Center> y <Bounds>
+  // midan la escena YA sin el campo: con visible=false u ocultado en un
+  // efecto, el auto-encuadre seguiría contando las piezas gigantes.
+  useMemo(() => {
+    const size = new THREE.Vector3();
+    const gigantes: THREE.Object3D[] = [];
     scene.traverse((obj) => {
       const mesh = obj as THREE.Mesh;
       if (!mesh.isMesh) return;
+      // La escena trae el campo y dos láminas de miles de unidades; los
+      // jugadores, el balón y los fragmentos miden ~200. Solo queremos
+      // a los jugadores.
+      mesh.geometry.computeBoundingBox();
+      mesh.geometry.boundingBox!.getSize(size);
+      const maxDim = Math.max(size.x, size.y, size.z);
+      if (maxDim > 500) {
+        gigantes.push(mesh);
+        return;
+      }
+      // El balón son las piezas pequeñas (~23 unidades): va en blanco
+      const tono = maxDim < 40 ? BLANCO : ACID;
       const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
       mats.forEach((m) => {
         const mat = m as THREE.MeshStandardMaterial;
         if (!mat || !mat.color) return;
-        mat.color.copy(ACID);
-        mat.emissive = ACID.clone().multiplyScalar(0.15);
+        // Los colores por vértice del original ensucian el tinte de marca
+        mat.vertexColors = false;
+        // El export trae capas con opacidad 0-20% (arte en "cristales"):
+        // sin esto los jugadores se ven fantasma
+        mat.transparent = false;
+        mat.opacity = 1;
+        mat.depthWrite = true;
+        mat.color.copy(tono);
+        mat.emissive = tono.clone();
+        mat.emissiveIntensity = 0.25;
         mat.metalness = 0.15;
         mat.roughness = 0.55;
         mat.needsUpdate = true;
       });
     });
+    gigantes.forEach((m) => m.removeFromParent());
   }, [scene]);
 
   useEffect(() => {
@@ -42,6 +70,7 @@ function RotatingBoot() {
     return () => window.removeEventListener("mousemove", onMove);
   }, []);
 
+  // Los jugadores giran en continuo (como la bota original) + parallax
   useFrame((_, delta) => {
     const g = group.current;
     if (!g) return;
@@ -64,7 +93,7 @@ export default function Boot3D() {
   const [visible, setVisible] = useState(true);
 
   // The render loop only runs while the hero is actually on screen;
-  // past the fold the GPU goes idle instead of spinning a boot nobody sees.
+  // past the fold the GPU goes idle instead of spinning art nobody sees.
   useEffect(() => {
     const el = wrapper.current;
     if (!el) return;
@@ -94,7 +123,7 @@ export default function Boot3D() {
 
         <Suspense fallback={null}>
           <Bounds fit clip margin={1.15}>
-            <RotatingBoot />
+            <RotatingArt />
           </Bounds>
         </Suspense>
       </Canvas>

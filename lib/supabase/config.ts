@@ -16,9 +16,17 @@ export function streamConfigured() {
   );
 }
 
-/** Subdominio de reproducción de Cloudflare Stream (customer code) */
-export const STREAM_CUSTOMER_CODE =
-  process.env.NEXT_PUBLIC_STREAM_CUSTOMER_CODE ?? "";
+/** Subdominio de reproducción de Cloudflare Stream (customer code).
+ *  Acepta tanto el código a secas como la dirección completa
+ *  ("customer-xxx.cloudflarestream.com") y extrae solo el código. */
+export const STREAM_CUSTOMER_CODE = (
+  process.env.NEXT_PUBLIC_STREAM_CUSTOMER_CODE ?? ""
+)
+  .trim()
+  .replace(/^https?:\/\//, "")
+  .replace(/^customer-/, "")
+  .replace(/\.cloudflarestream\.com.*$/, "")
+  .replace(/\/.*$/, "");
 
 export function streamIframeUrl(uid: string) {
   return `https://customer-${STREAM_CUSTOMER_CODE}.cloudflarestream.com/${uid}/iframe`;

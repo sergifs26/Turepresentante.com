@@ -8,6 +8,7 @@ import * as THREE from "three";
 useGLTF.preload("/balon-energia.glb");
 
 const ACID = new THREE.Color("#e8ff00");
+const BLANCO = new THREE.Color("#f0f0ee");
 
 function RotatingArt() {
   const { scene } = useGLTF("/balon-energia.glb");
@@ -31,10 +32,13 @@ function RotatingArt() {
       // a los jugadores.
       mesh.geometry.computeBoundingBox();
       mesh.geometry.boundingBox!.getSize(size);
-      if (Math.max(size.x, size.y, size.z) > 500) {
+      const maxDim = Math.max(size.x, size.y, size.z);
+      if (maxDim > 500) {
         gigantes.push(mesh);
         return;
       }
+      // El balón son las piezas pequeñas (~23 unidades): va en blanco
+      const tono = maxDim < 40 ? BLANCO : ACID;
       const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
       mats.forEach((m) => {
         const mat = m as THREE.MeshStandardMaterial;
@@ -46,8 +50,8 @@ function RotatingArt() {
         mat.transparent = false;
         mat.opacity = 1;
         mat.depthWrite = true;
-        mat.color.copy(ACID);
-        mat.emissive = ACID.clone();
+        mat.color.copy(tono);
+        mat.emissive = tono.clone();
         mat.emissiveIntensity = 0.25;
         mat.metalness = 0.15;
         mat.roughness = 0.55;

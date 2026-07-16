@@ -1,5 +1,6 @@
 import Link from "next/link";
 import HeroBoot from "@/components/sections/hero-boot";
+import AuthCta from "@/components/auth/auth-cta";
 import PlatformScroll from "@/components/sections/platform-scroll";
 import PlayersFilmstrip from "@/components/sections/players-filmstrip";
 import SiteFooter from "@/components/layout/site-footer";
@@ -428,13 +429,11 @@ function CtaSection() {
           Crea tu perfil hoy. Si tu nivel nos convence, nos encargamos de todo.
           Sin costes ocultos, sin intermediarios entre tú y tu futuro.
         </p>
-        <Link
+        <AuthCta
           id="nerve-end"
-          href="/registro"
+          anonLabel="Crear mi perfil gratis"
           className="bio-btn block bg-[#e8ff00] text-[#0a0a0a] font-mono text-[13px] tracking-[0.1em] uppercase font-medium px-7 py-4 text-center no-underline"
-        >
-          Crear mi perfil gratis
-        </Link>
+        />
         <Link
           href="/clubes"
           className="bio-btn-ghost block mt-3 border border-white/20 text-white/85 font-mono text-[12px] tracking-[0.12em] uppercase px-7 py-3 text-center no-underline hover:border-[#e8ff00]/50 hover:text-white/80"

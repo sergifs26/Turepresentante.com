@@ -196,10 +196,10 @@ function Membrane({ flip = false }: { flip?: boolean }) {
 
 function StatsBand() {
   const stats = [
-    { val: "0 €", key: "Para jugadores, siempre" },
-    { val: "72 h", key: "Respuesta máxima" },
-    { val: "100%", key: "Perfiles revisados a mano" },
-    { val: "1:1", key: "Representación dedicada" },
+    { val: "0 €", key: "Para ti es gratis: cobramos al club, no al jugador" },
+    { val: "72 h", key: "Máximo que tardamos en responderte, sí o sí" },
+    { val: "100%", key: "De los perfiles los ve una persona, no un algoritmo" },
+    { val: "1 a 1", key: "Un agente dedicado a ti, en contacto directo" },
   ];
   return (
     <div className="relative">
@@ -220,7 +220,7 @@ function StatsBand() {
             >
               {s.val}
             </span>
-            <span className="block font-mono text-[11px] tracking-[0.15em] text-[rgba(10,10,10,0.55)] uppercase mt-1 pr-3">
+            <span className="block font-mono text-[11px] tracking-[0.1em] leading-[1.6] text-[rgba(10,10,10,0.7)] uppercase mt-1.5 pr-4 max-w-[260px]">
               {s.key}
             </span>
           </div>

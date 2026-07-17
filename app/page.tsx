@@ -298,13 +298,13 @@ function ProcessSection() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {steps.map((s) => (
-          <div key={s.num} className="bio-cell px-7 py-9 md:px-9 md:py-11">
+          <div key={s.num} className="bio-cell px-6 py-7 md:px-9 md:py-11">
             <span
-              className="block text-transparent leading-none tracking-[-0.04em] mb-[-16px] md:mb-[-22px] text-[80px] md:text-[110px]"
+              className="block text-transparent leading-none tracking-[-0.04em] mb-[-12px] md:mb-[-22px] text-[64px] md:text-[110px]"
               style={{
                 fontFamily: "var(--font-barlow-condensed)",
                 fontWeight: 900,
-                WebkitTextStroke: "1px rgba(232,255,0,0.13)",
+                WebkitTextStroke: "1px rgba(232,255,0,0.28)",
               }}
               aria-hidden="true"
             >
@@ -318,10 +318,10 @@ function ProcessSection() {
               <br />
               {s.title[1]}
             </h3>
-            <p className="mt-4 text-[16px] text-white/80 leading-[1.75] max-w-[280px]">
+            <p className="mt-3 md:mt-4 text-[16px] text-white/80 leading-[1.7] max-w-[280px]">
               {s.desc}
             </p>
-            <div className="bio-ring mt-7 w-11 h-11 rounded-full bg-[#e8ff00]/8 border border-[#e8ff00]/25 flex items-center justify-center">
+            <div className="bio-ring mt-5 md:mt-7 w-11 h-11 rounded-full bg-[#e8ff00]/8 border border-[#e8ff00]/25 flex items-center justify-center">
               {s.icon}
             </div>
           </div>

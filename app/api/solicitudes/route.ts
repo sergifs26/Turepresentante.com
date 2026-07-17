@@ -37,7 +37,11 @@ export async function POST(request: Request) {
     );
   }
 
-  const accessKey = process.env.WEB3FORMS_ACCESS_KEY;
+  // La clave de Web3Forms es pública por diseño (solo permite enviar al
+  // buzón asociado). Va en el código como respaldo porque las variables
+  // del dashboard de Cloudflare ya se han perdido una vez en un deploy.
+  const accessKey =
+    process.env.WEB3FORMS_ACCESS_KEY ?? "15408549-f732-41cc-a42f-57ce1d6dcf64";
   if (!accessKey) {
     return NextResponse.json(
       {

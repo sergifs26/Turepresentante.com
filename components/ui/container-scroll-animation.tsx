@@ -26,21 +26,23 @@ export const ContainerScroll = ({
     };
   }, []);
 
-  // El scroll en móvil llega a saltos; un spield lo suaviza para que la
-  // inclinación no vaya a tirones. Sigue de cerca al scroll pero lima los pasos.
+  // El scroll en móvil llega a saltos; un spring lo suaviza. En escritorio
+  // el scroll ya es fino: usar el spring ahí añade un retardo que se nota
+  // como falta de fluidez, así que allí seguimos el scroll 1:1.
   const smooth = useSpring(scrollYProgress, {
     stiffness: 140,
     damping: 30,
     mass: 0.3,
   });
+  const progress = isMobile ? smooth : scrollYProgress;
 
   const scaleDimensions = () => {
     return isMobile ? [0.7, 0.9] : [1.05, 1];
   };
 
-  const rotate = useTransform(smooth, [0, 1], [20, 0]);
-  const scale = useTransform(smooth, [0, 1], scaleDimensions());
-  const translate = useTransform(smooth, [0, 1], [0, -100]);
+  const rotate = useTransform(progress, [0, 1], [20, 0]);
+  const scale = useTransform(progress, [0, 1], scaleDimensions());
+  const translate = useTransform(progress, [0, 1], [0, -100]);
 
   return (
     <div
@@ -97,8 +99,6 @@ export const Card = ({
         // Promociona la tarjeta a su propia capa de GPU: se rasteriza una vez
         // y luego solo se transforma, sin re-dibujar el contenido cada frame
         willChange: "transform",
-        transformStyle: "preserve-3d",
-        backfaceVisibility: "hidden",
       }}
       className="max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-[#6C6C6C] p-2 md:p-6 bg-[#222222] rounded-[30px]"
     >

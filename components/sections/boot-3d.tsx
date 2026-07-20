@@ -70,11 +70,14 @@ function RotatingArt() {
     return () => window.removeEventListener("mousemove", onMove);
   }, []);
 
-  // Los jugadores giran en continuo (como la bota original) + parallax
+  // Giro continuo lento + parallax. delta se limita: si el móvil pierde
+  // un fotograma, un delta grande daría un salto brusco; clamparlo hace
+  // que un tirón se note como una pausa mínima, no como un tirón.
   useFrame((_, delta) => {
     const g = group.current;
     if (!g) return;
-    g.rotation.y += delta * 0.35;
+    const d = Math.min(delta, 0.05);
+    g.rotation.y += d * 0.2;
     g.rotation.x = THREE.MathUtils.lerp(g.rotation.x, mouse.current.y * 0.22, 0.05);
     g.rotation.z = THREE.MathUtils.lerp(g.rotation.z, -mouse.current.x * 0.08, 0.05);
   });
@@ -91,6 +94,7 @@ function RotatingArt() {
 export default function Boot3D() {
   const wrapper = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   // The render loop only runs while the hero is actually on screen;
   // past the fold the GPU goes idle instead of spinning art nobody sees.
@@ -105,12 +109,21 @@ export default function Boot3D() {
     return () => io.disconnect();
   }, []);
 
+  // En móvil renderizamos a 1x (no 1.5x): la mitad de píxeles que sombrear,
+  // así el giro va más fluido en pantallas de alta densidad.
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
   return (
     <div ref={wrapper} className="h-full w-full">
       <Canvas
         camera={{ position: [0, 0.3, 3], fov: 35 }}
         gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
-        dpr={[1, 1.5]}
+        dpr={isMobile ? 1 : [1, 1.5]}
         frameloop={visible ? "always" : "never"}
         style={{ background: "transparent" }}
       >

@@ -51,7 +51,7 @@ export default function NerveLine() {
   const totalLength = useRef(0);
   // Muestreo longitud→Y para invertir "¿qué fracción del nervio está a
   // esta altura?" (la Y del trazado siempre crece, así que es biyectivo)
-  const samples = useRef<{ len: number; y: number }[]>([]);
+  const samples = useRef<{ len: number; x: number; y: number }[]>([]);
   const contTopAbs = useRef(0);
   const [d, setD] = useState<string | null>(null);
   const [startPt, setStartPt] = useState<Pt | null>(null);
@@ -144,12 +144,20 @@ export default function NerveLine() {
     };
   }, [measure]);
 
+  // El punto viaja interpolando los puntos ya muestreados: getPointAtLength
+  // en cada frame del scroll era carísimo (re-calcula la geometría del path)
+  // y era la causa principal del tirón en escritorio.
   const placeDot = (frac: number) => {
-    const path = pathRef.current;
-    if (!path || !totalLength.current) return;
-    const pt = path.getPointAtLength(totalLength.current * Math.min(frac, 1));
-    dotX.set(pt.x);
-    dotY.set(pt.y);
+    const s = samples.current;
+    const N = s.length - 1;
+    if (N < 1) return;
+    const pos = Math.min(Math.max(frac, 0), 1) * N;
+    const i = Math.floor(pos);
+    const t = pos - i;
+    const a = s[i];
+    const b = s[Math.min(i + 1, N)];
+    dotX.set(a.x + (b.x - a.x) * t);
+    dotY.set(a.y + (b.y - a.y) * t);
   };
 
   useMotionValueEvent(drawn, "change", placeDot);
@@ -161,10 +169,11 @@ export default function NerveLine() {
     const total = path.getTotalLength();
     totalLength.current = total;
     const N = 240;
-    const s: { len: number; y: number }[] = [];
+    const s: { len: number; x: number; y: number }[] = [];
     for (let i = 0; i <= N; i++) {
       const len = (total * i) / N;
-      s.push({ len, y: path.getPointAtLength(len).y });
+      const pt = path.getPointAtLength(len);
+      s.push({ len, x: pt.x, y: pt.y });
     }
     samples.current = s;
     update(window.scrollY);
@@ -181,23 +190,25 @@ export default function NerveLine() {
     >
       {d && startPt && endPt && (
         <>
-          {/* Glow con doble trazo: un filtro SVG re-rasterizaría el path
-              en cada tick de scroll; dos strokes son casi gratis */}
+          {/* Trazo FIJO (sin animar pathLength): animar el pathLength
+              re-rasterizaba un stroke larguísimo en cada frame del scroll y
+              era lo que mataba la fluidez en escritorio. Ahora el nervio se
+              dibuja una vez y solo viaja el impulso por encima. */}
           <svg className="w-full h-full" fill="none">
-            <motion.path
+            <path
               d={d}
               stroke="#e8ff00"
               strokeWidth="7"
               strokeLinecap="round"
-              style={{ pathLength: drawn, opacity: 0.07 }}
+              opacity={0.05}
             />
-            <motion.path
+            <path
               ref={pathRef}
               d={d}
               stroke="#e8ff00"
               strokeWidth="1.4"
               strokeLinecap="round"
-              style={{ pathLength: drawn, opacity: 0.32 }}
+              opacity={0.22}
             />
           </svg>
 

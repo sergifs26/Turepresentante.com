@@ -94,13 +94,13 @@ export const Card = ({
         rotateX: rotate,
         scale,
         // Sin box-shadow con desenfoque: recomponer una sombra de 60px de
-        // blur sobre un elemento de ~1024px en cada frame del giro era lo
-        // que tiraba la fluidez en escritorio. El borde ya enmarca la pieza.
+        // blur sobre un elemento de ~1024px en cada frame del giro tiraba
+        // la fluidez. El borde ya enmarca la pieza.
         willChange: "transform",
       }}
       className="max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-[#6C6C6C] p-2 md:p-6 bg-[#222222] rounded-[30px]"
     >
-      <div className=" h-full w-full  overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900 md:rounded-2xl md:p-4 ">
+      <div className="h-full w-full overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900 md:rounded-2xl md:p-4">
         {children}
       </div>
     </motion.div>

@@ -41,7 +41,7 @@ export default function HeroBoot() {
           Sin drop-shadow: filtrar un canvas WebGL cuesta GPU cada frame. */}
       <motion.div
         id="nerve-origin"
-        className="relative order-1 mt-[60px] h-[29vh] w-full shrink-0 pointer-events-none md:order-none md:absolute md:right-0 md:top-0 md:mt-0 md:h-full md:w-[58vw] md:max-w-[900px]"
+        className="relative order-1 mt-[44px] h-[42vh] w-full shrink-0 pointer-events-none md:order-none md:absolute md:right-0 md:top-0 md:mt-0 md:h-full md:w-[58vw] md:max-w-[900px]"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, ease: "easeOut" }}

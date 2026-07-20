@@ -122,7 +122,7 @@ export default function Boot3D() {
         <spotLight position={[0, 3, -5]} angle={0.8} penumbra={1} intensity={18} color="#ffffff" />
 
         <Suspense fallback={null}>
-          <Bounds fit clip margin={1.15}>
+          <Bounds fit clip margin={1.0}>
             <RotatingArt />
           </Bounds>
         </Suspense>

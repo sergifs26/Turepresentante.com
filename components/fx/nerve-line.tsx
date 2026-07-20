@@ -110,9 +110,11 @@ export default function NerveLine() {
     if (!c.width || !c.height) return;
     contTopAbs.current = c.top + window.scrollY;
 
-    // Nace bajo el empeine de la bota; muere enchufado al lateral del botón
+    // Nace en el balón (entre los dos jugadores). Su posición media en
+    // pantalla, medida por píxeles, cae en la fracción 0.44 / 0.58 del
+    // contenedor 3D; muere enchufado al lateral del botón final.
     const start: Pt = {
-      x: o.left - c.left + o.width * 0.5,
+      x: o.left - c.left + o.width * 0.44,
       y: o.top - c.top + o.height * 0.58,
     };
     const goal: Pt = {

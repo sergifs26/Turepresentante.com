@@ -93,11 +93,9 @@ export const Card = ({
       style={{
         rotateX: rotate,
         scale,
-        // Sombra de una sola capa (antes 6): recomponer 6 desenfoques enormes
-        // en cada frame del giro era lo que daba tirones
-        boxShadow: "0 30px 60px rgba(0,0,0,0.45)",
-        // Promociona la tarjeta a su propia capa de GPU: se rasteriza una vez
-        // y luego solo se transforma, sin re-dibujar el contenido cada frame
+        // Sin box-shadow con desenfoque: recomponer una sombra de 60px de
+        // blur sobre un elemento de ~1024px en cada frame del giro era lo
+        // que tiraba la fluidez en escritorio. El borde ya enmarca la pieza.
         willChange: "transform",
       }}
       className="max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-[#6C6C6C] p-2 md:p-6 bg-[#222222] rounded-[30px]"

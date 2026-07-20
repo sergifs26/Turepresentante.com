@@ -21,13 +21,13 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function HeroBoot() {
   return (
-    <section className="relative h-dvh overflow-hidden">
+    <section className="relative min-h-dvh md:h-dvh overflow-hidden flex flex-col md:block">
       <SiteNav variant="overlay" />
 
-      {/* Aura biológica: late detrás de la bota como un corazón */}
+      {/* Aura biológica: late detrás de los jugadores como un corazón */}
       <div
         aria-hidden="true"
-        className="absolute right-[-10%] top-[8%] w-[70vw] max-w-[1000px] aspect-square pointer-events-none"
+        className="absolute right-[-10%] top-[2%] md:top-[8%] w-[80vw] md:w-[70vw] max-w-[1000px] aspect-square pointer-events-none"
         style={{
           background:
             "radial-gradient(closest-side, rgba(232,255,0,0.14), rgba(232,255,0,0.05) 50%, transparent 72%)",
@@ -35,12 +35,13 @@ export default function HeroBoot() {
         }}
       />
 
-      {/* Boot — real 3D scanned model, transparent so it melts into the page */}
-      {/* Sin drop-shadow: filtrar un canvas WebGL cuesta GPU en cada frame;
-          el glow lo pone la aura de detrás, que es una capa estática */}
+      {/* Jugadores 3D — modelo escaneado real, transparente para fundirse.
+          En móvil ocupa su propia banda arriba (sin pisar el texto);
+          en escritorio flota a la derecha a toda altura, tras el texto.
+          Sin drop-shadow: filtrar un canvas WebGL cuesta GPU cada frame. */}
       <motion.div
         id="nerve-origin"
-        className="absolute right-0 top-0 h-full w-[85vw] md:w-[58vw] max-w-[900px] pointer-events-none opacity-50 md:opacity-100"
+        className="relative order-1 mt-[44px] h-[42vh] w-full shrink-0 pointer-events-none md:order-none md:absolute md:right-0 md:top-0 md:mt-0 md:h-full md:w-[58vw] md:max-w-[900px]"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, ease: "easeOut" }}
@@ -51,30 +52,31 @@ export default function HeroBoot() {
       {/* Blob bioluminiscente bajo el titular */}
       <div
         aria-hidden="true"
-        className="bio-blob bottom-[6%] left-[-6%] w-[46vw] max-w-[560px] aspect-square opacity-70"
+        className="bio-blob bottom-[6%] left-[-6%] w-[46vw] max-w-[560px] aspect-square opacity-70 hidden md:block"
       />
 
-      {/* Text — bottom left, overlapping boot */}
-      <div className="absolute bottom-14 left-5 md:left-10 z-10">
+      {/* Texto — en móvil ocupa la banda de abajo, con el CTA al alcance
+          del pulgar; en escritorio flota abajo a la izquierda */}
+      <div className="relative order-2 mt-auto px-5 pb-10 z-10 md:absolute md:bottom-14 md:left-10 md:px-0 md:pb-0 md:mt-0">
         <motion.div
           className="inline-flex items-center gap-2.5 mb-5 border border-[#e8ff00]/25 rounded-full px-4 py-[7px] bg-[#0a0a0a]/60"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35, duration: 0.5, ease: EASE }}
         >
-          <span className="bio-node" />
-          <span className="font-mono text-[12px] tracking-[0.2em] uppercase text-[#e8ff00]">
-            Representación de futbolistas · Gratis para ti
+          <span className="bio-node shrink-0" />
+          <span className="font-mono text-[11px] md:text-[12px] tracking-[0.12em] md:tracking-[0.2em] uppercase text-[#e8ff00]">
+            Futbolistas · 100% gratis
           </span>
         </motion.div>
 
         <h1
-          className="uppercase leading-[0.88] tracking-[-0.03em]"
+          className="uppercase leading-[0.9] md:leading-[0.88] tracking-[-0.03em]"
           style={{
             fontFamily: "var(--font-barlow-condensed)",
             fontWeight: 900,
             fontStyle: "italic",
-            fontSize: "clamp(60px, 9vw, 126px)",
+            fontSize: "clamp(46px, 11vw, 126px)",
           }}
         >
           <motion.span
@@ -105,7 +107,7 @@ export default function HeroBoot() {
         </h1>
 
         <motion.p
-          className="mt-5 max-w-[360px] text-[18px] leading-[1.7] text-[rgba(240,240,238,0.88)]"
+          className="mt-4 max-w-[360px] text-[16px] md:text-[18px] leading-[1.6] md:leading-[1.7] text-[rgba(240,240,238,0.88)]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.9, duration: 0.5 }}

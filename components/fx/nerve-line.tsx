@@ -190,25 +190,24 @@ export default function NerveLine() {
     >
       {d && startPt && endPt && (
         <>
-          {/* Trazo FIJO (sin animar pathLength): animar el pathLength
-              re-rasterizaba un stroke larguísimo en cada frame del scroll y
-              era lo que mataba la fluidez en escritorio. Ahora el nervio se
-              dibuja una vez y solo viaja el impulso por encima. */}
+          {/* El nervio se dibuja conforme bajas (pathLength). Lo que era
+              carísimo no era esto, sino el getPointAtLength del punto en
+              cada frame (ya sustituido por interpolación). */}
           <svg className="w-full h-full" fill="none">
-            <path
+            <motion.path
               d={d}
               stroke="#e8ff00"
               strokeWidth="7"
               strokeLinecap="round"
-              opacity={0.05}
+              style={{ pathLength: drawn, opacity: 0.07 }}
             />
-            <path
+            <motion.path
               ref={pathRef}
               d={d}
               stroke="#e8ff00"
               strokeWidth="1.4"
               strokeLinecap="round"
-              opacity={0.22}
+              style={{ pathLength: drawn, opacity: 0.32 }}
             />
           </svg>
 

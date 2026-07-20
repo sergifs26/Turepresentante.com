@@ -77,7 +77,7 @@ function RotatingArt() {
     const g = group.current;
     if (!g) return;
     const d = Math.min(delta, 0.05);
-    g.rotation.y += d * 0.2;
+    g.rotation.y += d * 0.13;
     g.rotation.x = THREE.MathUtils.lerp(g.rotation.x, mouse.current.y * 0.22, 0.05);
     g.rotation.z = THREE.MathUtils.lerp(g.rotation.z, -mouse.current.x * 0.08, 0.05);
   });
@@ -109,8 +109,6 @@ export default function Boot3D() {
     return () => io.disconnect();
   }, []);
 
-  // En móvil renderizamos a 1x (no 1.5x): la mitad de píxeles que sombrear,
-  // así el giro va más fluido en pantallas de alta densidad.
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth <= 768);
     check();
@@ -120,19 +118,25 @@ export default function Boot3D() {
 
   return (
     <div ref={wrapper} className="h-full w-full">
+      {/* En móvil render a 2x (nítido) pero sin el spotLight — la luz más
+          cara — para mantener los 60 fps. En escritorio, todo. */}
       <Canvas
         camera={{ position: [0, 0.3, 3], fov: 35 }}
-        gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
-        dpr={isMobile ? 1 : [1, 1.5]}
+        gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
+        dpr={isMobile ? 2 : [1, 1.75]}
         frameloop={visible ? "always" : "never"}
         style={{ background: "transparent" }}
       >
-        {/* Neutral lights give realistic form; the acid color lives in the material */}
+        {/* Neutral lights give realistic form; the acid color lives in the material.
+            En móvil subimos algo la direccional para compensar la ausencia del rim. */}
         <ambientLight intensity={0.55} />
-        <directionalLight position={[4, 6, 5]} intensity={2.2} />
+        <directionalLight position={[4, 6, 5]} intensity={isMobile ? 2.6 : 2.2} />
         <directionalLight position={[-5, 2, -3]} intensity={0.9} />
-        {/* White rim from behind for a crisp highlighted edge */}
-        <spotLight position={[0, 3, -5]} angle={0.8} penumbra={1} intensity={18} color="#ffffff" />
+        {/* Rim blanco trasero: da un borde nítido pero es la luz más cara,
+            solo en escritorio para no bajar de 60 fps en móvil */}
+        {!isMobile && (
+          <spotLight position={[0, 3, -5]} angle={0.8} penumbra={1} intensity={18} color="#ffffff" />
+        )}
 
         <Suspense fallback={null}>
           <Bounds fit clip margin={1.0}>

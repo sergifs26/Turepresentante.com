@@ -34,7 +34,7 @@ export default function AvatarUpload({ profile }: { profile: Profile }) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [fotoUrl, setFotoUrl] = useState(profile.foto_url);
-  const [status, setStatus] = useState<"idle" | "subiendo" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "subiendo" | "quitando" | "error">("idle");
   const [errMsg, setErrMsg] = useState("");
 
   const onFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,6 +86,31 @@ export default function AvatarUpload({ profile }: { profile: Profile }) {
     }
   };
 
+  const onRemove = async () => {
+    const supabase = createClient();
+    if (!supabase) return;
+    setStatus("quitando");
+    try {
+      // Borra los archivos de la carpeta del usuario y limpia la BD
+      const { data: files } = await supabase.storage
+        .from("avatars")
+        .list(profile.user_id);
+      const paths = (files ?? []).map((f) => `${profile.user_id}/${f.name}`);
+      if (paths.length) await supabase.storage.from("avatars").remove(paths);
+      const { error } = await supabase
+        .from("profiles")
+        .update({ foto_url: null, updated_at: new Date().toISOString() })
+        .eq("user_id", profile.user_id);
+      if (error) throw error;
+      setFotoUrl(null);
+      setStatus("idle");
+      router.refresh();
+    } catch {
+      setErrMsg("No hemos podido quitar la foto. Inténtalo de nuevo.");
+      setStatus("error");
+    }
+  };
+
   return (
     <div className="flex items-center gap-5 mb-8">
       {fotoUrl ? (
@@ -109,18 +134,30 @@ export default function AvatarUpload({ profile }: { profile: Profile }) {
         <span className="block font-mono text-[12px] tracking-[0.15em] uppercase text-white/75 mb-2">
           Foto de perfil
         </span>
-        <button
-          type="button"
-          onClick={() => inputRef.current?.click()}
-          disabled={status === "subiendo"}
-          className="bio-btn-ghost border border-white/20 text-white/85 font-mono text-[12px] tracking-[0.12em] uppercase px-5 py-2.5 bg-transparent cursor-pointer hover:border-[#e8ff00]/50 disabled:opacity-50 disabled:cursor-wait"
-        >
-          {status === "subiendo"
-            ? "Subiendo…"
-            : fotoUrl
-              ? "Cambiar foto"
-              : "Subir foto"}
-        </button>
+        <div className="flex flex-wrap items-center gap-2.5">
+          <button
+            type="button"
+            onClick={() => inputRef.current?.click()}
+            disabled={status === "subiendo" || status === "quitando"}
+            className="bio-btn-ghost border border-white/20 text-white/85 font-mono text-[12px] tracking-[0.12em] uppercase px-5 py-2.5 bg-transparent cursor-pointer hover:border-[#e8ff00]/50 disabled:opacity-50 disabled:cursor-wait"
+          >
+            {status === "subiendo"
+              ? "Subiendo…"
+              : fotoUrl
+                ? "Cambiar foto"
+                : "Subir foto"}
+          </button>
+          {fotoUrl && (
+            <button
+              type="button"
+              onClick={onRemove}
+              disabled={status === "subiendo" || status === "quitando"}
+              className="border border-white/15 text-white/60 font-mono text-[12px] tracking-[0.12em] uppercase px-5 py-2.5 bg-transparent cursor-pointer hover:border-red-400/50 hover:text-red-400/90 transition-colors disabled:opacity-50 disabled:cursor-wait"
+            >
+              {status === "quitando" ? "Quitando…" : "Quitar foto"}
+            </button>
+          )}
+        </div>
         <input
           ref={inputRef}
           type="file"

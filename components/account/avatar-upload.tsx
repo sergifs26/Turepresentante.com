@@ -132,7 +132,8 @@ export default function AvatarUpload({ profile }: { profile: Profile }) {
           <p className="mt-2 text-[14px] text-red-400/90 leading-[1.6]">{errMsg}</p>
         ) : (
           <p className="mt-2 text-[14px] text-white/60 leading-[1.6]">
-            JPG o PNG. Se muestra recortada en círculo.
+            JPG o PNG. Es tu portada en el escaparate de jugadores, así que
+            elige una buena.
           </p>
         )}
       </div>

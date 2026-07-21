@@ -52,6 +52,13 @@ export default async function CuentaPage() {
 
   const p = profile as Profile;
 
+  // Teléfono privado (tabla protegida): solo el dueño lo lee para editarlo
+  const { data: priv } = await supabase
+    .from("profile_private")
+    .select("telefono")
+    .eq("user_id", user.id)
+    .maybeSingle();
+
   return (
     <main className="bg-[#0a0a0a] min-h-dvh">
       <SiteNav />
@@ -116,7 +123,7 @@ export default async function CuentaPage() {
             Tus datos
           </h2>
           {p && <AvatarUpload profile={p} />}
-          {p && <ProfileForm profile={p} />}
+          {p && <ProfileForm profile={p} telefonoInicial={priv?.telefono ?? ""} />}
         </div>
       </section>
 

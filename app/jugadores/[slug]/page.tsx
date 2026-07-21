@@ -17,14 +17,25 @@ async function getProfile(slug: string) {
     .select("*")
     .eq("slug", slug)
     .single();
-  if (!profile) return { profile: null, videos: [] as Video[] };
+  if (!profile) return { profile: null, videos: [] as Video[], telefono: null };
   const { data: videos } = await supabase
     .from("videos")
     .select("*")
     .eq("user_id", profile.user_id)
     .eq("status", "ready")
     .order("created_at", { ascending: false });
-  return { profile: profile as Profile, videos: (videos ?? []) as Video[] };
+  // El teléfono está en una tabla protegida: la BD solo devuelve la fila
+  // si quien mira es admin (o el propio dueño). Si no, viene vacío.
+  const { data: priv } = await supabase
+    .from("profile_private")
+    .select("telefono")
+    .eq("user_id", profile.user_id)
+    .maybeSingle();
+  return {
+    profile: profile as Profile,
+    videos: (videos ?? []) as Video[],
+    telefono: (priv?.telefono as string | null) ?? null,
+  };
 }
 
 export async function generateMetadata({
@@ -47,7 +58,7 @@ export default async function JugadorPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const { profile, videos } = await getProfile(slug);
+  const { profile, videos, telefono } = await getProfile(slug);
   if (!profile) notFound();
 
   const datos = [
@@ -116,6 +127,22 @@ export default async function JugadorPage({
                 <span className="block text-[16px] text-white/80 mt-0.5">{d.v}</span>
               </div>
             ))}
+          </div>
+        </section>
+      )}
+
+      {telefono && (
+        <section className="px-5 md:px-10 pb-12">
+          <div className="bio-cell inline-flex flex-wrap items-center gap-x-5 gap-y-2 px-6 py-4">
+            <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#e8ff00]">
+              Teléfono · solo admin
+            </span>
+            <a
+              href={`tel:${telefono.replace(/\s+/g, "")}`}
+              className="text-[18px] text-[#f0f0ee] no-underline hover:text-[#e8ff00] transition-colors"
+            >
+              {telefono}
+            </a>
           </div>
         </section>
       )}

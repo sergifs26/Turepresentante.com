@@ -9,7 +9,13 @@ const inputBase =
 const label =
   "block font-mono text-[12px] tracking-[0.15em] uppercase text-white/75 mb-2";
 
-export default function ProfileForm({ profile }: { profile: Profile }) {
+export default function ProfileForm({
+  profile,
+  telefonoInicial = "",
+}: {
+  profile: Profile;
+  telefonoInicial?: string;
+}) {
   const [form, setForm] = useState({
     nombre: profile.nombre ?? "",
     posicion: profile.posicion ?? "",
@@ -19,6 +25,7 @@ export default function ProfileForm({ profile }: { profile: Profile }) {
     ciudad: profile.ciudad ?? "",
     nacimiento: profile.nacimiento ? String(profile.nacimiento) : "",
     bio: profile.bio ?? "",
+    telefono: telefonoInicial,
   });
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
 
@@ -46,7 +53,16 @@ export default function ProfileForm({ profile }: { profile: Profile }) {
         updated_at: new Date().toISOString(),
       })
       .eq("user_id", profile.user_id);
-    setStatus(error ? "error" : "saved");
+
+    // El teléfono va en una tabla aparte protegida (solo dueño y admins
+    // pueden leerlo), nunca en profiles que es de lectura pública
+    const { error: telError } = await supabase.from("profile_private").upsert({
+      user_id: profile.user_id,
+      telefono: form.telefono.trim() || null,
+      updated_at: new Date().toISOString(),
+    });
+
+    setStatus(error || telError ? "error" : "saved");
   };
 
   return (
@@ -98,6 +114,22 @@ export default function ProfileForm({ profile }: { profile: Profile }) {
       <div>
         <label className={label} htmlFor="p-nacimiento">Año de nacimiento</label>
         <input id="p-nacimiento" type="number" inputMode="numeric" className={inputBase} value={form.nacimiento} onChange={(e) => set("nacimiento", e.target.value)} placeholder="2004" />
+      </div>
+      <div className="sm:col-span-2">
+        <label className={label} htmlFor="p-telefono">Teléfono</label>
+        <input
+          id="p-telefono"
+          type="tel"
+          inputMode="tel"
+          className={inputBase}
+          value={form.telefono}
+          onChange={(e) => set("telefono", e.target.value)}
+          placeholder="+34 600 000 000"
+        />
+        <p className="mt-1.5 text-[13px] text-white/60 leading-[1.6]">
+          Privado. No sale en tu perfil público: solo lo ven los
+          administradores de Turepresentante para poder contactarte.
+        </p>
       </div>
       <div className="sm:col-span-2">
         <label className={label} htmlFor="p-bio">Sobre ti</label>

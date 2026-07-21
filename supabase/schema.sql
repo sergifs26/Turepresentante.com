@@ -97,3 +97,54 @@ create policy "avatars borra el dueno"
   on storage.objects for delete using (
     bucket_id = 'avatars' and (storage.foldername(name))[1] = auth.uid()::text
   );
+
+-- ============================================================
+-- Administradores + teléfono privado
+-- El teléfono NO puede ir en profiles (lectura pública): iría en una
+-- tabla aparte que solo el dueño o un admin pueden leer.
+-- ============================================================
+
+-- Quién es admin. is_admin() es SECURITY DEFINER para poder comprobarlo
+-- dentro de las políticas sin exponer la tabla.
+create table if not exists public.admins (
+  user_id uuid primary key references auth.users (id) on delete cascade
+);
+alter table public.admins enable row level security;
+
+drop policy if exists "cada uno ve si es admin" on public.admins;
+create policy "cada uno ve si es admin"
+  on public.admins for select using (auth.uid() = user_id);
+
+create or replace function public.is_admin()
+  returns boolean
+  language sql
+  security definer
+  stable
+  set search_path = public
+as $$
+  select exists (select 1 from public.admins where user_id = auth.uid());
+$$;
+
+-- Contacto privado (teléfono)
+create table if not exists public.profile_private (
+  user_id uuid primary key references auth.users (id) on delete cascade,
+  telefono text,
+  updated_at timestamptz not null default now()
+);
+alter table public.profile_private enable row level security;
+
+drop policy if exists "contacto: lo lee el dueno o un admin" on public.profile_private;
+create policy "contacto: lo lee el dueno o un admin"
+  on public.profile_private for select
+  using (auth.uid() = user_id or public.is_admin());
+
+drop policy if exists "contacto: el dueno lo crea" on public.profile_private;
+create policy "contacto: el dueno lo crea"
+  on public.profile_private for insert with check (auth.uid() = user_id);
+
+drop policy if exists "contacto: el dueno lo actualiza" on public.profile_private;
+create policy "contacto: el dueno lo actualiza"
+  on public.profile_private for update using (auth.uid() = user_id);
+
+-- Para hacerte admin, ejecuta (con tu user_id de auth.users):
+--   insert into public.admins (user_id) values ('TU-USER-ID') on conflict do nothing;

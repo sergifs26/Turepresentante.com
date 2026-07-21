@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef } from "react";
-import { useScroll, useTransform, motion, MotionValue } from "framer-motion";
+import { useScroll, useTransform, useSpring, motion, MotionValue } from "framer-motion";
 
 export const ContainerScroll = ({
   titleComponent,
@@ -26,13 +26,23 @@ export const ContainerScroll = ({
     };
   }, []);
 
+  // El scroll en móvil llega a saltos; un spring lo suaviza. En escritorio
+  // el scroll ya es fino: usar el spring ahí añade un retardo que se nota
+  // como falta de fluidez, así que allí seguimos el scroll 1:1.
+  const smooth = useSpring(scrollYProgress, {
+    stiffness: 140,
+    damping: 30,
+    mass: 0.3,
+  });
+  const progress = isMobile ? smooth : scrollYProgress;
+
   const scaleDimensions = () => {
     return isMobile ? [0.7, 0.9] : [1.05, 1];
   };
 
-  const rotate = useTransform(scrollYProgress, [0, 1], [20, 0]);
-  const scale = useTransform(scrollYProgress, [0, 1], scaleDimensions());
-  const translate = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const rotate = useTransform(progress, [0, 1], [20, 0]);
+  const scale = useTransform(progress, [0, 1], scaleDimensions());
+  const translate = useTransform(progress, [0, 1], [0, -100]);
 
   return (
     <div
@@ -59,6 +69,7 @@ export const Header = ({ translate, titleComponent }: any) => {
     <motion.div
       style={{
         translateY: translate,
+        willChange: "transform",
       }}
       className="div max-w-5xl mx-auto text-center"
     >
@@ -82,12 +93,14 @@ export const Card = ({
       style={{
         rotateX: rotate,
         scale,
-        boxShadow:
-          "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003",
+        // Sin box-shadow con desenfoque: recomponer una sombra de 60px de
+        // blur sobre un elemento de ~1024px en cada frame del giro tiraba
+        // la fluidez. El borde ya enmarca la pieza.
+        willChange: "transform",
       }}
-      className="max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-[#6C6C6C] p-2 md:p-6 bg-[#222222] rounded-[30px] shadow-2xl"
+      className="max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-[#6C6C6C] p-2 md:p-6 bg-[#222222] rounded-[30px]"
     >
-      <div className=" h-full w-full  overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900 md:rounded-2xl md:p-4 ">
+      <div className="h-full w-full overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900 md:rounded-2xl md:p-4">
         {children}
       </div>
     </motion.div>

@@ -78,51 +78,79 @@ export default async function JugadoresPage() {
             </Link>
           </div>
         ) : (
-          <div className="grid gap-5" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))" }}>
-            {profiles.map((p) => (
-              <Link
-                key={p.user_id}
-                href={`/jugadores/${p.slug}`}
-                className="bio-cell block px-7 py-8 no-underline"
-              >
-                {p.foto_url ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={p.foto_url}
-                    alt={`Foto de ${p.nombre}`}
-                    loading="lazy"
-                    className="w-[72px] h-[72px] rounded-full object-cover border border-white/15 mb-4"
-                  />
-                ) : (
-                  <span
-                    className="w-[72px] h-[72px] rounded-full bg-white/[0.05] border border-white/10 flex items-center justify-center text-[30px] text-[#e8ff00] uppercase mb-4"
-                    style={{ fontFamily: "var(--font-barlow-condensed)", fontWeight: 900 }}
-                    aria-hidden="true"
-                  >
-                    {p.nombre.charAt(0)}
-                  </span>
-                )}
-                <span
-                  className="block uppercase text-[#f0f0ee] leading-[1.02] tracking-[-0.01em] text-[28px]"
-                  style={{ fontFamily: "var(--font-barlow-condensed)", fontWeight: 900 }}
+          <div className="grid gap-5" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))" }}>
+            {profiles.map((p) => {
+              const sub = [p.club, p.categoria, p.ciudad].filter(Boolean).join(" · ");
+              return (
+                <Link
+                  key={p.user_id}
+                  href={`/jugadores/${p.slug}`}
+                  className="group relative block overflow-hidden no-underline border border-white/10 rounded-tl-[38px] rounded-br-[38px] rounded-tr-[14px] rounded-bl-[14px] transition-all duration-500 hover:border-[#e8ff00]/40 hover:shadow-[0_0_36px_rgba(232,255,0,0.14)]"
                 >
-                  {p.nombre}
-                </span>
-                <span className="block mt-1.5 font-mono text-[12px] tracking-[0.15em] uppercase text-[#e8ff00]">
-                  {[p.posicion, p.ciudad].filter(Boolean).join(" · ") || "Perfil nuevo"}
-                </span>
-                <span className="block mt-3 text-[15px] text-white/75 leading-[1.7]">
-                  {[p.club, p.categoria, p.nacimiento ? `Nacido en ${p.nacimiento}` : null]
-                    .filter(Boolean)
-                    .join(" · ") || "Completando su ficha…"}
-                </span>
-              </Link>
-            ))}
+                  {/* Portada: la foto del jugador; si no tiene, un balón */}
+                  <div className="relative bg-[#141414]" style={{ aspectRatio: "3 / 4" }}>
+                    {p.foto_url ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={p.foto_url}
+                        alt={`Foto de ${p.nombre}`}
+                        loading="lazy"
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <FootballIcon />
+                      </div>
+                    )}
+
+                    {/* Degradado para que el texto se lea sobre la foto */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/25 to-transparent" />
+
+                    {/* Nombre + datos abajo */}
+                    <div className="absolute bottom-0 left-0 right-0 p-5">
+                      <span
+                        className="block uppercase text-white leading-[1.02] tracking-[-0.01em] text-[26px]"
+                        style={{ fontFamily: "var(--font-barlow-condensed)", fontWeight: 900 }}
+                      >
+                        {p.nombre}
+                      </span>
+                      <span className="block mt-1 font-mono text-[11px] tracking-[0.15em] uppercase text-[#e8ff00]">
+                        {p.posicion || "Perfil nuevo"}
+                      </span>
+                      {sub && (
+                        <span className="block mt-2 text-[13px] text-white/70 leading-[1.5]">
+                          {sub}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         )}
       </section>
 
       <SiteFooter />
     </main>
+  );
+}
+
+/* Balón de fútbol para las portadas sin foto */
+function FootballIcon() {
+  return (
+    <svg
+      viewBox="0 0 64 64"
+      className="w-[38%] h-[38%] opacity-25"
+      fill="none"
+      stroke="#e8ff00"
+      strokeWidth={2}
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="32" cy="32" r="26" />
+      <path d="M32 18l9 6.5-3.4 10.5H26.4L23 24.5 32 18z" fill="#e8ff00" fillOpacity="0.15" />
+      <path d="M32 6v12M14.7 22.5l8.3 2M14.7 41.5l9-3M32 58V46m17.3-23.5l-8.3 2M49.3 41.5l-9-3" />
+    </svg>
   );
 }

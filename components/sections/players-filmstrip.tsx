@@ -4,7 +4,7 @@ import { useRef } from "react";
 
 const PLAYERS = [
   { name: "Alejandro V.", pos: "Mediocentro · Madrid", age: 24, goals: 23, parts: 87, bg: "https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=400&q=80", rep: true },
-  { name: "Marco T.", pos: "Delantero · Barcelona", age: 21, goals: 31, parts: 64, bg: "https://images.unsplash.com/photo-1526232761682-d26e03ac148e?w=400&q=80", rep: false },
+  { name: "Marco T.", pos: "Delantero · Barcelona", age: 21, goals: 31, parts: 64, bg: "https://images.unsplash.com/photo-1551958219-acbc608c6377?w=400&q=80", rep: false },
   { name: "Diego R.", pos: "Portero · Sevilla", age: 26, goals: 0, parts: 102, bg: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&q=80", rep: true },
   { name: "Luis P.", pos: "Lateral Izq. · Valencia", age: 23, goals: 9, parts: 55, bg: "https://images.unsplash.com/photo-1553778263-73a83bab9b0c?w=400&q=80", rep: false },
   { name: "Ivan M.", pos: "Extremo Der. · Bilbao", age: 20, goals: 14, parts: 38, bg: "https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=400&q=80", rep: true },

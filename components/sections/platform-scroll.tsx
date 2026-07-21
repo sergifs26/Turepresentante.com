@@ -16,7 +16,7 @@ const PLAYERS = [
     pos: "Delantero",
     age: 21,
     goals: 31,
-    bg: "https://images.unsplash.com/photo-1526232761682-d26e03ac148e?w=300&q=80",
+    bg: "https://images.unsplash.com/photo-1551958219-acbc608c6377?w=300&q=80",
     rep: false,
   },
   {

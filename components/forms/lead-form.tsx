@@ -36,6 +36,8 @@ export default function LeadForm({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [serverError, setServerError] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [consentError, setConsentError] = useState(false);
 
   const set = (name: string, value: string) => {
     setValues((v) => ({ ...v, [name]: value }));
@@ -59,6 +61,10 @@ export default function LeadForm({
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
+    if (!consent) {
+      setConsentError(true);
+      return;
+    }
     setStatus("sending");
     setServerError("");
     try {
@@ -177,6 +183,29 @@ export default function LeadForm({
             {serverError}
           </p>
         )}
+        <label className="flex items-start gap-3 mb-5 cursor-pointer text-[14px] text-white/70 leading-[1.6]">
+          <input
+            type="checkbox"
+            checked={consent}
+            onChange={(e) => {
+              setConsent(e.target.checked);
+              if (e.target.checked) setConsentError(false);
+            }}
+            className="mt-0.5 h-4 w-4 flex-shrink-0 accent-[#e8ff00] cursor-pointer"
+          />
+          <span>
+            He leído y acepto la{" "}
+            <a href="/privacidad" className="text-[#e8ff00] underline hover:opacity-80">
+              política de privacidad
+            </a>
+            . Solo usamos tus datos para valorar tu perfil y responderte.
+          </span>
+        </label>
+        {consentError && (
+          <p className="mb-4 text-[14px] text-red-400/90">
+            Debes aceptar la política de privacidad para continuar.
+          </p>
+        )}
         <button
           type="submit"
           disabled={status === "sending"}
@@ -184,13 +213,6 @@ export default function LeadForm({
         >
           {status === "sending" ? "Enviando…" : submitLabel}
         </button>
-        <p className="mt-4 text-[14px] text-white/60 leading-[1.7]">
-          Al enviar aceptas nuestra{" "}
-          <a href="/privacidad" className="text-white/75 underline hover:text-white/85 transition-colors">
-            política de privacidad
-          </a>
-          . Solo usamos tus datos para valorar tu perfil y responderte.
-        </p>
       </div>
     </form>
   );

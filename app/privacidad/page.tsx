@@ -76,6 +76,12 @@ export default function PrivacidadPage() {
         ideología, origen, etc.). Te pedimos que no incluyas ese tipo de
         información en los campos de texto libre ni en tus vídeos.
       </p>
+      <p>
+        Facilitar tus datos es voluntario, pero algunos son necesarios para
+        prestarte el servicio: los campos marcados como obligatorios se precisan
+        para registrarte, crear tu perfil o poder valorarte. Si no los
+        proporcionas, no podremos ofrecerte esas funcionalidades.
+      </p>
 
       <h2>4. Finalidades y base jurídica del tratamiento</h2>
       <ul>

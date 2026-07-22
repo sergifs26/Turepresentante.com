@@ -17,13 +17,16 @@ export default function AvisoLegalPage() {
       </p>
       <ul>
         <li>
-          Titular: <strong>[NOMBRE Y APELLIDOS o RAZÓN SOCIAL]</strong>
+          Titular: <strong>Grupo Intertorrent SL</strong>
         </li>
         <li>
-          NIF/CIF: <strong>[NIF/CIF]</strong>
+          NIF: <strong>B67949925</strong>
         </li>
         <li>
-          Domicilio: <strong>[DIRECCIÓN]</strong>
+          Domicilio:{" "}
+          <strong>
+            Avinguda al Vedat, 180, Planta 1, Local 1, 46900 Torrent (Valencia)
+          </strong>
         </li>
         <li>
           Correo:{" "}

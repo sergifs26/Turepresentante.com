@@ -12,8 +12,11 @@ export default function PrivacidadPage() {
       <h2>1. Responsable del tratamiento</h2>
       <p>
         El responsable del tratamiento de tus datos es{" "}
-        <strong>[NOMBRE Y APELLIDOS o RAZÓN SOCIAL]</strong>, con NIF/CIF{" "}
-        <strong>[NIF/CIF]</strong> y domicilio en <strong>[DIRECCIÓN]</strong>{" "}
+        <strong>Grupo Intertorrent SL</strong>, con NIF <strong>B67949925</strong>{" "}
+        y domicilio en{" "}
+        <strong>
+          Avinguda al Vedat, 180, Planta 1, Local 1, 46900 Torrent (Valencia)
+        </strong>{" "}
         (en adelante, «Turepresentante»). Para cualquier cuestión sobre tus
         datos puedes escribir a{" "}
         <a href="mailto:info@turepresentante.com">info@turepresentante.com</a>.

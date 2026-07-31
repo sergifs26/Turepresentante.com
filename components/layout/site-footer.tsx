@@ -9,6 +9,8 @@ const NAV = [
 const LEGAL = [
   { href: "/privacidad", label: "Privacidad" },
   { href: "/terminos", label: "Términos" },
+  { href: "/aviso-legal", label: "Aviso legal" },
+  { href: "/cookies", label: "Cookies" },
 ];
 
 export default function SiteFooter() {

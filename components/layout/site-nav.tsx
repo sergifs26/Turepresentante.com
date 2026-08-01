@@ -70,13 +70,22 @@ export default function SiteNav({
         }
         style={isOverlay ? { mixBlendMode: "difference" } : undefined}
       >
-        <Link
-          href="/"
-          className="font-black text-[19px] tracking-[0.08em] uppercase text-[#f0f0ee] no-underline"
-          style={{ fontFamily: "var(--font-barlow-condensed)" }}
-        >
-          Turepresentante
-        </Link>
+        {/* En overlay el logo va fuera de la barra: el mix-blend "difference"
+            le cambiaría el verde. Aquí solo dejamos el hueco. */}
+        {isOverlay ? (
+          <span className="block w-[150px] h-[34px]" aria-hidden="true" />
+        ) : (
+          <Link href="/" className="flex items-center gap-2.5 no-underline" aria-label="Turepresentante — inicio">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo-marca.png" alt="" className="block h-[30px] w-auto" />
+            <span
+              className="font-black text-[19px] tracking-[0.08em] uppercase text-[#f0f0ee]"
+              style={{ fontFamily: "var(--font-barlow-condensed)" }}
+            >
+              Turepresentante
+            </span>
+          </Link>
+        )}
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-8">
@@ -143,6 +152,25 @@ export default function SiteNav({
           />
         </button>
       </nav>
+
+      {/* Logo flotante del modo overlay, fuera del mix-blend-mode para que
+          conserve el verde de la marca */}
+      {isOverlay && (
+        <Link
+          href="/"
+          aria-label="Turepresentante — inicio"
+          className="absolute top-0 left-5 md:left-10 z-50 h-[60px] flex items-center gap-2.5 no-underline"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo-marca.png" alt="" className="block h-[30px] w-auto" />
+          <span
+            className="font-black text-[19px] tracking-[0.08em] uppercase text-[#f0f0ee]"
+            style={{ fontFamily: "var(--font-barlow-condensed)" }}
+          >
+            Turepresentante
+          </span>
+        </Link>
+      )}
 
       {/* Avatar flotante para el modo overlay (fuera del contenedor con
           mix-blend-mode para que la foto conserve sus colores) */}

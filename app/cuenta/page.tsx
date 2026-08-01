@@ -6,6 +6,7 @@ import SiteFooter from "@/components/layout/site-footer";
 import ProfileForm from "@/components/account/profile-form";
 import AvatarUpload from "@/components/account/avatar-upload";
 import VideoManager from "@/components/account/video-manager";
+import ReviewStatus from "@/components/account/review-status";
 import { createClient } from "@/lib/supabase/server";
 import { slugify } from "@/lib/slug";
 import type { Profile } from "@/lib/types";
@@ -59,6 +60,18 @@ export default async function CuentaPage() {
     .eq("user_id", user.id)
     .maybeSingle();
 
+  // Para la checklist de revisión y el acceso al panel de admin
+  const { count: readyCount } = await supabase
+    .from("videos")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", user.id)
+    .eq("status", "ready");
+  const { data: adminRow } = await supabase
+    .from("admins")
+    .select("user_id")
+    .eq("user_id", user.id)
+    .maybeSingle();
+
   return (
     <main className="bg-[#0a0a0a] min-h-dvh">
       <SiteNav />
@@ -85,12 +98,20 @@ export default async function CuentaPage() {
         </div>
 
         <div className="flex items-center gap-3 pb-2">
+          {adminRow && (
+            <Link
+              href="/admin"
+              className="bio-btn-ghost border border-[#e8ff00]/40 text-[#e8ff00] font-mono text-[12px] tracking-[0.12em] uppercase px-5 py-2.5 no-underline hover:opacity-85"
+            >
+              Panel admin
+            </Link>
+          )}
           {p?.slug && (
             <Link
               href={`/jugadores/${p.slug}`}
               className="bio-btn-ghost border border-white/20 text-white/75 font-mono text-[12px] tracking-[0.12em] uppercase px-5 py-2.5 no-underline hover:border-[#e8ff00]/50 hover:text-white/90"
             >
-              Ver mi perfil público
+              {p.estado === "aprobado" ? "Ver mi perfil público" : "Vista previa de mi perfil"}
             </Link>
           )}
           <form action="/auth/logout" method="post">
@@ -104,6 +125,12 @@ export default async function CuentaPage() {
         </div>
       </header>
 
+      {p && (
+        <section className="px-5 md:px-10 pb-10">
+          <ReviewStatus profile={p} hasReadyVideo={(readyCount ?? 0) > 0} />
+        </section>
+      )}
+
       <section className="px-5 md:px-10 pb-24 grid grid-cols-1 lg:grid-cols-5 gap-14">
         <div className="lg:col-span-3">
           <h2
@@ -112,7 +139,7 @@ export default async function CuentaPage() {
           >
             Tu galería de vídeos
           </h2>
-          <VideoManager />
+          <VideoManager estadoPerfil={p?.estado ?? "borrador"} />
         </div>
 
         <div className="lg:col-span-2">

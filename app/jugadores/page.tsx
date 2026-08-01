@@ -17,9 +17,12 @@ export default async function JugadoresPage() {
   const supabase = await createClient();
   let profiles: Profile[] = [];
   if (supabase) {
+    // Solo perfiles aprobados en la revisión (la RLS de la BD también lo
+    // impone; el filtro evita además que un admin logueado vea aquí la cola)
     const { data } = await supabase
       .from("profiles")
       .select("*")
+      .eq("estado", "aprobado")
       .order("created_at", { ascending: false })
       .limit(60);
     profiles = (data ?? []) as Profile[];
@@ -48,8 +51,9 @@ export default async function JugadoresPage() {
           Jugadores<span className="text-[#e8ff00]">.</span>
         </h1>
         <p className="mt-5 max-w-[460px] text-[17px] leading-[1.75] text-white/80">
-          Perfiles públicos con vídeo. Si eres club o agente y quieres que te
-          filtremos candidatos,{" "}
+          Cada perfil ha pasado nuestra revisión: vídeo editado de calidad y
+          ficha completa. Si eres club o agente y quieres que te filtremos
+          candidatos,{" "}
           <Link href="/clubes" className="text-[#e8ff00] no-underline hover:opacity-80">
             cuéntanos qué buscas
           </Link>

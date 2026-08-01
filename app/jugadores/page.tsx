@@ -35,7 +35,6 @@ export default async function JugadoresPage() {
     // deja salir ni el nombre ni la foto de un perfil sin aprobar.
     const { data: pendientes } = await supabase.rpc("perfiles_en_revision_count");
     enRevision = typeof pendientes === "number" ? pendientes : 0;
-    enRevision = Math.max(enRevision, 3); // PRUEBA TEMPORAL — revertir
   }
   const siluetas = Math.min(enRevision, MAX_SILUETAS);
 

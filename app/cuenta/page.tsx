@@ -7,6 +7,7 @@ import ProfileForm from "@/components/account/profile-form";
 import AvatarUpload from "@/components/account/avatar-upload";
 import VideoManager from "@/components/account/video-manager";
 import ReviewStatus from "@/components/account/review-status";
+import VideoRules from "@/components/account/video-rules";
 import { createClient } from "@/lib/supabase/server";
 import { slugify } from "@/lib/slug";
 import type { Profile } from "@/lib/types";
@@ -139,6 +140,7 @@ export default async function CuentaPage() {
           >
             Tu galería de vídeos
           </h2>
+          <VideoRules />
           <VideoManager estadoPerfil={p?.estado ?? "borrador"} />
         </div>
 

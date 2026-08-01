@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import SiteNav from "@/components/layout/site-nav";
 import SiteFooter from "@/components/layout/site-footer";
-import AdminQueue, { type PerfilPendiente, type VideoPendiente } from "@/components/admin/admin-queue";
+import AdminQueue, {
+  type Contacto,
+  type PerfilPendiente,
+  type PerfilRevisado,
+  type VideoPendiente,
+} from "@/components/admin/admin-queue";
 import { createClient } from "@/lib/supabase/server";
 import type { Profile, Video } from "@/lib/types";
 
@@ -37,35 +42,58 @@ export default async function AdminPage() {
     .eq("estado", "en_revision")
     .order("enviado_revision_at", { ascending: true });
   const perfiles = (pendientes ?? []) as Profile[];
-  const ids = perfiles.map((p) => p.user_id);
 
-  let videosDe: Record<string, Video[]> = {};
-  let telefonos: Record<string, string> = {};
-  if (ids.length > 0) {
+  // Ya revisados: para escribirles y para poder rectificar una decisión
+  const { data: revisadosRaw } = await supabase
+    .from("profiles")
+    .select("*")
+    .in("estado", ["aprobado", "rechazado"])
+    .order("revisado_at", { ascending: false })
+    .limit(60);
+  const yaRevisados = (revisadosRaw ?? []) as Profile[];
+
+  const todosIds = [...perfiles, ...yaRevisados].map((p) => p.user_id);
+
+  // Contacto (tabla protegida: solo dueño o admin) para todos los de la página
+  let contactos: Record<string, Contacto> = {};
+  if (todosIds.length > 0) {
+    const { data: privs } = await supabase
+      .from("profile_private")
+      .select("user_id, telefono, email")
+      .in("user_id", todosIds);
+    contactos = Object.fromEntries(
+      (privs ?? []).map((r) => [
+        r.user_id as string,
+        { telefono: (r.telefono as string | null) ?? null, email: (r.email as string | null) ?? null },
+      ])
+    );
+  }
+
+  // Vídeos de los perfiles en cola, para poder verlos aquí mismo
+  const videosDe: Record<string, Video[]> = {};
+  if (perfiles.length > 0) {
     const { data: vids } = await supabase
       .from("videos")
       .select("*")
-      .in("user_id", ids)
+      .in(
+        "user_id",
+        perfiles.map((p) => p.user_id)
+      )
       .order("created_at", { ascending: false });
-    videosDe = {};
     for (const v of (vids ?? []) as Video[]) {
       (videosDe[v.user_id] ??= []).push(v);
     }
-    const { data: privs } = await supabase
-      .from("profile_private")
-      .select("user_id, telefono")
-      .in("user_id", ids);
-    telefonos = Object.fromEntries(
-      (privs ?? [])
-        .filter((r) => r.telefono)
-        .map((r) => [r.user_id as string, r.telefono as string])
-    );
   }
 
   const cola: PerfilPendiente[] = perfiles.map((p) => ({
     profile: p,
     videos: videosDe[p.user_id] ?? [],
-    telefono: telefonos[p.user_id] ?? null,
+    contacto: contactos[p.user_id] ?? { telefono: null, email: null },
+  }));
+
+  const revisados: PerfilRevisado[] = yaRevisados.map((p) => ({
+    profile: p,
+    contacto: contactos[p.user_id] ?? { telefono: null, email: null },
   }));
 
   // Vídeos nuevos de perfiles ya aprobados, pendientes de aprobar
@@ -113,14 +141,15 @@ export default async function AdminPage() {
         >
           Revisión<span className="text-[#e8ff00]">.</span>
         </h1>
-        <p className="mt-4 max-w-[520px] text-[16px] leading-[1.75] text-white/75">
-          Perfiles y vídeos pendientes de tu okey. Lo que apruebes sale al
-          escaparate al momento; lo que rechaces vuelve al jugador con tu nota.
+        <p className="mt-4 max-w-[560px] text-[16px] leading-[1.75] text-white/75">
+          Ficha completa de cada jugador y sus vídeos, con su email y teléfono
+          para que le escribas tú. Lo que apruebes sale al escaparate al
+          momento; lo que rechaces vuelve a su panel con tu nota.
         </p>
       </header>
 
       <section className="flex-1 px-5 md:px-10 pb-24">
-        <AdminQueue cola={cola} videosSueltos={videosSueltos} />
+        <AdminQueue cola={cola} videosSueltos={videosSueltos} revisados={revisados} />
       </section>
 
       <SiteFooter />

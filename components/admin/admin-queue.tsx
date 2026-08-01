@@ -7,10 +7,17 @@ import { createClient } from "@/lib/supabase/client";
 import { streamThumbUrl, streamIframeUrl } from "@/lib/supabase/config";
 import type { Profile, Video } from "@/lib/types";
 
+export type Contacto = { telefono: string | null; email: string | null };
+
 export type PerfilPendiente = {
   profile: Profile;
   videos: Video[];
-  telefono: string | null;
+  contacto: Contacto;
+};
+
+export type PerfilRevisado = {
+  profile: Profile;
+  contacto: Contacto;
 };
 
 export type VideoPendiente = {
@@ -24,20 +31,118 @@ function fmt(seconds: number) {
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 }
 
+/** dd/mm/aaaa a partir del ISO, sin depender de la zona del navegador */
+function fecha(iso: string | null) {
+  if (!iso) return "—";
+  const [y, m, d] = iso.slice(0, 10).split("-");
+  return `${d}/${m}/${y}`;
+}
+
+/** Número en formato internacional para el enlace de WhatsApp */
+function waNumero(telefono: string) {
+  let n = telefono.replace(/\D/g, "");
+  if (n.startsWith("00")) n = n.slice(2);
+  if (n.length === 9) n = `34${n}`; // móvil español sin prefijo
+  return n;
+}
+
 const heading = {
   fontFamily: "var(--font-barlow-condensed)",
   fontWeight: 900,
 } as const;
 
+const btnGhost =
+  "bio-btn-ghost border border-white/20 text-white/80 font-mono text-[11px] tracking-[0.1em] uppercase px-4 py-2 no-underline hover:border-[#e8ff00]/50 hover:text-white transition-colors";
+
+/** Botones de contacto: escribes tú, cuando quieras */
+function Contactar({ contacto, nombre }: { contacto: Contacto; nombre: string }) {
+  const primer = nombre?.split(" ")[0] ?? "";
+  const asunto = encodeURIComponent("Tu perfil en Turepresentante");
+  const cuerpo = encodeURIComponent(`Hola ${primer},\n\n`);
+  const waTexto = encodeURIComponent(`Hola ${primer}, te escribo de Turepresentante.`);
+
+  if (!contacto.email && !contacto.telefono) {
+    return (
+      <span className="font-mono text-[11px] tracking-[0.1em] uppercase text-white/45">
+        Sin datos de contacto
+      </span>
+    );
+  }
+
+  return (
+    <div className="flex flex-wrap items-center gap-2.5">
+      {contacto.email && (
+        <a href={`mailto:${contacto.email}?subject=${asunto}&body=${cuerpo}`} className={btnGhost}>
+          ✉ Email
+        </a>
+      )}
+      {contacto.telefono && (
+        <>
+          <a
+            href={`https://wa.me/${waNumero(contacto.telefono)}?text=${waTexto}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={btnGhost}
+          >
+            WhatsApp
+          </a>
+          <a href={`tel:${contacto.telefono.replace(/\s+/g, "")}`} className={btnGhost}>
+            Llamar
+          </a>
+        </>
+      )}
+    </div>
+  );
+}
+
+/** Ficha de datos: todo lo que el jugador ha rellenado, de un vistazo */
+function Ficha({
+  profile,
+  contacto,
+  extra,
+}: {
+  profile: Profile;
+  contacto: Contacto;
+  extra?: { k: string; v: string }[];
+}) {
+  const edad = profile.nacimiento ? new Date().getFullYear() - profile.nacimiento : null;
+  const datos: { k: string; v: string }[] = [
+    { k: "Posición", v: profile.posicion ?? "—" },
+    { k: "Pierna", v: profile.pierna ?? "—" },
+    { k: "Nacimiento", v: profile.nacimiento ? `${profile.nacimiento} (${edad} años)` : "—" },
+    { k: "Club", v: profile.club ?? "—" },
+    { k: "Categoría", v: profile.categoria ?? "—" },
+    { k: "Ciudad", v: profile.ciudad ?? "—" },
+    { k: "Email", v: contacto.email ?? "—" },
+    { k: "Teléfono", v: contacto.telefono ?? "—" },
+    { k: "Registrado", v: fecha(profile.created_at) },
+    ...(extra ?? []),
+  ];
+
+  return (
+    <dl className="mt-5 grid gap-x-6 gap-y-3.5" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))" }}>
+      {datos.map((d) => (
+        <div key={d.k} className="min-w-0">
+          <dt className="font-mono text-[10px] tracking-[0.18em] uppercase text-white/50">{d.k}</dt>
+          <dd className="mt-1 text-[15px] text-white/85 leading-[1.45] break-words">{d.v}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
 export default function AdminQueue({
   cola,
   videosSueltos,
+  revisados,
 }: {
   cola: PerfilPendiente[];
   videosSueltos: VideoPendiente[];
+  revisados: PerfilRevisado[];
 }) {
   const [perfiles, setPerfiles] = useState(cola);
   const [sueltos, setSueltos] = useState(videosSueltos);
+  const [hechos, setHechos] = useState(revisados);
   const [rechazando, setRechazando] = useState<string | null>(null);
   const [motivo, setMotivo] = useState("");
   const [busy, setBusy] = useState<string | null>(null);
@@ -48,6 +153,7 @@ export default function AdminQueue({
   // Tras router.refresh() el servidor manda listas frescas: resincronizamos
   useEffect(() => setPerfiles(cola), [cola]);
   useEffect(() => setSueltos(videosSueltos), [videosSueltos]);
+  useEffect(() => setHechos(revisados), [revisados]);
 
   // Cerrar el reproductor con Escape
   useEffect(() => {
@@ -64,12 +170,12 @@ export default function AdminQueue({
     router.refresh();
   };
 
-  const aprobarPerfil = async (p: PerfilPendiente) => {
+  /** Aprueba el perfil y publica de una vez sus vídeos ya listos */
+  const aprobar = async (profile: Profile, estadoEsperado: Profile["estado"]) => {
     const supabase = createClient();
     if (!supabase) return;
     setError("");
-    setBusy(p.profile.user_id);
-    // 1) Perfil aprobado; 2) sus vídeos listos, publicados de una vez
+    setBusy(profile.user_id);
     const { data: filas, error: e1 } = await supabase
       .from("profiles")
       .update({
@@ -77,26 +183,26 @@ export default function AdminQueue({
         revisado_at: new Date().toISOString(),
         revision_notas: null,
       })
-      .eq("user_id", p.profile.user_id)
-      .eq("estado", "en_revision")
+      .eq("user_id", profile.user_id)
+      .eq("estado", estadoEsperado)
       .select("user_id");
     if (e1 || !filas || filas.length === 0) {
       setBusy(null);
       fallo(
         e1
           ? "No se ha podido aprobar. Recarga y prueba de nuevo."
-          : "Este perfil ya lo ha procesado otro admin. Actualizando la cola…"
+          : "Este perfil ya lo ha procesado otro admin. Actualizando…"
       );
       return;
     }
     const { error: e2 } = await supabase
       .from("videos")
       .update({ revision: "aprobado" })
-      .eq("user_id", p.profile.user_id)
+      .eq("user_id", profile.user_id)
       .eq("status", "ready")
       .eq("revision", "pendiente");
     setBusy(null);
-    setPerfiles((list) => list.filter((x) => x.profile.user_id !== p.profile.user_id));
+    setPerfiles((list) => list.filter((x) => x.profile.user_id !== profile.user_id));
     if (e2) {
       // El perfil YA está aprobado: lo decimos tal cual para no confundir
       setError(
@@ -106,7 +212,8 @@ export default function AdminQueue({
     router.refresh();
   };
 
-  const rechazarPerfil = async (p: PerfilPendiente) => {
+  /** Rechaza (o retira del escaparate) con un motivo que verá el jugador */
+  const rechazar = async (profile: Profile) => {
     if (!motivo.trim()) {
       setError("Escribe el motivo: el jugador lo verá en su panel.");
       return;
@@ -114,7 +221,7 @@ export default function AdminQueue({
     const supabase = createClient();
     if (!supabase) return;
     setError("");
-    setBusy(p.profile.user_id);
+    setBusy(profile.user_id);
     const { data: filas, error: e } = await supabase
       .from("profiles")
       .update({
@@ -122,32 +229,32 @@ export default function AdminQueue({
         revisado_at: new Date().toISOString(),
         revision_notas: motivo.trim(),
       })
-      .eq("user_id", p.profile.user_id)
-      .eq("estado", "en_revision")
+      .eq("user_id", profile.user_id)
+      .neq("estado", "rechazado")
       .select("user_id");
     setBusy(null);
     if (e || !filas || filas.length === 0) {
       fallo(
         e
-          ? "No se ha podido rechazar. Recarga y prueba de nuevo."
-          : "Este perfil ya lo ha procesado otro admin. Actualizando la cola…"
+          ? "No se ha podido guardar. Recarga y prueba de nuevo."
+          : "Este perfil ya lo ha procesado otro admin. Actualizando…"
       );
       return;
     }
     setRechazando(null);
     setMotivo("");
-    setPerfiles((list) => list.filter((x) => x.profile.user_id !== p.profile.user_id));
+    setPerfiles((list) => list.filter((x) => x.profile.user_id !== profile.user_id));
     router.refresh();
   };
 
-  const moderarVideo = async (v: VideoPendiente, aprobar: boolean) => {
+  const moderarVideo = async (v: VideoPendiente, aprobarVideo: boolean) => {
     const supabase = createClient();
     if (!supabase) return;
     setError("");
     setBusy(v.video.id);
     const { data: filas, error: e } = await supabase
       .from("videos")
-      .update({ revision: aprobar ? "aprobado" : "rechazado" })
+      .update({ revision: aprobarVideo ? "aprobado" : "rechazado" })
       .eq("id", v.video.id)
       .eq("revision", "pendiente")
       .select("id");
@@ -156,13 +263,59 @@ export default function AdminQueue({
       fallo(
         e
           ? "No se ha podido guardar. Recarga y prueba de nuevo."
-          : "Este vídeo ya lo ha procesado otro admin. Actualizando la cola…"
+          : "Este vídeo ya lo ha procesado otro admin. Actualizando…"
       );
       return;
     }
     setSueltos((list) => list.filter((x) => x.video.id !== v.video.id));
     router.refresh();
   };
+
+  /** Formulario de motivo, compartido por rechazar y retirar */
+  const FormMotivo = ({
+    profile,
+    etiqueta,
+  }: {
+    profile: Profile;
+    etiqueta: string;
+  }) => (
+    <div className="mt-5 max-w-[560px]">
+      <label
+        className="block font-mono text-[12px] tracking-[0.15em] uppercase text-white/75 mb-2"
+        htmlFor={`motivo-${profile.user_id}`}
+      >
+        Motivo (lo verá el jugador en su panel)
+      </label>
+      <textarea
+        id={`motivo-${profile.user_id}`}
+        rows={3}
+        value={motivo}
+        onChange={(e) => setMotivo(e.target.value)}
+        className="bio-input w-full bg-white/[0.04] border border-white/10 text-[#f0f0ee] text-[15px] px-4 py-3 outline-none focus:border-[#e8ff00] placeholder:text-white/50 resize-y"
+        placeholder="Ej. El vídeo no está editado: junta tus mejores jugadas en un clip de 3-5 minutos y reenvíalo."
+      />
+      <div className="mt-3 flex gap-3">
+        <button
+          type="button"
+          disabled={busy === profile.user_id}
+          onClick={() => rechazar(profile)}
+          className="bio-btn bg-red-400/90 text-[#0a0a0a] font-mono text-[12px] tracking-[0.1em] uppercase font-medium px-6 py-3 cursor-pointer border-0 disabled:opacity-50"
+        >
+          {etiqueta}
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setRechazando(null);
+            setMotivo("");
+          }}
+          className="bio-btn-ghost border border-white/20 text-white/75 font-mono text-[12px] tracking-[0.1em] uppercase px-6 py-3 bg-transparent cursor-pointer"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  );
 
   return (
     <div className="flex flex-col gap-14">
@@ -189,14 +342,6 @@ export default function AdminQueue({
               const d = p.profile;
               const listos = p.videos.filter((v) => v.status === "ready");
               const total = listos.reduce((s, v) => s + (Number(v.duration) || 0), 0);
-              const chips = [
-                d.posicion,
-                d.nacimiento ? `Nac. ${d.nacimiento}` : null,
-                d.club,
-                d.categoria,
-                d.ciudad,
-                d.pierna,
-              ].filter(Boolean);
               return (
                 <article key={d.user_id} className="bio-cell px-6 py-6 md:px-8 md:py-7">
                   <div className="flex flex-wrap items-start justify-between gap-5">
@@ -206,58 +351,64 @@ export default function AdminQueue({
                         <img
                           src={d.foto_url}
                           alt={`Foto de ${d.nombre}`}
-                          className="w-[64px] h-[64px] rounded-full object-cover border border-white/15 flex-shrink-0"
+                          className="w-[72px] h-[72px] rounded-full object-cover border border-white/15 flex-shrink-0"
                         />
                       ) : (
-                        <span className="w-[64px] h-[64px] rounded-full bg-white/[0.06] border border-white/15 flex items-center justify-center flex-shrink-0 text-[24px] text-white/60">
+                        <span className="w-[72px] h-[72px] rounded-full bg-white/[0.06] border border-white/15 flex items-center justify-center flex-shrink-0 text-[26px] text-white/60">
                           {d.nombre?.[0]?.toUpperCase() ?? "?"}
                         </span>
                       )}
                       <div className="min-w-0">
                         <h3
-                          className="uppercase text-[#f0f0ee] text-[24px] leading-[1.05] truncate"
+                          className="uppercase text-[#f0f0ee] text-[26px] leading-[1.05]"
                           style={heading}
                         >
                           {d.nombre}
                         </h3>
-                        <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1">
-                          {chips.map((c) => (
-                            <span key={c as string} className="font-mono text-[11px] tracking-[0.1em] uppercase text-white/65">
-                              {c}
-                            </span>
-                          ))}
-                        </div>
+                        <span className="font-mono text-[11px] tracking-[0.15em] uppercase text-white/55">
+                          En cola desde {fecha(d.enviado_revision_at)}
+                        </span>
                       </div>
                     </div>
-                    <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-                      {p.telefono && (
-                        <a
-                          href={`tel:${p.telefono.replace(/\s+/g, "")}`}
-                          className="font-mono text-[13px] text-[#e8ff00] no-underline hover:opacity-80"
-                        >
-                          {p.telefono}
-                        </a>
-                      )}
-                      <Link
-                        href={`/jugadores/${d.slug}`}
-                        className="font-mono text-[11px] tracking-[0.15em] uppercase text-white/70 no-underline hover:text-white/90"
-                      >
-                        Ver perfil →
-                      </Link>
-                    </div>
+                    <Link href={`/jugadores/${d.slug}`} className={btnGhost}>
+                      Ver perfil →
+                    </Link>
                   </div>
 
+                  <Ficha
+                    profile={d}
+                    contacto={p.contacto}
+                    extra={[
+                      { k: "Vídeos", v: `${listos.length} · ${fmt(total)}` },
+                      { k: "Foto", v: d.foto_url ? "Sí" : "No" },
+                    ]}
+                  />
+
                   {d.bio && (
-                    <p className="mt-4 text-[15px] text-white/75 leading-[1.7] max-w-[680px]">{d.bio}</p>
+                    <div className="mt-5">
+                      <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-white/50">
+                        Sobre él
+                      </span>
+                      <p className="mt-1 text-[15px] text-white/80 leading-[1.7] max-w-[680px]">
+                        {d.bio}
+                      </p>
+                    </div>
                   )}
 
-                  {/* Vídeos del jugador */}
                   <div className="mt-5">
-                    <span className="font-mono text-[11px] tracking-[0.15em] uppercase text-white/60">
-                      Vídeos listos: {listos.length} · {fmt(total)} en total
+                    <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-white/50 block mb-2">
+                      Escribirle
                     </span>
-                    {listos.length > 0 && (
-                      <div className="mt-3 flex flex-wrap gap-3">
+                    <Contactar contacto={p.contacto} nombre={d.nombre} />
+                  </div>
+
+                  {/* Vídeos del jugador */}
+                  {listos.length > 0 && (
+                    <div className="mt-6">
+                      <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-white/50 block mb-2.5">
+                        Sus vídeos
+                      </span>
+                      <div className="flex flex-wrap gap-3">
                         {listos.map((v) => (
                           <button
                             key={v.id}
@@ -282,53 +433,18 @@ export default function AdminQueue({
                           </button>
                         ))}
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
 
                   {/* Acciones */}
                   {rechazando === d.user_id ? (
-                    <div className="mt-5 max-w-[560px]">
-                      <label
-                        className="block font-mono text-[12px] tracking-[0.15em] uppercase text-white/75 mb-2"
-                        htmlFor={`motivo-${d.user_id}`}
-                      >
-                        Motivo del rechazo (lo verá el jugador)
-                      </label>
-                      <textarea
-                        id={`motivo-${d.user_id}`}
-                        rows={3}
-                        value={motivo}
-                        onChange={(e) => setMotivo(e.target.value)}
-                        className="bio-input w-full bg-white/[0.04] border border-white/10 text-[#f0f0ee] text-[15px] px-4 py-3 outline-none focus:border-[#e8ff00] placeholder:text-white/50 resize-y"
-                        placeholder="Ej. El vídeo no está editado: junta tus mejores jugadas en un clip de 3-5 minutos y reenvíalo."
-                      />
-                      <div className="mt-3 flex gap-3">
-                        <button
-                          type="button"
-                          disabled={busy === d.user_id}
-                          onClick={() => rechazarPerfil(p)}
-                          className="bio-btn bg-red-400/90 text-[#0a0a0a] font-mono text-[12px] tracking-[0.1em] uppercase font-medium px-6 py-3 cursor-pointer border-0 disabled:opacity-50"
-                        >
-                          Confirmar rechazo
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setRechazando(null);
-                            setMotivo("");
-                          }}
-                          className="bio-btn-ghost border border-white/20 text-white/75 font-mono text-[12px] tracking-[0.1em] uppercase px-6 py-3 bg-transparent cursor-pointer"
-                        >
-                          Cancelar
-                        </button>
-                      </div>
-                    </div>
+                    <FormMotivo profile={d} etiqueta="Confirmar rechazo" />
                   ) : (
-                    <div className="mt-5 flex flex-wrap gap-3">
+                    <div className="mt-6 flex flex-wrap gap-3">
                       <button
                         type="button"
                         disabled={busy === d.user_id}
-                        onClick={() => aprobarPerfil(p)}
+                        onClick={() => aprobar(d, "en_revision")}
                         className="bio-btn bg-[#e8ff00] text-[#0a0a0a] font-mono text-[12px] tracking-[0.1em] uppercase font-medium px-7 py-3 cursor-pointer border-0 disabled:opacity-50"
                       >
                         {busy === d.user_id ? "Guardando…" : "Aprobar y publicar"}
@@ -419,6 +535,96 @@ export default function AdminQueue({
                 </div>
               </div>
             ))}
+          </div>
+        )}
+      </div>
+
+      {/* Ya revisados: para escribirles y para rectificar */}
+      <div>
+        <h2 className="uppercase text-[#f0f0ee] text-[26px] leading-[1.1] mb-6" style={heading}>
+          Ya revisados <span className="text-[#e8ff00]">({hechos.length})</span>
+        </h2>
+        {hechos.length === 0 ? (
+          <p className="text-[15px] text-white/65">
+            Aquí aparecerán los jugadores que ya hayas aprobado o rechazado,
+            con sus datos de contacto y la opción de cambiar de decisión.
+          </p>
+        ) : (
+          <div className="flex flex-col gap-4">
+            {hechos.map((h) => {
+              const d = h.profile;
+              const aprobado = d.estado === "aprobado";
+              return (
+                <article
+                  key={d.user_id}
+                  className="border border-white/10 rounded-tl-[24px] rounded-br-[24px] rounded-tr-[10px] rounded-bl-[10px] px-6 py-5"
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-4">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <span
+                        className={`font-mono text-[10px] tracking-[0.18em] uppercase ${aprobado ? "text-[#e8ff00]" : "text-red-400/90"}`}
+                      >
+                        {aprobado ? "Publicado" : "Rechazado"}
+                      </span>
+                      <h3 className="uppercase text-[#f0f0ee] text-[22px] leading-[1.05]" style={heading}>
+                        {d.nombre}
+                      </h3>
+                      <span className="font-mono text-[11px] text-white/50">
+                        {fecha(d.revisado_at)}
+                      </span>
+                    </div>
+                    <Link href={`/jugadores/${d.slug}`} className={btnGhost}>
+                      Ver perfil →
+                    </Link>
+                  </div>
+
+                  <Ficha profile={d} contacto={h.contacto} />
+
+                  {!aprobado && d.revision_notas && (
+                    <p className="mt-4 text-[14px] text-white/70 leading-[1.7] border-l-2 border-red-400/40 pl-4 max-w-[620px]">
+                      Tu motivo: {d.revision_notas}
+                    </p>
+                  )}
+
+                  <div className="mt-5">
+                    <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-white/50 block mb-2">
+                      Escribirle
+                    </span>
+                    <Contactar contacto={h.contacto} nombre={d.nombre} />
+                  </div>
+
+                  {rechazando === d.user_id ? (
+                    <FormMotivo profile={d} etiqueta="Retirar del escaparate" />
+                  ) : (
+                    <div className="mt-5 flex flex-wrap gap-3">
+                      {aprobado ? (
+                        <button
+                          type="button"
+                          disabled={busy === d.user_id}
+                          onClick={() => {
+                            setRechazando(d.user_id);
+                            setMotivo("");
+                            setError("");
+                          }}
+                          className="bio-btn-ghost border border-red-400/40 text-red-400/90 font-mono text-[12px] tracking-[0.1em] uppercase px-6 py-2.5 bg-transparent cursor-pointer disabled:opacity-50"
+                        >
+                          Retirar del escaparate…
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          disabled={busy === d.user_id}
+                          onClick={() => aprobar(d, "rechazado")}
+                          className="bio-btn bg-[#e8ff00] text-[#0a0a0a] font-mono text-[12px] tracking-[0.1em] uppercase font-medium px-6 py-2.5 cursor-pointer border-0 disabled:opacity-50"
+                        >
+                          {busy === d.user_id ? "Guardando…" : "Aprobar y publicar"}
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </article>
+              );
+            })}
           </div>
         )}
       </div>

@@ -125,10 +125,13 @@ as $$
   select exists (select 1 from public.admins where user_id = auth.uid());
 $$;
 
--- Contacto privado (teléfono)
+-- Contacto privado (teléfono y email; el email se copia de auth.users
+-- para que el panel de revisión pueda mostrarlo — ver
+-- supabase/migracion-contacto-admin.sql)
 create table if not exists public.profile_private (
   user_id uuid primary key references auth.users (id) on delete cascade,
   telefono text,
+  email text,
   updated_at timestamptz not null default now()
 );
 alter table public.profile_private enable row level security;
@@ -292,3 +295,47 @@ drop trigger if exists trg_proteger_moderacion_video on public.videos;
 create trigger trg_proteger_moderacion_video
   before update on public.videos
   for each row execute function public.proteger_moderacion_video();
+
+-- ============================================================
+-- Email del jugador visible para admins (2026-08-01)
+-- Réplica de supabase/migracion-contacto-admin.sql para
+-- instalaciones nuevas.
+-- ============================================================
+
+alter table public.profile_private add column if not exists email text;
+
+create or replace function public.sincronizar_email_contacto()
+  returns trigger
+  language plpgsql
+  security definer
+  set search_path = public
+as $$
+begin
+  new.email := (select u.email from auth.users u where u.id = new.user_id);
+  return new;
+end;
+$$;
+
+drop trigger if exists trg_sincronizar_email_contacto on public.profile_private;
+create trigger trg_sincronizar_email_contacto
+  before insert or update on public.profile_private
+  for each row execute function public.sincronizar_email_contacto();
+
+create or replace function public.propagar_email_usuario()
+  returns trigger
+  language plpgsql
+  security definer
+  set search_path = public
+as $$
+begin
+  insert into public.profile_private (user_id, email)
+  values (new.id, new.email)
+  on conflict (user_id) do update set email = excluded.email;
+  return new;
+end;
+$$;
+
+drop trigger if exists trg_propagar_email_usuario on auth.users;
+create trigger trg_propagar_email_usuario
+  after insert or update of email on auth.users
+  for each row execute function public.propagar_email_usuario();

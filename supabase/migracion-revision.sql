@@ -24,7 +24,16 @@ alter table public.videos
   add column if not exists revision text not null default 'pendiente'
     check (revision in ('pendiente','aprobado','rechazado'));
 
--- 2) Lectura pública solo de lo aprobado ----------------------------
+-- 2) MIGRACIÓN ÚNICA: los perfiles ya existentes pasan a revisión ---
+-- (Va ANTES de crear los triggers de protección: el trigger exigiría
+-- requisitos que los perfiles antiguos aún no cumplen. Sus vídeos ya
+-- quedan en 'pendiente' por el default de la columna.)
+
+update public.profiles
+set estado = 'en_revision', enviado_revision_at = now()
+where estado = 'borrador';
+
+-- 3) Lectura pública solo de lo aprobado ----------------------------
 
 drop policy if exists "perfiles visibles para todos" on public.profiles;
 create policy "perfiles: publico solo aprobados"
@@ -66,7 +75,7 @@ drop policy if exists "videos: un admin puede moderar" on public.videos;
 create policy "videos: un admin puede moderar"
   on public.videos for update using (public.is_admin());
 
--- 3) Triggers de protección ----------------------------------------
+-- 4) Triggers de protección ----------------------------------------
 -- El dueño puede editar su perfil, pero NO auto-aprobarse: la única
 -- transición que se le permite es borrador/rechazado → en_revision,
 -- y solo si cumple los requisitos (datos completos + 1 vídeo listo).
@@ -158,10 +167,3 @@ drop trigger if exists trg_proteger_moderacion_video on public.videos;
 create trigger trg_proteger_moderacion_video
   before update on public.videos
   for each row execute function public.proteger_moderacion_video();
-
--- 4) MIGRACIÓN ÚNICA: los perfiles ya existentes pasan a revisión ---
--- (Sus vídeos ya quedan en 'pendiente' por el default de la columna.)
-
-update public.profiles
-set estado = 'en_revision', enviado_revision_at = now()
-where estado = 'borrador';

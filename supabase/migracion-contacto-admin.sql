@@ -52,7 +52,22 @@ begin
 end;
 $$;
 
-drop trigger if exists trg_propagar_email_usuario on auth.users;
-create trigger trg_propagar_email_usuario
-  after insert or update of email on auth.users
-  for each row execute function public.propagar_email_usuario();
+-- auth.users no nos pertenece: creamos el trigger solo si no existe y
+-- toleramos que la instalación no dé permisos (el email se sincroniza
+-- igualmente en cada escritura de profile_private).
+do $$
+begin
+  if not exists (
+    select 1 from pg_trigger
+    where tgname = 'trg_propagar_email_usuario'
+      and tgrelid = 'auth.users'::regclass
+  ) then
+    create trigger trg_propagar_email_usuario
+      after insert or update of email on auth.users
+      for each row execute function public.propagar_email_usuario();
+  end if;
+exception
+  when insufficient_privilege then
+    raise notice 'Sin permisos sobre auth.users: el email se sincronizará al guardar datos.';
+end
+$$;

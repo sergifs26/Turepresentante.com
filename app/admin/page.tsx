@@ -57,14 +57,25 @@ export default async function AdminPage() {
   // Contacto (tabla protegida: solo dueño o admin) para todos los de la página
   let contactos: Record<string, Contacto> = {};
   if (todosIds.length > 0) {
-    const { data: privs } = await supabase
+    type FilaContacto = { user_id: string; telefono?: string | null; email?: string | null };
+    const { data: conEmail } = await supabase
       .from("profile_private")
       .select("user_id, telefono, email")
       .in("user_id", todosIds);
+    let privs = conEmail as FilaContacto[] | null;
+    if (!privs) {
+      // Si aún no se ha ejecutado la migración del email, al menos que no
+      // se pierdan también los teléfonos
+      const { data: soloTel } = await supabase
+        .from("profile_private")
+        .select("user_id, telefono")
+        .in("user_id", todosIds);
+      privs = soloTel as FilaContacto[] | null;
+    }
     contactos = Object.fromEntries(
       (privs ?? []).map((r) => [
-        r.user_id as string,
-        { telefono: (r.telefono as string | null) ?? null, email: (r.email as string | null) ?? null },
+        r.user_id,
+        { telefono: r.telefono ?? null, email: r.email ?? null },
       ])
     );
   }
@@ -96,13 +107,15 @@ export default async function AdminPage() {
     contacto: contactos[p.user_id] ?? { telefono: null, email: null },
   }));
 
-  // Vídeos nuevos de perfiles ya aprobados, pendientes de aprobar
+  // Vídeos de perfiles ya aprobados: pendientes de aprobar y también los
+  // rechazados, para poder rectificar sin tocar la base de datos
   const { data: vidsPend } = await supabase
     .from("videos")
     .select("*")
-    .eq("revision", "pendiente")
+    .in("revision", ["pendiente", "rechazado"])
     .eq("status", "ready")
-    .order("created_at", { ascending: true });
+    .order("created_at", { ascending: true })
+    .limit(60);
   const todosPendientes = (vidsPend ?? []) as Video[];
   let videosSueltos: VideoPendiente[] = [];
   if (todosPendientes.length > 0) {
@@ -149,7 +162,12 @@ export default async function AdminPage() {
       </header>
 
       <section className="flex-1 px-5 md:px-10 pb-24">
-        <AdminQueue cola={cola} videosSueltos={videosSueltos} revisados={revisados} />
+        <AdminQueue
+          cola={cola}
+          videosSueltos={videosSueltos}
+          revisados={revisados}
+          anioActual={new Date().getFullYear()}
+        />
       </section>
 
       <SiteFooter />

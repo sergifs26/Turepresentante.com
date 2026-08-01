@@ -176,6 +176,13 @@ export default function PrivacidadPage() {
           <strong>Web3Forms</strong> — entrega de los formularios de contacto a
           nuestro correo.
         </li>
+        <li>
+          <strong>Meta Platforms Ireland (WhatsApp)</strong> — únicamente si te
+          escribimos por WhatsApp al teléfono que nos hayas facilitado, o si eres
+          tú quien nos escribe por ese canal. En ese caso, el número y el
+          contenido de la conversación se tratan también conforme a la política
+          de privacidad de WhatsApp. Puedes pedirnos que usemos solo el email.
+        </li>
       </ul>
 
       <h2>7. Transferencias internacionales</h2>

@@ -101,13 +101,13 @@ export default function ReviewStatus({
   return (
     <div className="bio-cell px-7 py-7 md:px-9">
       <span className="font-mono text-[12px] tracking-[0.2em] uppercase text-[#e8ff00]">
-        {estado === "rechazado" ? "Revisado: aún no" : "Tu perfil no es público todavía"}
+        {estado === "rechazado" ? "Revisado" : "Tu perfil no es público todavía"}
       </span>
 
       {estado === "rechazado" && (
         <div className="mt-3 max-w-[620px]">
           <p className="text-[16px] text-white/85 leading-[1.75]">
-            Esta vez no lo hemos aprobado. Nuestro apunte:
+            Ahora mismo tu perfil no está publicado. Nuestro apunte:
           </p>
           {profile.revision_notas && (
             <p className="mt-2 text-[15px] text-white/80 leading-[1.75] border-l-2 border-[#e8ff00]/50 pl-4">

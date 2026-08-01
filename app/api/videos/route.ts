@@ -31,6 +31,9 @@ export async function GET() {
     for (const v of pending) {
       try {
         const s = await getVideoStatus(v.stream_uid);
+        const abandonada =
+          s.state === "pendingupload" &&
+          Date.now() - new Date(v.created_at).getTime() > 30 * 60 * 1000;
         if (s.ready) {
           await supabase
             .from("videos")
@@ -38,12 +41,19 @@ export async function GET() {
             .eq("id", v.id);
           v.status = "ready";
           v.duration = s.duration;
-        } else if (s.state === "error") {
+        } else if (s.state === "error" || abandonada) {
+          // "abandonada": la subida nunca llegó a Cloudflare (p. ej. se cerró
+          // la página a mitad); sin esto la fila quedaría "procesando" eterna
           await supabase.from("videos").update({ status: "error" }).eq("id", v.id);
           v.status = "error";
         }
-      } catch {
-        // si Stream no responde, lo dejamos en processing y se reintenta
+      } catch (err) {
+        // Un 404 es permanente (el vídeo no existe en Stream): sin esto la
+        // fila quedaría "procesando" eterna. El resto se reintenta.
+        if (/404|not found/i.test(String(err))) {
+          await supabase.from("videos").update({ status: "error" }).eq("id", v.id);
+          v.status = "error";
+        }
       }
     }
   }

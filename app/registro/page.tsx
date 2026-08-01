@@ -30,7 +30,7 @@ export default async function RegistroPage() {
           Tu carrera <span className="text-[#e8ff00]">empieza aquí.</span>
         </>
       }
-      intro="Crea tu cuenta, completa tu perfil y sube tus mejores vídeos. Tu galería es pública: cualquier club puede descubrirte."
+      intro="Crea tu cuenta, completa tu perfil y sube tu mejor vídeo: profesional, editado y con tus mejores jugadas (máx. 10 min en total). Lo revisamos a mano y, si da el nivel, te publicamos en el escaparate."
     />
   );
 }

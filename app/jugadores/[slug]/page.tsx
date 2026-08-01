@@ -18,12 +18,19 @@ async function getProfile(slug: string) {
     .eq("slug", slug)
     .single();
   if (!profile) return { profile: null, videos: [] as Video[], telefono: null };
-  const { data: videos } = await supabase
+  // En un perfil aprobado solo salen vídeos aprobados. Si el perfil aún no
+  // está aprobado, la RLS garantiza que solo el dueño o un admin llegan
+  // hasta aquí: les enseñamos los vídeos listos como vista previa.
+  let videosQuery = supabase
     .from("videos")
     .select("*")
     .eq("user_id", profile.user_id)
     .eq("status", "ready")
     .order("created_at", { ascending: false });
+  if ((profile as Profile).estado === "aprobado") {
+    videosQuery = videosQuery.eq("revision", "aprobado");
+  }
+  const { data: videos } = await videosQuery;
   // El teléfono está en una tabla protegida: la BD solo devuelve la fila
   // si quien mira es admin (o el propio dueño). Si no, viene vacío.
   const { data: priv } = await supabase
@@ -73,6 +80,22 @@ export default async function JugadorPage({
   return (
     <main className="bg-[#0a0a0a] min-h-dvh">
       <SiteNav />
+
+      {profile.estado !== "aprobado" && (
+        <div className="px-5 md:px-10 pt-8">
+          {/* Solo el dueño o un admin pueden ver un perfil sin aprobar (RLS) */}
+          <div className="bio-cell inline-flex flex-wrap items-center gap-x-4 gap-y-1.5 px-6 py-3.5">
+            <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-[#e8ff00]">
+              Vista previa
+            </span>
+            <span className="text-[14px] text-white/75">
+              {profile.estado === "en_revision"
+                ? "Este perfil está en revisión: aún no es público."
+                : "Este perfil todavía no es público."}
+            </span>
+          </div>
+        </div>
+      )}
 
       <header className="px-5 md:px-10 pt-16 md:pt-24 pb-10">
         <Link

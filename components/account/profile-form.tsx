@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { POSICIONES, PIERNAS, type Profile } from "@/lib/types";
 
@@ -28,6 +29,7 @@ export default function ProfileForm({
     telefono: telefonoInicial,
   });
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const router = useRouter();
 
   const set = (k: keyof typeof form, v: string) => {
     setForm((f) => ({ ...f, [k]: v }));
@@ -63,6 +65,8 @@ export default function ProfileForm({
     });
 
     setStatus(error || telError ? "error" : "saved");
+    // Refresca la parte servida de /cuenta (checklist de revisión)
+    if (!error && !telError) router.refresh();
   };
 
   return (

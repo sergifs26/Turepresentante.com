@@ -83,7 +83,7 @@ function FitSection() {
   const si = [
     "Juegas federado en España, de juvenil DH a 2ª RFEF",
     "Tienes entre 16 y 26 años",
-    "Puedes enseñar vídeo reciente de tus partidos",
+    "Puedes preparar un vídeo editado con tus mejores jugadas",
     "No tienes representante ahora mismo",
   ];
   const no = [
@@ -263,13 +263,13 @@ function ProcessSection() {
     {
       num: "01",
       title: ["Sube tu", "contenido"],
-      desc: "Vídeos, estadísticas, historial de equipos, documentos. Cuanto más completo, más atención recibes.",
+      desc: "Tu ficha y un vídeo profesional, editado y con tus mejores jugadas. Máximo 10 minutos en total: calidad antes que cantidad.",
       icon: <IconUpload />,
     },
     {
       num: "02",
       title: ["Nosotros", "evaluamos"],
-      desc: "Nuestro equipo revisa cada perfil. Si vemos potencial real, te seleccionamos y asumimos tu representación.",
+      desc: "Nuestro equipo revisa cada perfil a mano y solo publica los que dan el nivel. Si vemos potencial real, asumimos tu representación.",
       icon: <IconScan />,
     },
     {
@@ -339,7 +339,7 @@ function FaqSection() {
     },
     {
       q: "¿Qué pasa si no me seleccionáis?",
-      a: "Tu perfil se queda en la plataforma y puedes actualizarlo cuando quieras. Muchos jugadores entran tras subir mejor material unos meses después.",
+      a: "Te lo decimos claro y con el porqué. Tu cuenta no se borra: mejora tu material, reenvía tu perfil a revisión y lo volvemos a mirar. Muchos jugadores entran al segundo intento.",
     },
     {
       q: "¿Necesito ya un representante?",
@@ -347,7 +347,7 @@ function FaqSection() {
     },
     {
       q: "¿Qué material debo subir?",
-      a: "Lo mínimo: un vídeo reciente (partido completo o highlights) y tu historial de equipos. Estadísticas y datos físicos suman puntos.",
+      a: "Un vídeo profesional y editado con tus mejores jugadas — máximo 10 minutos en total entre todos tus clips, nada de partidos enteros sin editar — y tu ficha completa. Estadísticas y datos físicos suman puntos.",
     },
     {
       q: "¿En qué categorías trabajáis?",

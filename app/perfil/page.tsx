@@ -52,7 +52,7 @@ const FIELDS: Field[] = [
     type: "url",
     required: true,
     placeholder: "https://…",
-    hint: "YouTube, Veo, Instagram o similar. Highlights o partido completo reciente.",
+    hint: "YouTube, Veo, Instagram o similar. Vídeo editado con tus mejores jugadas, máx. 10 minutos.",
   },
   {
     name: "trayectoria",
@@ -113,7 +113,7 @@ export default function PerfilPage() {
           </h2>
           <ul className="mt-5 flex flex-col gap-4">
             {[
-              "Vídeo reciente y sin editar de más: mejor 10 minutos reales que 60 segundos de música.",
+              "Vídeo profesional y editado: tus mejores jugadas en un máximo de 10 minutos. Buena imagen, sin música que tape el juego.",
               "Historial claro: equipos, categorías y minutos de las últimas 2-3 temporadas.",
               "Regularidad. Nos importa más tu temporada completa que una jugada viral.",
               "Actitud: puntualidad en la comunicación ya dice mucho de ti.",

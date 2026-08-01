@@ -351,3 +351,22 @@ exception
     raise notice 'Sin permisos sobre auth.users: el email se sincronizará al guardar datos.';
 end
 $$;
+
+-- ============================================================
+-- Contador de perfiles en revisión (2026-08-01)
+-- El escaparate pinta una silueta difuminada por cada perfil pendiente:
+-- solo necesita el número, nunca los datos. Réplica de
+-- supabase/migracion-contador-revision.sql.
+-- ============================================================
+
+create or replace function public.perfiles_en_revision_count()
+  returns int
+  language sql
+  security definer
+  stable
+  set search_path = public
+as $$
+  select count(*)::int from public.profiles where estado = 'en_revision';
+$$;
+
+grant execute on function public.perfiles_en_revision_count() to anon, authenticated;

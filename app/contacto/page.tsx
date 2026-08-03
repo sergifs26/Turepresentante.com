@@ -77,7 +77,7 @@ export default function ContactoPage() {
               info@turepresentante.com
             </a>
           </div>
-          <p className="mt-5 text-[14px] text-white/60 leading-[1.7]">
+          <p className="mt-5 max-w-[440px] text-[14px] text-white/60 leading-[1.7]">
             Si eres menor de edad, pide a tu padre, madre o tutor que nos
             escriba o que esté en copia en el primer email.
           </p>

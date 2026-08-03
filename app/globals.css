@@ -271,3 +271,21 @@
     scroll-behavior: auto;
   }
 }
+/* ============================================================
+   Encaje en cualquier pantalla
+   ============================================================ */
+
+/* En monitores grandes el contenido deja de estirarse: sin esto, las
+   líneas de texto llegaban a 200 caracteres en un ultrapanorámico.
+   `relative` mantiene la barra superior flotante alineada con el
+   contenido en vez de irse a los bordes de la pantalla. */
+main {
+  position: relative;
+  max-width: 1600px;
+  margin-inline: auto;
+}
+
+/* Los adornos que sobresalen a propósito ya los recorta el overflow-x
+   del <body> (ver app/layout.tsx). Ojo: NO poner overflow-x en <html>,
+   convierte la página en un contenedor de scroll y la barra superior
+   deja de quedarse pegada arriba. */

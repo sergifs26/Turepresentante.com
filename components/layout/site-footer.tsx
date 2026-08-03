@@ -34,7 +34,8 @@ export default function SiteFooter() {
           </p>
         </div>
 
-        <div className="flex gap-14">
+        {/* En móviles de 320px las dos columnas no caben juntas: envuelven */}
+        <div className="flex flex-wrap gap-x-10 gap-y-8 md:gap-14">
           <div className="flex flex-col gap-2.5">
             {NAV.map((l) => (
               <Link

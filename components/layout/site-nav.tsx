@@ -88,7 +88,7 @@ export default function SiteNav({
         )}
 
         {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-8">
           {LINKS.map((l) => {
             const active = !l.href.includes("#") && pathname === l.href;
             return (
@@ -139,7 +139,7 @@ export default function SiteNav({
           aria-label={open ? "Cerrar menú" : "Abrir menú"}
           aria-expanded={open}
           onClick={() => setOpen(!open)}
-          className="md:hidden flex flex-col justify-center gap-[5px] w-10 h-10 items-end bg-transparent border-0 cursor-pointer"
+          className="lg:hidden flex flex-col justify-center gap-[5px] w-10 h-10 items-end bg-transparent border-0 cursor-pointer"
         >
           <span
             className={`block h-[2px] bg-[#f0f0ee] transition-all duration-300 ${open ? "w-6 rotate-45 translate-y-[7px]" : "w-6"}`}
@@ -178,7 +178,7 @@ export default function SiteNav({
         <Link
           href="/cuenta"
           aria-label="Ir a mi panel"
-          className="hidden md:block absolute top-3 right-10 z-50 no-underline"
+          className="hidden lg:block absolute top-3 right-10 z-50 no-underline"
         >
           <Avatar fotoUrl={session.fotoUrl} inicial={session.inicial} />
         </Link>
@@ -188,7 +188,7 @@ export default function SiteNav({
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-40 bg-[#0a0a0a] flex flex-col justify-end px-6 pb-12 md:hidden"
+            className="fixed inset-0 z-40 bg-[#0a0a0a] flex flex-col justify-end px-6 pb-12 lg:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

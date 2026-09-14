@@ -140,13 +140,6 @@ export default function PlatformScroll() {
       <ContainerScroll
         titleComponent={
           <div className="text-center px-4">
-            <div className="flex items-center justify-center gap-3 mb-5">
-              <span className="w-6 h-px bg-[#e8ff00] block" />
-              <span className="font-mono text-[12px] tracking-[0.2em] uppercase text-[#e8ff00]">
-                La plataforma
-              </span>
-              <span className="w-6 h-px bg-[#e8ff00] block" />
-            </div>
             <h2
               className="uppercase leading-[0.9] tracking-[-0.03em] text-[#f0f0ee]"
               style={{

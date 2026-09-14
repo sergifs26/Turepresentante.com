@@ -38,16 +38,9 @@ export default function Home() {
 
 /* Qué somos, en lenguaje llano: lo primero que lee quien no nos conoce */
 function IntroSection() {
-  const chips = ["Jugadores sin agencia", "De juvenil DH a 2ª RFEF", "Toda España"];
   return (
     <section className="px-5 md:px-10 pt-20 md:pt-28 pb-16 md:pb-20">
       <div className="max-w-[900px]">
-        <div className="inline-flex items-center gap-2.5 mb-7 border border-[#e8ff00]/25 rounded-full px-4 py-[7px]">
-          <span className="bio-node" aria-hidden="true" />
-          <span className="font-mono text-[12px] tracking-[0.2em] uppercase text-[#e8ff00]">
-            Qué es Turepresentante
-          </span>
-        </div>
         <p
           className="text-[#f0f0ee] leading-[1.25] tracking-[-0.01em]"
           style={{ fontSize: "clamp(24px, 3.2vw, 40px)" }}
@@ -63,16 +56,6 @@ function IntroSection() {
           al club cuando se cierra una operación. Sin cuotas, sin letra
           pequeña.
         </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          {chips.map((c) => (
-            <span
-              key={c}
-              className="border border-white/15 rounded-full px-4 py-2 font-mono text-[12px] tracking-[0.12em] uppercase text-white/85"
-            >
-              {c}
-            </span>
-          ))}
-        </div>
       </div>
     </section>
   );

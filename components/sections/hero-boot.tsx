@@ -58,18 +58,6 @@ export default function HeroBoot() {
       {/* Texto — en móvil ocupa la banda de abajo, con el CTA al alcance
           del pulgar; en escritorio flota abajo a la izquierda */}
       <div className="relative order-2 mt-auto px-5 pb-10 z-10 md:absolute md:bottom-14 md:left-10 md:px-0 md:pb-0 md:mt-0">
-        <motion.div
-          className="inline-flex items-center gap-2.5 mb-5 border border-[#e8ff00]/25 rounded-full px-4 py-[7px] bg-[#0a0a0a]/60"
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35, duration: 0.5, ease: EASE }}
-        >
-          <span className="bio-node shrink-0" />
-          <span className="font-mono text-[11px] md:text-[12px] tracking-[0.12em] md:tracking-[0.2em] uppercase text-[#e8ff00]">
-            Futbolistas · 100% gratis
-          </span>
-        </motion.div>
-
         <h1
           className="uppercase leading-[0.9] md:leading-[0.88] tracking-[-0.03em]"
           style={{
@@ -137,22 +125,6 @@ export default function HeroBoot() {
       </div>
 
       {/* Scroll hint */}
-      <motion.div
-        className="absolute bottom-8 right-10 hidden md:flex flex-col items-center gap-2 z-20"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.6, duration: 0.5 }}
-        aria-hidden="true"
-      >
-        <div className="w-px h-12 bg-gradient-to-b from-transparent to-[rgba(240,240,238,0.3)] animate-pulse" />
-        <span
-          className="text-[11px] tracking-[0.2em] text-[rgba(240,240,238,0.25)] uppercase font-mono"
-          style={{ writingMode: "vertical-rl" }}
-        >
-          Scroll
-        </span>
-      </motion.div>
-
       {/* Grain overlay */}
       <div
         className="absolute inset-0 pointer-events-none z-30 opacity-[0.038]"
